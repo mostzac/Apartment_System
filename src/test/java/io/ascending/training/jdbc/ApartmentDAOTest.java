@@ -1,4 +1,4 @@
-package io.ascending.training;
+package io.ascending.training.jdbc;
 
 import io.ascending.training.jdbc.ApartmentDAO;
 import io.ascending.training.model.Apartment;
@@ -32,4 +32,6 @@ public class ApartmentDAOTest {
 
         Assert.assertEquals(expectetNum,apartments.size());
     }
+
+
 }

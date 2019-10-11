@@ -1,19 +1,20 @@
 package io.ascending.training.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private long id;
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "password")
+    @Column
     private String password;
     private long resident_id;
 
@@ -57,5 +58,19 @@ public class User {
 
     public void setResident_id(long resident_id) {
         this.resident_id = resident_id;
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String str = null;
+        try {
+            str = objectMapper.writeValueAsString(this);
+        }
+        catch(JsonProcessingException jpe) {
+            jpe.printStackTrace();
+        }
+
+        return str;
     }
 }

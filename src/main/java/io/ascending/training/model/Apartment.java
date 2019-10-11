@@ -1,18 +1,17 @@
 package io.ascending.training.model;
 
-import org.hibernate.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "apartment")
 public class Apartment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -21,7 +20,6 @@ public class Apartment {
 
     @Column(name = "address")
     private String address;
-    private List<Resident> residentList = new ArrayList<>();
 
     public Apartment(String name, String address) {
         this.name = name;
@@ -56,11 +54,17 @@ public class Apartment {
         this.address = address;
     }
 
-    public List<Resident> getResidentList() {
-        return residentList;
-    }
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String str = null;
+        try {
+            str = objectMapper.writeValueAsString(this);
+        }
+        catch(JsonProcessingException jpe) {
+            jpe.printStackTrace();
+        }
 
-    public void setResidentList(List<Resident> residentList) {
-        this.residentList = residentList;
+        return str;
     }
 }

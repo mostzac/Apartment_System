@@ -26,7 +26,7 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                String[] modelPackages = {"com.ascending.training.model"};
+                String[] modelPackages = {"io.ascending.training.model"};
                 String dbDriver = System.getProperty("database.driver");
                 String dbDialect = System.getProperty("database.dialect");
                 String dbUrl = System.getProperty("database.url");
@@ -44,6 +44,7 @@ public class HibernateUtil {
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 configuration.setProperties(settings);
 
+                //Mapping Class
                 EntityScanner.scanPackages(modelPackages).addTo(configuration);
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
                 ServiceRegistry serviceRegistry = registryBuilder.applySettings(configuration.getProperties()).build();

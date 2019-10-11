@@ -1,4 +1,4 @@
-package io.ascending.training;
+package io.ascending.training.jdbc;
 
 import io.ascending.training.jdbc.UsersDAO;
 import io.ascending.training.model.User;
