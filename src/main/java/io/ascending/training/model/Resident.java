@@ -1,9 +1,23 @@
 package io.ascending.training.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "resident")
 public class Resident {
+    @Id
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "room")
     private String room;
+
     private long apartment_id;
 
     public Resident(String name, String room, long apartment_id) {

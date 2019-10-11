@@ -1,4 +1,4 @@
-insert into apartment (name, address, location) values
+insert into apartment (name, address) values
 ('Crystal Plaza','2111 Jefferson'),
 ('Buchanan','320 23rd St')
 ;
@@ -10,8 +10,8 @@ insert into resident (name, room, apartment_id) values
 ;
 commit;
 
-insert into user (name, password, resident_id) values
+insert into users (name, password, resident_id) values
 ('Dave', 1234, 1),
-('Runuuu', 0000, 2),
+('Runuuu', 0000, 2)
 ;
 commit;

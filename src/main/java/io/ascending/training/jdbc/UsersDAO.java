@@ -1,15 +1,16 @@
 package io.ascending.training.jdbc;
 
-import io.ascending.training.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.ascending.training.model.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UserDAO {
+public class UsersDAO {
 
     static final String DB_URL = "jdbc:postgresql://localhost:5431/projectDB";
     static final String USER = "admin";
@@ -28,7 +29,7 @@ public class UserDAO {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql =  "select * from user";
+            sql =  "select * from users";
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 long id = rs.getLong("id");
@@ -60,7 +61,7 @@ public class UserDAO {
 
             System.out.println("Creating statement");
             stmt = conn.createStatement();
-            String sql = "insert into user (name,password,resident_id) values" + "('"+user.getName()+"','"+user.getPassword()+"','"+user.getResident_id()+"')";
+            String sql = "insert into users (name,password,resident_id) values" + "('"+user.getName()+"','"+user.getPassword()+"','"+user.getResident_id()+"')";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");
@@ -81,14 +82,14 @@ public class UserDAO {
         return false;
     }
 
-    public boolean delete (String username){
+    public boolean delete (String usersname){
         Connection conn = null;
         Statement stmt = null;
 
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "delete from user where name = " + "'"+username+"'";
+            String sql = "delete from users where name = " + "'"+usersname+"'";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 return true;

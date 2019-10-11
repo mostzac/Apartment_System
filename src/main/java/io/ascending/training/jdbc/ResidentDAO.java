@@ -1,7 +1,6 @@
 package io.ascending.training.jdbc;
 
 import io.ascending.training.model.Resident;
-import io.ascending.training.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;

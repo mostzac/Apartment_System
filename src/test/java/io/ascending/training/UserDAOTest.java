@@ -1,6 +1,6 @@
 package io.ascending.training;
 
-import io.ascending.training.jdbc.UserDAO;
+import io.ascending.training.jdbc.UsersDAO;
 import io.ascending.training.model.User;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,12 +10,12 @@ import org.junit.Test;
 import java.util.List;
 
 public class UserDAOTest {
-    private UserDAO userDAO;
+    private UsersDAO userDAO;
     private User userTest;
 
     @Before
     public void init(){
-        userDAO = new UserDAO();
+        userDAO = new UsersDAO();
         userTest = new User("test","pass",1);
         userDAO.save(userTest);
     }
