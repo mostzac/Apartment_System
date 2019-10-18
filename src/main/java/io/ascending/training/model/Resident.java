@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "resident")
+@Table(name = "residents")
 public class Resident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +19,12 @@ public class Resident {
     @Column(name = "room")
     private String room;
 
-    private long apartment_id;
+    private long apartmentId;
 
-    public Resident(String name, String room, long apartment_id) {
+    public Resident(String name, String room, long apartmentId) {
         this.name = name;
         this.room = room;
-        this.apartment_id = apartment_id;
+        this.apartmentId = apartmentId;
     }
 
     public Resident() {
@@ -56,11 +56,11 @@ public class Resident {
     }
 
     public long getApartment_id() {
-        return apartment_id;
+        return apartmentId;
     }
 
-    public void setApartment_id(long apartment_id) {
-        this.apartment_id = apartment_id;
+    public void setApartment_id(long apartmentId) {
+        this.apartmentId = apartmentId;
     }
 
     @Override

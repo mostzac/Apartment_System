@@ -16,12 +16,12 @@ public class User {
     private String name;
     @Column
     private String password;
-    private long resident_id;
+    private long residentId;
 
-    public User(String name, String password,long resident_id) {
+    public User(String name, String password,long residentId) {
         this.name = name;
         this.password = password;
-        this.resident_id = resident_id;
+        this.residentId = residentId;
     }
 
     public User() {
@@ -53,11 +53,11 @@ public class User {
     }
 
     public long getResident_id() {
-        return resident_id;
+        return residentId;
     }
 
-    public void setResident_id(long resident_id) {
-        this.resident_id = resident_id;
+    public void setResident_id(long residentId) {
+        this.residentId = residentId;
     }
 
     @Override

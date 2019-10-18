@@ -19,7 +19,7 @@ public class HibernateMappingTest {
 
     @Test
     public void mappingTest() {
-        String hqlApartment = "FROM Apartment";
+        String hqlApartment = "FROM Apartment"; //from class
         String hqlUser = "FROM User";
         String hqlResident = "FROM Resident";
         List<Apartment> apartments = null;
