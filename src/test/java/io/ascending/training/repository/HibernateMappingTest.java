@@ -1,7 +1,7 @@
 package io.ascending.training.repository;
 
 import io.ascending.training.model.Apartment;
-import io.ascending.training.model.Resident;
+import io.ascending.training.model.Package;
 import io.ascending.training.model.User;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
@@ -24,28 +24,28 @@ public class HibernateMappingTest {
         String hqlResident = "FROM Resident";
         List<Apartment> apartments = null;
         List<User> users = null;
-        List<Resident> residents = null;
+        List<Package> aPackages = null;
 
         try  { //the session will close after the try block, getCurrentSession() - if exist get it which will auto close when thread is over, if not create one
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
             Query<Apartment> queryAp = session.createQuery(hqlApartment);
             Query<User> queryUser = session.createQuery(hqlUser);
-            Query<Resident> queryRes = session.createQuery(hqlResident);
+            Query<Package> queryRes = session.createQuery(hqlResident);
             apartments = queryAp.list();
             users = queryUser.list();
-            residents = queryRes.list();
+            aPackages = queryRes.list();
             transaction.commit();
 
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
         apartments.forEach(apt -> logger.info(apt.toString()));
-        residents.forEach(resident -> logger.info(resident.toString()));
+        aPackages.forEach(resident -> logger.info(resident.toString()));
         users.forEach(user -> logger.info(user.toString()));
 
         Assert.assertNotNull(apartments);
-        Assert.assertNotNull(residents);
+        Assert.assertNotNull(aPackages);
         Assert.assertNotNull(users);
     }
 

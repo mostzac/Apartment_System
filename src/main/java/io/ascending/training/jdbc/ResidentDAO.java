@@ -1,6 +1,6 @@
 package io.ascending.training.jdbc;
 
-import io.ascending.training.model.Resident;
+import io.ascending.training.model.Package;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ public class ResidentDAO {
     private final  Logger logger = LoggerFactory.getLogger(getClass());
 
 
-    public List<Resident> getResident(){
+    public List<Package> getResident(){
         Connection conn;
         Statement stmt = null;
         ResultSet rs = null;
-        List<Resident> residents = new ArrayList<>();
+        List<Package> aPackages = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
@@ -36,22 +36,22 @@ public class ResidentDAO {
                 String room = rs.getString("room");
                 long apartment_id = rs.getLong("apartment_id");
 
-                Resident resident = new Resident();
-                resident.setId(id);
-                resident.setName(name);
-                resident.setRoom(room);
-                resident.setApartment_id(apartment_id);
-                residents.add(resident);
+                Package aPackage = new Package();
+                aPackage.setId(id);
+                aPackage.setName(name);
+                aPackage.setRoom(room);
+                aPackage.setApartment_id(apartment_id);
+                aPackages.add(aPackage);
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return residents;
+        return aPackages;
     }
 
-    public boolean save(Resident resident){
+    public boolean save(Package aPackage){
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -60,7 +60,7 @@ public class ResidentDAO {
 
             System.out.println("Creating statement");
             stmt = conn.createStatement();
-            String sql = "insert into resident (name,room,apartment_id) values" + "('"+resident.getName()+"','"+resident.getRoom()+"','"+resident.getApartment_id()+"')";
+            String sql = "insert into resident (name,room,apartment_id) values" + "('"+ aPackage.getName()+"','"+ aPackage.getRoom()+"','"+ aPackage.getApartment_id()+"')";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");

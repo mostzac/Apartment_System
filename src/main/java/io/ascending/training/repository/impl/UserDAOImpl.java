@@ -102,7 +102,7 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getUsers() {
         String hql = "FROM User";
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) { //openSession() in try block dont need to close, 
             Query<User> query = session.createQuery(hql);
             return query.list();
         }

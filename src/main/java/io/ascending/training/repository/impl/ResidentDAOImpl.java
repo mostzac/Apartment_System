@@ -1,10 +1,9 @@
 package io.ascending.training.repository.impl;
 
 import io.ascending.training.model.Apartment;
-import io.ascending.training.model.Resident;
+import io.ascending.training.model.Package;
 import io.ascending.training.repository.interfaces.ResidentDAO;
 import io.ascending.training.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -17,14 +16,14 @@ public class ResidentDAOImpl implements ResidentDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public boolean save(Resident resident) {
+    public boolean save(Package aPackage) {
         Transaction transaction = null;
         boolean isSuccess = true;
 
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            session.save(resident);
+            session.save(aPackage);
             transaction.commit();
         } catch (Exception e) {
             isSuccess = false;
@@ -32,31 +31,31 @@ public class ResidentDAOImpl implements ResidentDAO {
             logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The resident &s is saved"), resident.toString());
+        if (isSuccess) logger.debug(String.format("The resident &s is saved"), aPackage.toString());
         return isSuccess;
     }
 
     @Override
-    public boolean update(Resident resident) {
+    public boolean update(Package aPackage) {
         Transaction transaction = null;
         boolean isSuccess =  true;
         try{
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            session.saveOrUpdate(resident);
+            session.saveOrUpdate(aPackage);
             transaction.commit();
         } catch (Exception e) {
             isSuccess = false;
             if (transaction != null) transaction.rollback();
             logger.error(e.getMessage());
         }
-        if (isSuccess) logger.debug(String.format("The resident &s is updated",resident.toString()));
+        if (isSuccess) logger.debug(String.format("The resident &s is updated", aPackage.toString()));
         return isSuccess;
     }
 
     @Override
-    public boolean delete(Resident resident) {
-        String residentName = resident.getName();
+    public boolean delete(Package aPackage) {
+        String residentName = aPackage.getName();
         String hql = "DELETE Resident where name = :residentNamePara";
         int delectedCount = 0;
         Transaction transaction = null;
@@ -101,21 +100,21 @@ public class ResidentDAOImpl implements ResidentDAO {
 
 
     @Override
-    public List<Resident> getResidents() {
+    public List<Package> getResidents() {
         String hql = "FROM Resident";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Resident> query = session.createQuery(hql);
+            Query<Package> query = session.createQuery(hql);
             return query.list();
         }
     }
 
     @Override
-    public Resident getResidentByName(String residentName) {
+    public Package getResidentByName(String residentName) {
         //if(apartName.equals(null)) return null;
         String hql = "FROM Resident where name = :name";
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query<Resident> query = session.createQuery(hql);
+            Query<Package> query = session.createQuery(hql);
             query.setParameter("name",residentName);
             return query.uniqueResult();
         }

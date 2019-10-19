@@ -6,31 +6,38 @@ CREATE TABLE apartments (
     address       VARCHAR(150)
 );
 
-ALTER TABLE apartments ADD CONSTRAINT apartment_pk PRIMARY KEY ( id );
-
-CREATE TABLE residents (
-    id              SERIAL NOT NULL,
-    name            VARCHAR(30) not null unique,
-    room      VARCHAR(30),
-    apartmentId   INTEGER NOT NULL
-);
-
-ALTER TABLE residents ADD CONSTRAINT resident_pk PRIMARY KEY ( id );
+ALTER TABLE apartments ADD CONSTRAINT apartments_pk PRIMARY KEY ( id );
 
 
 CREATE TABLE users (
     id             SERIAL NOT NULL,
-    name   VARCHAR(30) not null unique,
+    account   VARCHAR(30) not null unique,
     password         VARCHAR(30),
-    residentId    INTEGER
+    name VARCHAR(30),
+    room VARCHAR(30),
+    apartmentId    INTEGER
 );
 
 ALTER TABLE users ADD CONSTRAINT users_pk PRIMARY KEY ( id );
 
-ALTER TABLE users
-    ADD CONSTRAINT users_resident_fk FOREIGN KEY ( residentId )
-        REFERENCES residents ( id );
+CREATE TABLE packages(
+    id             SERIAL NOT NULL,
+    shipNumber VARCHAR(200),
+    shipper VARCHAR(50),
+    deliveredDate TIMESTAMP not null,
+    description   VARCHAR(200),
+    status   INTEGER ,
+    arrangeDate TIMESTAMP,
+    notes VARCHAR(200),
+    userId INTEGER
+);
 
-ALTER TABLE residents
-    ADD CONSTRAINT resident_apartment_fk FOREIGN KEY ( apartmentId )
-        REFERENCES apartments ( id );
+ALTER TABLE packages ADD CONSTRAINT packages_pk PRIMARY KEY (id);
+
+ALTER TABLE users
+    ADD CONSTRAINT user_apartment_fk FOREIGN KEY ( apartmentId )
+        REFERENCES users ( id );
+
+ALTER TABLE packages
+    ADD CONSTRAINT package_user_fk FOREIGN KEY ( userId )
+        REFERENCES users ( id );

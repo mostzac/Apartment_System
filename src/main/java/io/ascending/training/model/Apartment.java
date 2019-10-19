@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -20,6 +21,10 @@ public class Apartment {
 
     @Column(name = "address")
     private String address;
+
+    @OneToMany(mappedBy = "apartment",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    private Set<User> users;
+
 
     public Apartment(String name, String address) {
         this.name = name;
@@ -66,5 +71,19 @@ public class Apartment {
         }
 
         return str;
+    }
+
+    public Set<User> getUsers() {
+        try {
+            int size = users.size();//try catch the exception if the residents are not fetched
+        }
+        catch (Exception e){
+            return null;
+        }
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

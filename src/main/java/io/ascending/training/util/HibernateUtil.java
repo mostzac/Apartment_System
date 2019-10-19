@@ -45,7 +45,7 @@ public class HibernateUtil {
                 configuration.setProperties(settings);
 
                 //Mapping Class
-                EntityScanner.scanPackages(modelPackages).addTo(configuration);
+                EntityScanner.scanPackages(modelPackages).addTo(configuration);// third-party config tool, EntityScanner
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
                 ServiceRegistry serviceRegistry = registryBuilder.applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);

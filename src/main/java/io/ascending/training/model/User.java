@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -13,15 +14,27 @@ public class User {
     @Column
     private long id;
     @Column
-    private String name;
+    private String account;
     @Column
     private String password;
-    private long residentId;
+    @Column
+    private String name;
+    @Column
+    private String room;
 
-    public User(String name, String password,long residentId) {
-        this.name = name;
+    @ManyToOne
+    @JoinColumn(name = "apartmentId")
+    private Apartment apartment;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    private Set<Package> packages;
+
+
+    public User(String account, String password,String name,String room) {
+        this.account = account;
         this.password = password;
-        this.residentId = residentId;
+        this.name = name;
+        this.room = room;
     }
 
     public User() {
@@ -36,12 +49,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getAccount() {
+        return account;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getPassword() {
@@ -52,12 +65,36 @@ public class User {
         this.password = password;
     }
 
-    public long getResident_id() {
-        return residentId;
+    public String getName() {
+        return name;
     }
 
-    public void setResident_id(long residentId) {
-        this.residentId = residentId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public Apartment getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
+    }
+
+    public Set<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<Package> packages) {
+        this.packages = packages;
     }
 
     @Override
