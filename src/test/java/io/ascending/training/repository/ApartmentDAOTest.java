@@ -62,7 +62,7 @@ public class ApartmentDAOTest {
             logger.info("apartment is null");
         }
         apartment.setAddress("test1");
-        Assert.assertTrue(apartmentDAO.update(apartment));git a
+        Assert.assertTrue(apartmentDAO.update(apartment));
     }
 
 
