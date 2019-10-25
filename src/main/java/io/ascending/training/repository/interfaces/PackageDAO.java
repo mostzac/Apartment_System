@@ -9,7 +9,7 @@ public interface PackageDAO {
     boolean update(Package pack);
     //TODO byxxx
     boolean delete(Package pack);
-    boolean deletePackageByName(String residentName);
     List<Package> getPackages();
-    Package getResidentByName(String residentName);
+    Package getPackageByShipNumber(String packShipNum);
+
 }

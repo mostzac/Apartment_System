@@ -1,5 +1,6 @@
 package io.ascending.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,10 +23,12 @@ public class User {
     @Column
     private String room;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "apartmentId")
     private Apartment apartment;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private Set<Package> packages;
 
@@ -90,6 +93,12 @@ public class User {
     }
 
     public Set<Package> getPackages() {
+        try {
+            int size = packages.size();
+        }
+        catch (Exception e){
+            return  null;
+        }
         return packages;
     }
 

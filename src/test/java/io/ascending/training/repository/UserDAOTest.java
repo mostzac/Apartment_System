@@ -2,6 +2,7 @@ package io.ascending.training.repository;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.ascending.training.model.User;
+import io.ascending.training.repository.impl.ApartmentDAOImpl;
 import io.ascending.training.repository.impl.UserDAOImpl;
 import io.ascending.training.repository.interfaces.UserDAO;
 import org.junit.Assert;
@@ -20,7 +21,8 @@ public class UserDAOTest {
     @BeforeClass
     public static void init(){
         userDAO = new UserDAOImpl();
-        user = new User("test","passworrTest",1);
+        user = new User("accountTest","passworrTest","nameTest","777");
+        user.setApartment(new ApartmentDAOImpl().getApartmentByName("Buchanan"));
     }
 
     @Test
@@ -38,13 +40,14 @@ public class UserDAOTest {
 
     @Test
     public void updateUserTest(){
-        user = userDAO.getUserByName(user.getName());
+        user = userDAO.getUserByAccount(user.getAccount());
         if(user != null){
             logger.info(String.valueOf(user.getId()));
         }
         else {
-            logger.info("User is not null");
+            logger.info("User is null");
         }
+        user.setName("update");
         user.setPassword("12312");
         Assert.assertTrue(userDAO.update(user));
     }
@@ -56,10 +59,12 @@ public class UserDAOTest {
 
     @Test
     public void delelteByNameTest(){
-        User user = new User("testName","123123",1);
+        User user = new User("deleteTest","passworrTest","nameTest","777");
         userDAO.save(user);
-        Assert.assertTrue(userDAO.deleteUserByName(user.getName()));
+        Assert.assertTrue(userDAO.deleteUserByAccount(user.getAccount()));
     }
+
+
 
 }
 

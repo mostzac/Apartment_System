@@ -1,6 +1,7 @@
 package io.ascending.training.repository.impl;
 
 import io.ascending.training.model.Apartment;
+import io.ascending.training.model.User;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ApartmentDAOImpl implements ApartmentDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -101,22 +104,26 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
     @Override
     public List<Apartment> getApartments() {
-        String hql = "FROM Apartment";
+//        String hql = "FROM Apartment";
+        String hql = "FROM Apartment as apt left join fetch apt.users";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Apartment> query = session.createQuery(hql);
-            return query.list();
+            return query.list().stream().distinct().collect(Collectors.toList());//to make the table distinct
         }
     }
+
 
     @Override
     public Apartment getApartmentByName(String apartName) {
         //if(apartName.equals(null)) return null;
-        String hql = "FROM Apartment where name = :name";
+//        String hql = "FROM Apartment as apt left join fetch apt.users where name = :name";
+        String hql = "FROM Apartment as apt left join fetch apt.users where apt.name = :name";
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Apartment> query = session.createQuery(hql);
             query.setParameter("name",apartName);
             return query.uniqueResult();
         }
     }
+
 }

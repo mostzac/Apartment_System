@@ -33,15 +33,18 @@ public class UsersDAO {
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 long id = rs.getLong("id");
-                String name = rs.getString("name");
+                String account = rs.getString("account");
                 String password = rs.getString("password");
-                long resident_id = rs.getLong("resident_id");
+                String name = rs.getString("name");
+                String room = rs.getString("room");
+                long apartmentId = rs.getLong("apartmentIdd");
 
                 User user = new User();
                 user.setId(id);
-                user.setName(name);
+                user.setAccount(account);
                 user.setPassword(password);
-                user.setResident_id(resident_id);
+                user.setName(name);
+                user.setRoom(room);
                 users.add(user);
             }
 
@@ -61,7 +64,8 @@ public class UsersDAO {
 
             System.out.println("Creating statement");
             stmt = conn.createStatement();
-            String sql = "insert into users (name,password,resident_id) values" + "('"+user.getName()+"','"+user.getPassword()+"','"+user.getResident_id()+"')";
+            String sql = "insert into users (account, password, name,room,apartmentId) values" +
+                    "('"+user.getAccount()+"','"+user.getPassword()+"','"+user.getName()+"','"+user.getRoom()+"',1)";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");
@@ -82,14 +86,14 @@ public class UsersDAO {
         return false;
     }
 
-    public boolean delete (String usersname){
+    public boolean delete (String useraccount){
         Connection conn = null;
         Statement stmt = null;
 
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "delete from users where name = " + "'"+usersname+"'";
+            String sql = "delete from users where account = " + "'"+useraccount+"'";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 return true;

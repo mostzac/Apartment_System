@@ -6,27 +6,32 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public class PackageDAOTest {
-    private ResidentDAO residentDAO;
+    private PackageDAO packageDAO;
     private Package packageTest;
 
     @Before
     public void init(){
-        residentDAO = new ResidentDAO();
-        packageTest = new Package("test","room",1);
-        residentDAO.save(packageTest);
+        packageDAO = new PackageDAO();
+        LocalDateTime deliveredTime = LocalDateTime.now();
+        LocalDateTime arrangeTime = LocalDateTime.now();
+        packageTest = new Package("111","shipTest",deliveredTime,"test",1,arrangeTime,"testNote");
+
+        packageDAO.save(packageTest);
     }
 
     @After
     public void tearDown(){
-        residentDAO.delete(packageTest.getName());
+        packageDAO.delete(packageTest);
     }
 
     @Test
     public void getresidentsTest(){
-        List<Package> aPackages = residentDAO.getResident();
+        List<Package> aPackages = packageDAO.getPackage();
         int expectetNum = 3;
 
         Assert.assertEquals(expectetNum, aPackages.size());

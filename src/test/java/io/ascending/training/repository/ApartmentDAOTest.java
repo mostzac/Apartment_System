@@ -1,7 +1,10 @@
 package io.ascending.training.repository;
 
+import io.ascending.training.jdbc.UsersDAO;
 import io.ascending.training.model.Apartment;
+import io.ascending.training.model.User;
 import io.ascending.training.repository.impl.ApartmentDAOImpl;
+import io.ascending.training.repository.impl.UserDAOImpl;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -59,7 +62,8 @@ public class ApartmentDAOTest {
             logger.info("apartment is null");
         }
         apartment.setAddress("test1");
-        Assert.assertTrue(apartmentDAO.update(apartment));
+        Assert.assertTrue(apartmentDAO.update(apartment));git a
     }
+
 
 }

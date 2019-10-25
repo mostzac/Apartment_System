@@ -3,13 +3,15 @@ package io.ascending.training.jdbc;
 import io.ascending.training.model.Package;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ResidentDAO {
+public class PackageDAO {
 
     static final String DB_URL = "jdbc:postgresql://localhost:5431/projectDB";
     static final String USER = "admin";
@@ -17,7 +19,7 @@ public class ResidentDAO {
     private final  Logger logger = LoggerFactory.getLogger(getClass());
 
 
-    public List<Package> getResident(){
+    public List<Package> getPackage(){
         Connection conn;
         Statement stmt = null;
         ResultSet rs = null;
@@ -28,19 +30,28 @@ public class ResidentDAO {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql =  "select * from resident";
+            sql =  "select * from packages";
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 long id = rs.getLong("id");
-                String name = rs.getString("name");
-                String room = rs.getString("room");
-                long apartment_id = rs.getLong("apartment_id");
+                String shipNumber = rs.getString("shipNumber");
+                String shipper = rs.getString("shipper");
+                LocalDateTime deliveredDate = rs.getObject(4,LocalDateTime.class);
+                String description = rs.getString("description");
+                int status = rs.getInt("status");
+                LocalDateTime arrangeDate = rs.getObject(7,LocalDateTime.class);
+                long userId = rs.getLong("userId");
+                String notes = rs.getString("notes");
 
                 Package aPackage = new Package();
                 aPackage.setId(id);
-                aPackage.setName(name);
-                aPackage.setRoom(room);
-                aPackage.setApartment_id(apartment_id);
+                aPackage.setShipNumber(shipNumber);
+                aPackage.setShipper(shipper);
+                aPackage.setDeliveredDate(deliveredDate);
+                aPackage.setDescription(description);
+                aPackage.setStatus(status);
+                aPackage.setArrangeDate(arrangeDate);
+                aPackage.setNotes(notes);
                 aPackages.add(aPackage);
             }
 
@@ -60,7 +71,8 @@ public class ResidentDAO {
 
             System.out.println("Creating statement");
             stmt = conn.createStatement();
-            String sql = "insert into resident (name,room,apartment_id) values" + "('"+ aPackage.getName()+"','"+ aPackage.getRoom()+"','"+ aPackage.getApartment_id()+"')";
+            String sql = "insert into packages (shipNumber,shipper,deliveredDate,description,status,arrangeDate,notes,userId) values" +
+                    "('"+ aPackage.getShipNumber()+"','"+ aPackage.getShipper()+"','"+ aPackage.getDeliveredDate()+"','"+aPackage.getDescription()+"','"+aPackage.getStatus()+"','"+aPackage.getArrangeDate()+"','"+aPackage.getArrangeDate()+"','"+aPackage.getNotes()+"',1)";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");
@@ -81,14 +93,14 @@ public class ResidentDAO {
         return false;
     }
 
-    public boolean delete (String residentname){
+    public boolean delete (Package pack){
         Connection conn = null;
         Statement stmt = null;
 
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "delete from resident where name = " + "'"+residentname+"'";
+            String sql = "delete from packages where shipNumber = " + "'"+pack.getShipNumber()+"'";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 return true;

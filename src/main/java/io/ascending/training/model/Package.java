@@ -1,10 +1,12 @@
 package io.ascending.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "packages")
@@ -13,6 +15,12 @@ public class Package {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
+    @Column(name = "shipNumber")
+    private String shipNumber;
+
+    @Column(name = "shipper")
+    private String shipper;
 
     @Column(name = "deliveredDate")
     private LocalDateTime deliveredDate;
@@ -29,11 +37,14 @@ public class Package {
     @Column
     private String notes;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 
-    public Package(LocalDateTime deliveredDate, String description, int status, LocalDateTime arrangeDate, String notes) {
+    public Package(String shipNumber, String shipper, LocalDateTime deliveredDate, String description, int status, LocalDateTime arrangeDate, String notes) {
+        this.shipNumber = shipNumber;
+        this.shipper = shipper;
         this.deliveredDate = deliveredDate;
         this.description = description;
         this.status = status;
@@ -51,6 +62,22 @@ public class Package {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getShipNumber() {
+        return shipNumber;
+    }
+
+    public void setShipNumber(String shipNumber) {
+        this.shipNumber = shipNumber;
+    }
+
+    public String getShipper() {
+        return shipper;
+    }
+
+    public void setShipper(String shipper) {
+        this.shipper = shipper;
     }
 
     public LocalDateTime getDeliveredDate() {

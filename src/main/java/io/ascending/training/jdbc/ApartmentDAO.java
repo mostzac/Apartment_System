@@ -28,7 +28,7 @@ public class ApartmentDAO {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql =  "select * from apartment";
+            sql =  "select * from apartments";
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 long id = rs.getLong("id");

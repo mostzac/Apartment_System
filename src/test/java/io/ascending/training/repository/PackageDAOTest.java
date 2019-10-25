@@ -1,65 +1,67 @@
 package io.ascending.training.repository;
 
 import io.ascending.training.model.Package;
-import io.ascending.training.repository.impl.ResidentDAOImpl;
-import io.ascending.training.repository.interfaces.ResidentDAO;
+import io.ascending.training.repository.impl.PackageDAOImpl;
+import io.ascending.training.repository.impl.UserDAOImpl;
+import io.ascending.training.repository.interfaces.PackageDAO;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class PackageDAOTest {
-    private static ResidentDAO residentDAO;
-    private static Package aPackage;
+    private static PackageDAO packageDAO;
+    private static Package pack;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @BeforeClass
     public static void init() {
-        residentDAO = new ResidentDAOImpl();
-        aPackage = new Package("test","777",1);
+        packageDAO = new PackageDAOImpl();
+        LocalDateTime deliveredTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        LocalDateTime arrangeTime = deliveredTime.plusMonths(1);
+        pack = new Package("111","shipTest",deliveredTime,"test",1,arrangeTime,"testNote");
+        pack.setUser(new UserDAOImpl().getUserByAccount("DaveAccount"));
     }
 
     @Test
-    public void getResidents() {
-        List<Package> aPackages = residentDAO.getResidents();
+    public void getPackages() {
+        List<Package> packages = packageDAO.getPackages();
         int expectedNum = 2;
-        aPackages.forEach(res -> logger.info(res.toString()));
-        Assert.assertEquals(expectedNum, aPackages.size());
+        packages.forEach(pack -> logger.info(pack.toString()));
+        Assert.assertEquals(expectedNum, packages.size());
     }
 
     @Test
     public void saveTest() {
-        Assert.assertTrue(residentDAO.save(aPackage));
+        Assert.assertTrue(packageDAO.save(pack));
 
     }
 
     @Test
     public void deleteTest() {
-        Assert.assertTrue(residentDAO.delete(aPackage));
+        Assert.assertTrue(packageDAO.delete(pack));
     }
 
-    @Test
-    public void deleteByNameTest(){
-        Package res = new Package("testbyname","123",2);
-        residentDAO.save(res);
-        Assert.assertTrue(residentDAO.deleteResidentByName(res.getName()));
-    }
 
     @Test
     public void updateTest() {
-        aPackage = residentDAO.getResidentByName("test");
+        pack = packageDAO.getPackageByShipNumber("111");
 
-        if (aPackage != null) {
-            logger.info(String.valueOf(aPackage.getId()));
+        if (pack != null) {
+            logger.info(String.valueOf(pack.getId()));
         }
         else {
             logger.info("Resident is null");
         }
-        aPackage.setRoom("7777");
-        Assert.assertTrue(residentDAO.update(aPackage));
+        pack.setDescription("this is the test");
+        pack.setShipper("newTest");
+        Assert.assertTrue(packageDAO.update(pack));
     }
 
 }

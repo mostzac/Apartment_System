@@ -8,7 +8,7 @@ public interface UserDAO {
     boolean save(User user);
     boolean update(User user);
     boolean delete(User user);
-    boolean deleteUserByName(String userName);
+    boolean deleteUserByAccount(String userAccount);
     List<User> getUsers();
-    User getUserByName(String userName);
+    User getUserByAccount(String userAccount);
 }

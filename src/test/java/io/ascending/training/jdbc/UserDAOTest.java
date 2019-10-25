@@ -16,7 +16,7 @@ public class UserDAOTest {
     @Before
     public void init(){
         userDAO = new UsersDAO();
-        userTest = new User("test","pass",1);
+        userTest = new User("deleteTest","passworrTest","nameTest","777");
         userDAO.save(userTest);
     }
 

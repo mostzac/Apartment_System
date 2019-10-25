@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDAOImpl implements UserDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -54,8 +55,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean delete(User user) {
-        String userName = user.getName();
-        String hql = "DELETE User where name = :userNamePara";
+        String userAccount = user.getAccount();
+        String hql = "DELETE User where account = :userAccountPara";
         int delectedCount = 0;
         Transaction transaction = null;
 
@@ -63,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             Query<User> query = session.createQuery(hql);
-            query.setParameter("userNamePara", userName);
+            query.setParameter("userAccountPara", userAccount);
             delectedCount = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
@@ -71,13 +72,13 @@ public class UserDAOImpl implements UserDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The user &s is deleted"), userName);
+        logger.debug(String.format("The user &s is deleted"), userAccount);
         return delectedCount >= 1 ? true : false;
     }
 
     @Override
-    public boolean deleteUserByName(String userName) {
-        String hql = "DELETE User where name = :userNamePara";
+    public boolean deleteUserByAccount(String userAccount) {
+        String hql = "DELETE User where account = :userAccountPara";
         int delectedCount = 0;
         Transaction transaction = null;
 
@@ -85,7 +86,7 @@ public class UserDAOImpl implements UserDAO {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             Query<User> query = session.createQuery(hql);
-            query.setParameter("userNamePara", userName);
+            query.setParameter("userAccountPara", userAccount);
             delectedCount = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
@@ -93,29 +94,30 @@ public class UserDAOImpl implements UserDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The user &s is deleted"), userName);
+        logger.debug(String.format("The user &s is deleted"), userAccount);
         return delectedCount >= 1 ? true : false;
     }
-
 
     @Override
     public List<User> getUsers() {
-        String hql = "FROM User";
-
+//        String hql = "FROM User";
+        String hql = "FROM User as u left join fetch u.packages";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) { //openSession() in try block dont need to close, 
             Query<User> query = session.createQuery(hql);
-            return query.list();
+            return query.list().stream().distinct().collect(Collectors.toList());
         }
     }
 
     @Override
-    public User getUserByName(String userName) {
+    public User getUserByAccount(String userAccount) {
         //if(apartName.equals(null)) return null;
-        String hql = "FROM User where name = :name";
+//        String hql = "FROM User where account = :account";
+        String hql = "FROM User as u left join fetch u.packages where account = :account";
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<User> query = session.createQuery(hql);
-            query.setParameter("name",userName);
+            query.setParameter("account",userAccount);
             return query.uniqueResult();
         }
     }
+
 }
