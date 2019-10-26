@@ -1,4 +1,4 @@
-package io.ascending.training.repository;
+package io.ascending.training.repository.daoTest;
 
 import io.ascending.training.model.Package;
 import io.ascending.training.repository.impl.PackageDAOImpl;
@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 

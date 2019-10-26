@@ -22,7 +22,7 @@ public class Apartment {
     @Column(name = "address")
     private String address;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "apartment",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private Set<User> users;
 

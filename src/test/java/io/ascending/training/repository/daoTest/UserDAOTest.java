@@ -1,6 +1,5 @@
-package io.ascending.training.repository;
+package io.ascending.training.repository.daoTest;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.ascending.training.model.User;
 import io.ascending.training.repository.impl.ApartmentDAOImpl;
 import io.ascending.training.repository.impl.UserDAOImpl;

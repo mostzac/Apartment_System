@@ -28,7 +28,7 @@ public class User {
     @JoinColumn(name = "apartmentId")
     private Apartment apartment;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private Set<Package> packages;
 

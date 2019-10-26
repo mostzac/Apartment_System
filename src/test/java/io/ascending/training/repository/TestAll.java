@@ -1,5 +1,6 @@
 package io.ascending.training.repository;
 
+import io.ascending.training.repository.daoTest.ApartmentDAOTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

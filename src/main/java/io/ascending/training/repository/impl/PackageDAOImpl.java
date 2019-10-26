@@ -9,9 +9,11 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class PackageDAOImpl implements PackageDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,7 +33,7 @@ public class PackageDAOImpl implements PackageDAO {
             logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The package &s is saved"), pack.toString());
+        if (isSuccess) logger.debug(String.format("The package %s is saved", pack.toString()));
         return isSuccess;
     }
 
@@ -49,7 +51,7 @@ public class PackageDAOImpl implements PackageDAO {
             if (transaction != null) transaction.rollback();
             logger.error(e.getMessage());
         }
-        if (isSuccess) logger.debug(String.format("The package &s is updated", pack.toString()));
+        if (isSuccess) logger.debug(String.format("The package %s is updated", pack.toString()));
         return isSuccess;
     }
 
@@ -72,13 +74,13 @@ public class PackageDAOImpl implements PackageDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The package &s is deleted"), pack.getShipNumber());
+        logger.debug(String.format("The package %s is deleted", pack.getShipNumber()));
         return delectedCount >= 1 ? true : false;
     }
 
     @Override
     public List<Package> getPackages() {
-        String hql = "FROM Package";
+        String hql = "FROM Package p join fetch p.user";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Package> query = session.createQuery(hql);
@@ -89,7 +91,7 @@ public class PackageDAOImpl implements PackageDAO {
     @Override
     public Package getPackageByShipNumber(String packShipNum) {
         //if(apartName.equals(null)) return null;
-        String hql = "FROM Package where shipNumber = :packShipNumPara";
+        String hql = "FROM Package p join fetch p.user where p.shipNumber = :packShipNumPara";
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Package> query = session.createQuery(hql);
             query.setParameter("packShipNumPara",packShipNum);

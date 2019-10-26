@@ -23,8 +23,8 @@ public class HibernateUtil {
     -Ddatabase.user=admin
     -Ddatabase.password=Training123!
     */
-    public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
+    public static SessionFactory getSessionFactory() {//factory design pattern
+        if (sessionFactory == null) {// singleton design pattern
             try {
                 String[] modelPackages = {"io.ascending.training.model"};
                 String dbDriver = System.getProperty("database.driver");

@@ -8,10 +8,12 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
             logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The user &s is saved"), user.toString());
+        if (isSuccess) logger.debug(String.format("The user %s is saved", user.toString()));
         return isSuccess;
     }
 
@@ -49,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
             if (transaction != null) transaction.rollback();
             logger.error(e.getMessage());
         }
-        if (isSuccess) logger.debug(String.format("The user &s is updated",user.toString()));
+        if (isSuccess) logger.debug(String.format("The user %s is updated",user.toString()));
         return isSuccess;
     }
 
@@ -72,7 +74,7 @@ public class UserDAOImpl implements UserDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The user &s is deleted"), userAccount);
+        logger.debug(String.format("The user %s is deleted", userAccount));
         return delectedCount >= 1 ? true : false;
     }
 
@@ -94,7 +96,7 @@ public class UserDAOImpl implements UserDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The user &s is deleted"), userAccount);
+        logger.debug(String.format("The user %s is deleted", userAccount));
         return delectedCount >= 1 ? true : false;
     }
 

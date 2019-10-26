@@ -9,11 +9,13 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Repository
 public class ApartmentDAOImpl implements ApartmentDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -33,7 +35,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The apartment &s is saved"), apartment.toString());
+        if (isSuccess) logger.debug(String.format("The apartment %s is saved", apartment.toString()));
         return isSuccess;
     }
 
@@ -53,7 +55,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The apartment &s is updated"), apartment.toString());
+        if (isSuccess) logger.debug(String.format("The apartment %s is updated", apartment.toString()));
         return isSuccess;
     }
 
@@ -76,7 +78,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The apartment &s is deleted"), apartName);
+        logger.debug(String.format("The apartment %s is deleted", apartName));
         return delectedCount >= 1 ? true : false;
     }
 
@@ -98,7 +100,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The apartment &s is deleted"), apartName);
+        logger.debug(String.format("The apartment %s is deleted", apartName));
         return delectedCount >= 1 ? true : false;
     }
 

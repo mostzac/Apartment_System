@@ -1,10 +1,7 @@
-package io.ascending.training.repository;
+package io.ascending.training.repository.daoTest;
 
-import io.ascending.training.jdbc.UsersDAO;
 import io.ascending.training.model.Apartment;
-import io.ascending.training.model.User;
 import io.ascending.training.repository.impl.ApartmentDAOImpl;
-import io.ascending.training.repository.impl.UserDAOImpl;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import org.junit.Assert;
 import org.junit.BeforeClass;
