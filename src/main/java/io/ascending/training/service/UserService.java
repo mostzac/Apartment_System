@@ -25,9 +25,11 @@ public class UserService {
 
     public boolean deleteUserByAccount(String userAccount){ return (userDAO.deleteUserByAccount(userAccount));}
 
+    public boolean deleteUserById(long id){return userDAO.deleteUserById(id);}
+
     public List<User> getUsers(){return userDAO.getUsers();}
 
     public User getUserByAccount(String userAccount){return userDAO.getUserByAccount(userAccount);}
 
-
+    public User getUserById(long uid){return userDAO.getUserById(uid);}
 }

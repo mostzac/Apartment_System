@@ -11,5 +11,6 @@ public interface PackageDAO {
     boolean delete(Package pack);
     List<Package> getPackages();
     Package getPackageByShipNumber(String packShipNum);
+    Package getPackageById(long id);
 
 }

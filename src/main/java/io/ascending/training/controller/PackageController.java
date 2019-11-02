@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/api")
 public class PackageController {
     @Autowired
     private PackageService packageService;
 
-    @RequestMapping(value = "/getPackages", method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/packages", method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Package> getPackages(){
         return packageService.getPackages();
     }

@@ -13,12 +13,12 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/api")
 public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
-    @RequestMapping(value = "/getApartments", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/apartments,/apts", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Apartment> getApartments(){
         return apartmentService.getApartments();
     }

@@ -98,4 +98,15 @@ public class PackageDAOImpl implements PackageDAO {
             return query.uniqueResult();
         }
     }
+
+    @Override
+    public Package getPackageById(long id) {
+        //if(apartName.equals(null)) return null;
+        String hql = "FROM Package p join fetch p.user where p.id = :id";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Package> query = session.createQuery(hql);
+            query.setParameter("id",id);
+            return query.uniqueResult();
+        }
+    }
 }

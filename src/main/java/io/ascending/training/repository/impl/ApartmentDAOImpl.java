@@ -128,4 +128,14 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         }
     }
 
+    @Override
+    public Apartment getApartmentById(long id) {
+
+        String hql = "FROM Apartment as apt left join fetch apt.users where apt.id = :id";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Apartment> query = session.createQuery(hql);
+            query.setParameter("id",id);
+            return query.uniqueResult();
+        }
+    }
 }

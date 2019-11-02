@@ -101,6 +101,28 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public boolean deleteUserById(long id) {
+        String hql = "DELETE User where id = :uid";
+        int delectedCount = 0;
+        Transaction transaction = null;
+
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
+            Query<User> query = session.createQuery(hql);
+            query.setParameter("uid", id);
+            delectedCount = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            logger.error(e.getMessage());
+        }
+
+        logger.debug(String.format("The user %s is deleted", id));
+        return delectedCount >= 1 ? true : false;
+    }
+
+    @Override
     public List<User> getUsers() {
 //        String hql = "FROM User";
         String hql = "FROM User as u left join fetch u.packages";
@@ -114,7 +136,7 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByAccount(String userAccount) {
         //if(apartName.equals(null)) return null;
 //        String hql = "FROM User where account = :account";
-        String hql = "FROM User as u left join fetch u.packages where account = :account";
+        String hql = "FROM User as u left join fetch u.packages where u.account = :account";
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<User> query = session.createQuery(hql);
             query.setParameter("account",userAccount);
@@ -122,4 +144,13 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
+    public User getUserById(long id) {
+        String hql = "FROM User as u left join fetch u.packages where u.id = :id";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<User> query = session.createQuery(hql);
+            query.setParameter("id",id);
+            return query.uniqueResult();
+        }
+    }
 }

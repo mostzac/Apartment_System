@@ -25,4 +25,6 @@ public class ApartmentService {
     public List<Apartment> getApartments(){return apartmentDAO.getApartments();}
 
     public Apartment getApartmentByName(String apartName){return apartmentDAO.getApartmentByName(apartName);}
+
+    public Apartment getApartmentById(long aptId){return apartmentDAO.getApartmentById(aptId);}
 }
