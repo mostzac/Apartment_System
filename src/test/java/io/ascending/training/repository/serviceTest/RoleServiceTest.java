@@ -1,9 +1,9 @@
-package io.ascending.training.repository.daoTest;
+package io.ascending.training.repository.serviceTest;
 
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.Role;
 import io.ascending.training.repository.interfaces.RoleDAO;
-import org.junit.Assert;
+import io.ascending.training.service.RoleService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,27 +15,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
-public class RoleDAOTest {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+public class RoleServiceTest {
     @Autowired
-    private RoleDAO roleDAO;
+    private RoleService roleService;
     private Role role;
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Before
-    public void init() {
+    public void init(){
         role = new Role("testRole", "/test", true, true, true, true);
     }
 
-   @Test
-   public void saveTest(){
-       Assert.assertTrue(roleDAO.save(role));
-       role.setName("updateRole");
-       roleDAO.update(role);
-       Role role1  = roleDAO.getRoleByName(role.getName());
-       logger.info(role1.toString());
-       roleDAO.delete(role1);
-       roleDAO.save(role);
-       roleDAO.deleteById(roleDAO.getRoleByName(role.getName()).getId());
-   }
+    @Test
+    public void roleServiceTest(){
+        roleService.save(role);
+        Role role1 = roleService.getRoleByName(role.getName());
+        role1.setName("updated");
+        roleService.update(role1);
+        roleService.deleteById(role1.getId());
+    }
 
 }

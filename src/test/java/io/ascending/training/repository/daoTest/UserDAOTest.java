@@ -17,6 +17,7 @@ import javax.transaction.TransactionScoped;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserDAOTest {
     private static UserDAO userDAO;
     private static User user;
@@ -81,11 +82,12 @@ public class UserDAOTest {
         List<Role> roles = new ArrayList<>();
         roles.add(roleDAO.getRoleByName("Manager"));
         roles.add(roleDAO.getRoleByName("User"));
-        user = userDAO.getUserByAccount("accountTest");
+//        user = userDAO.getUserByAccount("accountTest");
         user.setRoles(roles);
-        userDAO.update(user);
+        userDAO.save(user);
         User user1 = userDAO.getUserByAccount(user.getAccount());
         Assert.assertEquals(user1.getRoles().size(),roles.size());
+        userDAO.deleteUserById(user1.getId());
 
     }
 

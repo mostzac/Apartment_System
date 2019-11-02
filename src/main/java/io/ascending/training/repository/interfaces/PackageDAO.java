@@ -9,6 +9,7 @@ public interface PackageDAO {
     boolean update(Package pack);
     //TODO byxxx
     boolean delete(Package pack);
+    boolean deletePackageById(long id);
     List<Package> getPackages();
     Package getPackageByShipNumber(String packShipNum);
     Package getPackageById(long id);

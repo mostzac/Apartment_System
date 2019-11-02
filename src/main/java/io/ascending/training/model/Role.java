@@ -1,5 +1,7 @@
 package io.ascending.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class Role {
     @Column(name = "allowed_delete")
     private boolean allowedDelete;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 

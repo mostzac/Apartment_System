@@ -12,6 +12,7 @@ public interface ApartmentDAO {
     boolean update(Apartment apartment);
     boolean delete(Apartment apartment);
     boolean deleteApartmentByName(String apartName);
+    boolean deleteApartmentById(long id);
     List<Apartment> getApartments();
     Apartment getApartmentByName(String apartName);
     Apartment getApartmentById(long id);

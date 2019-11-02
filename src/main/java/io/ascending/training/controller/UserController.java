@@ -7,6 +7,7 @@ import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,30 +25,25 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @RequestMapping(value = "/user/{account}", method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})
-    public User getUserByAccountPath(@PathVariable(name = "account")String p1){
+    @RequestMapping(value = "/user", method = RequestMethod.GET,params ={"Account"},produces = {MediaType.APPLICATION_JSON_VALUE})
+    public User getUserByAccount(@RequestParam(name = "Account")String p1){
         return userService.getUserByAccount(p1);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET,params={"Account"},produces = {MediaType.APPLICATION_JSON_VALUE})
-    public User getUserByAccountParam(@RequestParam(name = "Account")String p1){
-        return userService.getUserByAccount(p1);
+    @RequestMapping(value = "/user/{uid}",method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})
+    public User getUserById(@PathVariable(name = "uid")long id){
+        return userService.getUserById(id);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET,params ={"Id"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public User getUserByIdParam(@RequestParam(name = "Id")long p1){
-        return userService.getUserById(p1);
-    }
-
-    @RequestMapping(value = "/user/{aptName}",method = RequestMethod.POST,produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean createUser(@RequestBody User user,@PathVariable(name = "aptName") String aptName){
+    @RequestMapping(value = "/user",method = RequestMethod.POST,params = {"aptName"},produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Boolean createUser(@RequestBody User user,@RequestParam(name = "aptName") String aptName){
         Apartment apartment = apartmentService.getApartmentByName(aptName);
         user.setApartment(apartment);
         return userService.save(user);
     }
 
-    @RequestMapping(value = "/user",method = RequestMethod.DELETE,produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean delelteUser(@RequestParam(name = "Id") long id){
+    @RequestMapping(value = "/user/{uid}",method = RequestMethod.DELETE,produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Boolean deleteUser(@PathVariable(name = "uid")long id){
         return userService.deleteUserById(id);
     }
 

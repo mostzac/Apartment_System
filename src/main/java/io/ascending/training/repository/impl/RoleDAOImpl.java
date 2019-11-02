@@ -21,7 +21,7 @@ public class RoleDAOImpl implements RoleDAO {
 
         try{
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.getTransaction();
+            transaction = session.beginTransaction();
             session.save(role);
             transaction.commit();
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class RoleDAOImpl implements RoleDAO {
 
         try{
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.getTransaction();
+            transaction = session.beginTransaction();
             session.saveOrUpdate(role);
             transaction.commit();
         } catch (Exception e) {
@@ -101,7 +101,8 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Role getRoleByName(String roleName) {
-        String hql = "FROM Role where  name= :roleName";
+        String hql = "FROM Role as r left join fetch r.users where r.name= :roleName";
+//        String hql = "FROM Role where name= :roleName";
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Role> query = session.createQuery(hql);
             query.setParameter("roleName",roleName);

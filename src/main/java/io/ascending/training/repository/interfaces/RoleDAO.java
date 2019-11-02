@@ -8,4 +8,5 @@ public interface RoleDAO {
     boolean delete(Role role);
     boolean deleteById(long id);
     Role getRoleByName(String roleName);
+    Role getRoleById(long id);
 }

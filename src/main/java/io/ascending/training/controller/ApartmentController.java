@@ -18,7 +18,7 @@ public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
-    @RequestMapping(value = "/apartments,/apts", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = {"/apartments","/apts"}, method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Apartment> getApartments(){
         return apartmentService.getApartments();
     }

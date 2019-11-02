@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+
 public class ApartmentDAOTest {
     private static ApartmentDAO apartmentDAO;
     private static Apartment apartment;
