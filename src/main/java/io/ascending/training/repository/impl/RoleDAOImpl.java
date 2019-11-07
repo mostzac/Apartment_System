@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 public class RoleDAOImpl implements RoleDAO {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -55,8 +58,7 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public boolean delete(Role role) {
-        String roleName = role.getName();
+    public boolean deleteRoleByName(String roleName) {
         String hql = "DELETE Role where name = :roleName";
         int delectedCount = 0;
         Transaction transaction = null;
@@ -78,7 +80,7 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteRoleById(long id) {
         String hql = "DELETE Role where id = :id";
         int delectedCount = 0;
         Transaction transaction = null;
@@ -110,4 +112,24 @@ public class RoleDAOImpl implements RoleDAO {
         }
     }
 
+    @Override
+    public Role getRoleById(long id) {
+        String hql = "FROM Role as r left join fetch r.users where r.id= :roleid";
+//        String hql = "FROM Role where name= :roleName";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<Role> query = session.createQuery(hql);
+            query.setParameter("roleid",id);
+            return query.uniqueResult();
+        }
+    }
+
+    @Override
+    public List<Role> getRoles() {
+//        String hql = "FROM User";
+        String hql = "FROM Role as r left join fetch r.users";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) { //openSession() in try block dont need to close,
+            Query<Role> query = session.createQuery(hql);
+            return query.list().stream().distinct().collect(Collectors.toList());
+        }
+    }
 }

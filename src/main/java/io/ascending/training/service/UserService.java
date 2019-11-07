@@ -21,7 +21,7 @@ public class UserService {
 
     public boolean update(User u){ return (userDAO.update(u));}
 
-    public boolean delete(User u){ return (userDAO.delete(u));}
+//    public boolean delete(User u){ return (userDAO.delete(u));}
 
     public boolean deleteUserByAccount(String userAccount){ return (userDAO.deleteUserByAccount(userAccount));}
 

@@ -54,29 +54,29 @@ public class UserDAOImpl implements UserDAO {
         if (isSuccess) logger.debug(String.format("The user %s is updated",user.toString()));
         return isSuccess;
     }
-
-    @Override
-    public boolean delete(User user) {
-        String userAccount = user.getAccount();
-        String hql = "DELETE User where account = :userAccountPara";
-        int delectedCount = 0;
-        Transaction transaction = null;
-
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
-            Query<User> query = session.createQuery(hql);
-            query.setParameter("userAccountPara", userAccount);
-            delectedCount = query.executeUpdate();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
-        }
-
-        logger.debug(String.format("The user %s is deleted", userAccount));
-        return delectedCount >= 1 ? true : false;
-    }
+//
+//    @Override
+//    public boolean delete(User user) {
+//        String userAccount = user.getAccount();
+//        String hql = "DELETE User where account = :userAccountPara";
+//        int delectedCount = 0;
+//        Transaction transaction = null;
+//
+//        try {
+//            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//            transaction = session.beginTransaction();
+//            Query<User> query = session.createQuery(hql);
+//            query.setParameter("userAccountPara", userAccount);
+//            delectedCount = query.executeUpdate();
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) transaction.rollback();
+//            logger.error(e.getMessage());
+//        }
+//
+//        logger.debug(String.format("The user %s is deleted", userAccount));
+//        return delectedCount >= 1 ? true : false;
+//    }
 
     @Override
     public boolean deleteUserByAccount(String userAccount) {

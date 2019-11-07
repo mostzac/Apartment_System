@@ -15,7 +15,8 @@ public class PackageService {
 
     public boolean save(Package pack){return packageDAO.save(pack);};
     public boolean update(Package pack){return packageDAO.update(pack);};
-    public boolean delete(Package pack){return packageDAO.delete(pack);};
+    public boolean deletePackageByShipNumber(String shipNum){return packageDAO.deletePackageByShipNumber(shipNum);};
+    public boolean deletePackageById(long id){return packageDAO.deletePackageById(id);}
     public List<Package> getPackages(){return packageDAO.getPackages();};
     public Package getPackageByShipNumber(String packShipNum){return packageDAO.getPackageByShipNumber(packShipNum);};
     public Package getPackageById(long packId){return packageDAO.getPackageById(packId);}

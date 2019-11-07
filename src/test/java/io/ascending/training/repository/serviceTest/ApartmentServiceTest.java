@@ -31,7 +31,7 @@ public class ApartmentServiceTest {
     @Test
     public void saveAndDeleteTest(){
         Assert.assertTrue(apartmentService.save(apartment));
-        Assert.assertTrue(apartmentService.delete(apartment));
+        Assert.assertTrue(apartmentService.deleteApartmentByName(apartment.getName()));
     }
 
     @Test
@@ -44,7 +44,17 @@ public class ApartmentServiceTest {
         Apartment apt = apartmentService.getApartmentByName("updateTest");
         logger.info(apt.toString());
         Assert.assertTrue(apartmentService.deleteApartmentByName("updateTest"));
+    }
 
+    @Test
+    public void TestId(){
+        apartmentService.save(apartment);
+        apartment = apartmentService.getApartmentById(1);
+        apartment.toString();
+        apartment = apartmentService.getApartmentByName("test");
+        Apartment apt = apartmentService.getApartmentById(apartment.getId());
+        if(apt.getId()==apartment.getId())
+            apartmentService.deleteApartmentById(apt.getId());
 
     }
 

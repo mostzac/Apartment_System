@@ -18,9 +18,11 @@ public class ApartmentService {
 
     public boolean update(Apartment u){ return (apartmentDAO.update(u));}
 
-    public boolean delete(Apartment u){ return (apartmentDAO.delete(u));}
+//    public boolean delete(Apartment u){ return (apartmentDAO.delete(u));}
 
     public boolean deleteApartmentByName(String apartName){ return (apartmentDAO.deleteApartmentByName(apartName));}
+
+    public boolean deleteApartmentById(long id){ return (apartmentDAO.deleteApartmentById(id));}
 
     public List<Apartment> getApartments(){return apartmentDAO.getApartments();}
 

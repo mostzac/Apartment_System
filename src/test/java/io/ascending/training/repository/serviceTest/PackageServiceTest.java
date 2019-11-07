@@ -57,7 +57,19 @@ public class PackageServiceTest {
         Assert.assertTrue(packageService.update(p));
         p = packageService.getPackageByShipNumber(p.getShipNumber());
         logger.info(p.toString());
-        Assert.assertTrue(packageService.delete(p));
+        Assert.assertTrue(packageService.deletePackageByShipNumber(p.getShipNumber()));
+
+    }
+
+    @Test
+    public void TestId(){
+        packageService.save(pack);
+        pack = packageService.getPackageById(1);
+        pack.toString();
+        pack = packageService.getPackageByShipNumber("test111");
+        Package apt = packageService.getPackageById(pack.getId());
+        if(apt.getId()==pack.getId())
+            packageService.deletePackageById(apt.getId());
 
     }
 

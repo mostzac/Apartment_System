@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
 public class RoleServiceTest {
@@ -29,11 +31,27 @@ public class RoleServiceTest {
 
     @Test
     public void roleServiceTest(){
+        List<Role> roles = roleService.getRoles();
+
         roleService.save(role);
         Role role1 = roleService.getRoleByName(role.getName());
         role1.setName("updated");
         roleService.update(role1);
-        roleService.deleteById(role1.getId());
+        roleService.deleteRoleById(role1.getId());
     }
+
+    @Test
+    public void TestId(){
+        roleService.save(role);
+        role = roleService.getRoleById(1);
+        role.toString();
+        role = roleService.getRoleByName("testRole");
+        Role apt = roleService.getRoleById(role.getId());
+        if(apt.getId()==role.getId())
+            roleService.deleteRoleById(apt.getId());
+
+    }
+
+
 
 }

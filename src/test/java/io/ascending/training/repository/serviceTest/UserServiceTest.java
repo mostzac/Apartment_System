@@ -45,7 +45,7 @@ public class UserServiceTest {
     @Test
     public void saveAndDeleteTest(){
         Assert.assertTrue(userService.save(user));
-        Assert.assertTrue(userService.delete(user));
+        Assert.assertTrue(userService.deleteUserById(user.getId()));
     }
 
 
@@ -82,7 +82,7 @@ public class UserServiceTest {
         user1.setRoles(roles);
         userService.update(user1);
         userService.deleteUserById(user1.getId());
-        roleService.deleteById(roleService.getRoleByName(role.getName()).getId());
+        roleService.deleteRoleById(roleService.getRoleByName(role.getName()).getId());
     }
 
     @Test

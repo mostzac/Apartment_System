@@ -10,7 +10,7 @@ import java.util.Set;
 public interface ApartmentDAO {
     boolean save(Apartment apartment);
     boolean update(Apartment apartment);
-    boolean delete(Apartment apartment);
+//    boolean delete(Apartment apartment);
     boolean deleteApartmentByName(String apartName);
     boolean deleteApartmentById(long id);
     List<Apartment> getApartments();

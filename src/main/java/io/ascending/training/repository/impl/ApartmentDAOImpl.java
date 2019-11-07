@@ -4,6 +4,7 @@ import io.ascending.training.model.Apartment;
 import io.ascending.training.model.User;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import io.ascending.training.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -59,9 +60,31 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         return isSuccess;
     }
 
+//    @Override
+//    public boolean delete(Apartment apartment) {
+//        String apartName = apartment.getName();
+//        String hql = "DELETE Apartment where name = :apartNamePara";
+//        int delectedCount = 0;
+//        Transaction transaction = null;
+//
+//        try {
+//            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//            transaction = session.beginTransaction();
+//            Query<Apartment> query = session.createQuery(hql);
+//            query.setParameter("apartNamePara", apartName);
+//            delectedCount = query.executeUpdate();
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) transaction.rollback();
+//            logger.error(e.getMessage());
+//        }
+//
+//        logger.debug(String.format("The apartment %s is deleted", apartName));
+//        return delectedCount >= 1 ? true : false;
+//    }
+
     @Override
-    public boolean delete(Apartment apartment) {
-        String apartName = apartment.getName();
+    public boolean deleteApartmentByName(String apartName) {
         String hql = "DELETE Apartment where name = :apartNamePara";
         int delectedCount = 0;
         Transaction transaction = null;
@@ -83,24 +106,23 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     }
 
     @Override
-    public boolean deleteApartmentByName(String apartName) {
-        String hql = "DELETE Apartment where name = :apartNamePara";
+    public boolean deleteApartmentById(long id) {
+        String hql ="DELETE Apartment where id = :idPara";
         int delectedCount = 0;
         Transaction transaction = null;
 
-        try {
+        try{
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             Query<Apartment> query = session.createQuery(hql);
-            query.setParameter("apartNamePara", apartName);
+            query.setParameter("idPara",id);
             delectedCount = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             logger.error(e.getMessage());
         }
-
-        logger.debug(String.format("The apartment %s is deleted", apartName));
+        logger.debug(String.format("The apartment %s is deleted", id));
         return delectedCount >= 1 ? true : false;
     }
 

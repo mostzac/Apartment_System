@@ -44,7 +44,7 @@ public class PackageDAOTest {
 
     @Test
     public void deleteTest() {
-        Assert.assertTrue(packageDAO.delete(pack));
+        Assert.assertTrue(packageDAO.deletePackageByShipNumber(pack.getShipNumber()));
     }
 
 

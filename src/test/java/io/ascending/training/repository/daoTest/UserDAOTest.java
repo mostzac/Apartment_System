@@ -59,7 +59,7 @@ public class UserDAOTest {
 
     @Test
     public void deletTest(){
-        Assert.assertTrue(userDAO.delete(user));
+        Assert.assertTrue(userDAO.deleteUserByAccount(user.getAccount()));
     }
 
     @Test

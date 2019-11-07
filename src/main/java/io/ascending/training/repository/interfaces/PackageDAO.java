@@ -8,7 +8,7 @@ public interface PackageDAO {
     boolean save(Package pack);
     boolean update(Package pack);
     //TODO byxxx
-    boolean delete(Package pack);
+    boolean deletePackageByShipNumber(String shipNum);
     boolean deletePackageById(long id);
     List<Package> getPackages();
     Package getPackageByShipNumber(String packShipNum);

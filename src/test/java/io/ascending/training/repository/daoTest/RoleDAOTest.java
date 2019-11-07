@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
 public class RoleDAOTest {
@@ -26,6 +28,12 @@ public class RoleDAOTest {
         role = new Role("testRole", "/test", true, true, true, true);
     }
 
+    @Test
+    public void test(){
+        List<Role> roles = roleDAO.getRoles();
+        roles.forEach(r -> r.toString());
+    }
+
    @Test
    public void saveTest(){
        Assert.assertTrue(roleDAO.save(role));
@@ -33,9 +41,9 @@ public class RoleDAOTest {
        roleDAO.update(role);
        Role role1  = roleDAO.getRoleByName(role.getName());
        logger.info(role1.toString());
-       roleDAO.delete(role1);
+       roleDAO.deleteRoleByName(role1.getName());
        roleDAO.save(role);
-       roleDAO.deleteById(roleDAO.getRoleByName(role.getName()).getId());
+       roleDAO.deleteRoleById(roleDAO.getRoleByName(role.getName()).getId());
    }
 
 }

@@ -39,7 +39,7 @@ public class ApartmentDAOTest {
 
     @Test
     public void deleteTest() {
-        Assert.assertTrue(apartmentDAO.delete(apartment));
+        Assert.assertTrue(apartmentDAO.deleteApartmentById(apartment.getId()));
     }
 
     @Test

@@ -56,8 +56,7 @@ public class PackageDAOImpl implements PackageDAO {
     }
 
     @Override
-    public boolean delete(Package pack) {
-        String shipNum = pack.getShipNumber();
+    public boolean deletePackageByShipNumber(String shipNum) {
         String hql = "DELETE Package where shipNumber = :shipNumPara";
         int delectedCount = 0;
         Transaction transaction = null;
@@ -65,7 +64,7 @@ public class PackageDAOImpl implements PackageDAO {
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            Query<Apartment> query = session.createQuery(hql);
+            Query<Package> query = session.createQuery(hql);
             query.setParameter("shipNumPara", shipNum);
             delectedCount = query.executeUpdate();
             transaction.commit();
@@ -74,7 +73,29 @@ public class PackageDAOImpl implements PackageDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The package %s is deleted", pack.getShipNumber()));
+        logger.debug(String.format("The package %s is deleted", shipNum));
+        return delectedCount >= 1 ? true : false;
+    }
+
+    @Override
+    public boolean deletePackageById(long id) {
+        String hql = "DELETE Package where id = :idPara";
+        int delectedCount = 0;
+        Transaction transaction = null;
+
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
+            Query<Package> query = session.createQuery(hql);
+            query.setParameter("idPara", id);
+            delectedCount = query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            logger.error(e.getMessage());
+        }
+
+        logger.debug(String.format("The package %s is deleted", id));
         return delectedCount >= 1 ? true : false;
     }
 
