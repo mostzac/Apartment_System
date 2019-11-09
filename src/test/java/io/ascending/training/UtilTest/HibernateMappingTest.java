@@ -1,4 +1,4 @@
-package io.ascending.training.repository;
+package io.ascending.training.UtilTest;
 
 import io.ascending.training.model.Apartment;
 import io.ascending.training.model.Package;

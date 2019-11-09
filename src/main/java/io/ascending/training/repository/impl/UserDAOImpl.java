@@ -153,4 +153,15 @@ public class UserDAOImpl implements UserDAO {
             return query.uniqueResult();
         }
     }
+
+    @Override
+    public User getUserByCredential(String userAccount, String password) {
+        String hql = "FROM User as u left join fetch u.packages where u.account = :account and u.password = :password";
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query<User> query = session.createQuery(hql);
+            query.setParameter("account",userAccount);
+            query.setParameter("password",password);
+            return query.uniqueResult();
+        }
+    }
 }

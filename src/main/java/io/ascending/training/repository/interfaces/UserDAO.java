@@ -12,5 +12,6 @@ public interface UserDAO {
     boolean deleteUserById(long id);
     List<User> getUsers();
     User getUserByAccount(String userAccount);
+    User getUserByCredential(String userAccount,String password);
     User getUserById(long id);
 }

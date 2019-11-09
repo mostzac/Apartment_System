@@ -32,4 +32,6 @@ public class UserService {
     public User getUserByAccount(String userAccount){return userDAO.getUserByAccount(userAccount);}
 
     public User getUserById(long uid){return userDAO.getUserById(uid);}
+
+    public User getUserByCredential(String userAccount,String password){ return userDAO.getUserByCredential(userAccount,password);}
 }

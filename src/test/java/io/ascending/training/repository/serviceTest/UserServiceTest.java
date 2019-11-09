@@ -96,4 +96,10 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    public void getUserCredentialTest(){
+        User user = userService.getUserByCredential("DaveAccount","1234");
+        Assert.assertNotNull(user);
+    }
+
 }
