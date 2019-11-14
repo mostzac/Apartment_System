@@ -42,6 +42,7 @@ public class HibernateUtil {
                 settings.put(Environment.PASS, dbPassword);
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+                settings.put(Environment.HBM2DDL_AUTO,"validate");//
                 configuration.setProperties(settings);
 
                 //Mapping Class
@@ -51,7 +52,8 @@ public class HibernateUtil {
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
             } catch (Exception e) {
-                logger.debug(e.getMessage());
+                logger.error("build factory exception",e);
+//                logger.debug(e.getMessage());
             }
         }
         return sessionFactory;

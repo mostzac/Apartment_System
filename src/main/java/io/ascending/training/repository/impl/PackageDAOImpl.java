@@ -5,16 +5,21 @@ import io.ascending.training.model.Package;
 import io.ascending.training.repository.interfaces.PackageDAO;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class PackageDAOImpl implements PackageDAO {
+    @Autowired
+    private SessionFactory sessionFactory;
+    
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -23,7 +28,7 @@ public class PackageDAOImpl implements PackageDAO {
         boolean isSuccess = true;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.save(pack);
             transaction.commit();
@@ -42,7 +47,7 @@ public class PackageDAOImpl implements PackageDAO {
         Transaction transaction = null;
         boolean isSuccess =  true;
         try{
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(pack);
             transaction.commit();
@@ -62,7 +67,7 @@ public class PackageDAOImpl implements PackageDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<Package> query = session.createQuery(hql);
             query.setParameter("shipNumPara", shipNum);
@@ -84,7 +89,7 @@ public class PackageDAOImpl implements PackageDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<Package> query = session.createQuery(hql);
             query.setParameter("idPara", id);
@@ -103,7 +108,7 @@ public class PackageDAOImpl implements PackageDAO {
     public List<Package> getPackages() {
         String hql = "FROM Package p join fetch p.user";
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Package> query = session.createQuery(hql);
             return query.list();
         }
@@ -113,7 +118,7 @@ public class PackageDAOImpl implements PackageDAO {
     public Package getPackageByShipNumber(String packShipNum) {
         //if(apartName.equals(null)) return null;
         String hql = "FROM Package p join fetch p.user where p.shipNumber = :packShipNumPara";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<Package> query = session.createQuery(hql);
             query.setParameter("packShipNumPara",packShipNum);
             return query.uniqueResult();
@@ -124,7 +129,7 @@ public class PackageDAOImpl implements PackageDAO {
     public Package getPackageById(long id) {
         //if(apartName.equals(null)) return null;
         String hql = "FROM Package p join fetch p.user where p.id = :id";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<Package> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();

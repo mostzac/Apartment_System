@@ -6,10 +6,12 @@ import io.ascending.training.repository.interfaces.ApartmentDAO;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +20,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ApartmentDAOImpl implements ApartmentDAO {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -26,7 +31,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         boolean isSuccess = true;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.save(apartment);
             transaction.commit();
@@ -46,7 +51,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         boolean isSuccess = true;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(apartment);
             transaction.commit();
@@ -68,7 +73,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 //        Transaction transaction = null;
 //
 //        try {
-//            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//            Session session = sessionFactory.getCurrentSession();
 //            transaction = session.beginTransaction();
 //            Query<Apartment> query = session.createQuery(hql);
 //            query.setParameter("apartNamePara", apartName);
@@ -90,7 +95,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<Apartment> query = session.createQuery(hql);
             query.setParameter("apartNamePara", apartName);
@@ -112,7 +117,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         Transaction transaction = null;
 
         try{
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<Apartment> query = session.createQuery(hql);
             query.setParameter("idPara",id);
@@ -131,7 +136,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 //        String hql = "FROM Apartment";
         String hql = "FROM Apartment as apt left join fetch apt.users";
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Apartment> query = session.createQuery(hql);
             return query.list().stream().distinct().collect(Collectors.toList());//to make the table distinct
         }
@@ -143,7 +148,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
         //if(apartName.equals(null)) return null;
 //        String hql = "FROM Apartment as apt left join fetch apt.users where name = :name";
         String hql = "FROM Apartment as apt left join fetch apt.users where apt.name = :name";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<Apartment> query = session.createQuery(hql);
             query.setParameter("name",apartName);
             return query.uniqueResult();
@@ -154,7 +159,7 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     public Apartment getApartmentById(long id) {
 
         String hql = "FROM Apartment as apt left join fetch apt.users where apt.id = :id";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<Apartment> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();

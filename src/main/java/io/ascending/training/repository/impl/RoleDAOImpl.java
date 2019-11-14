@@ -4,10 +4,12 @@ import io.ascending.training.model.Role;
 import io.ascending.training.repository.interfaces.RoleDAO;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +17,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class RoleDAOImpl implements RoleDAO {
+    @Autowired
+    private SessionFactory sessionFactory;
+    
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -23,7 +28,7 @@ public class RoleDAOImpl implements RoleDAO {
         boolean isSuccess = true;
 
         try{
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.save(role);
             transaction.commit();
@@ -43,7 +48,7 @@ public class RoleDAOImpl implements RoleDAO {
         boolean isSuccess = true;
 
         try{
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(role);
             transaction.commit();
@@ -64,7 +69,7 @@ public class RoleDAOImpl implements RoleDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<Role> query = session.createQuery(hql);
             query.setParameter("roleName", roleName);
@@ -86,7 +91,7 @@ public class RoleDAOImpl implements RoleDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<Role> query = session.createQuery(hql);
             query.setParameter("id", id);
@@ -105,7 +110,7 @@ public class RoleDAOImpl implements RoleDAO {
     public Role getRoleByName(String roleName) {
         String hql = "FROM Role as r left join fetch r.users where r.name= :roleName";
 //        String hql = "FROM Role where name= :roleName";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<Role> query = session.createQuery(hql);
             query.setParameter("roleName",roleName);
             return query.uniqueResult();
@@ -116,7 +121,7 @@ public class RoleDAOImpl implements RoleDAO {
     public Role getRoleById(long id) {
         String hql = "FROM Role as r left join fetch r.users where r.id= :roleid";
 //        String hql = "FROM Role where name= :roleName";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<Role> query = session.createQuery(hql);
             query.setParameter("roleid",id);
             return query.uniqueResult();
@@ -127,7 +132,7 @@ public class RoleDAOImpl implements RoleDAO {
     public List<Role> getRoles() {
 //        String hql = "FROM User";
         String hql = "FROM Role as r left join fetch r.users";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) { //openSession() in try block dont need to close,
+        try (Session session = sessionFactory.openSession()) { //openSession() in try block dont need to close,
             Query<Role> query = session.createQuery(hql);
             return query.list().stream().distinct().collect(Collectors.toList());
         }

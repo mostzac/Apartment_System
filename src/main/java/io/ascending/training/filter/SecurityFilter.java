@@ -38,7 +38,7 @@ public class SecurityFilter implements Filter {
         int statusCode = HttpServletResponse.SC_UNAUTHORIZED;
         String uri = req.getRequestURI();
         String verb = req.getMethod();
-        if (uri.equalsIgnoreCase(AUTH_URI)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
+        if (uri.equalsIgnoreCase(AUTH_URI)||uri.equals("/")) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
 
         try {
             String origin = req.getHeader("Authorization");

@@ -4,10 +4,12 @@ import io.ascending.training.model.User;
 import io.ascending.training.repository.interfaces.UserDAO;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +17,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -23,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
         boolean isSuccess = true;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -42,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
         Transaction transaction = null;
         boolean isSuccess =  true;
         try{
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(user);
             transaction.commit();
@@ -63,7 +68,7 @@ public class UserDAOImpl implements UserDAO {
 //        Transaction transaction = null;
 //
 //        try {
-//            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//            Session session = sessionFactory.getCurrentSession();
 //            transaction = session.beginTransaction();
 //            Query<User> query = session.createQuery(hql);
 //            query.setParameter("userAccountPara", userAccount);
@@ -85,7 +90,7 @@ public class UserDAOImpl implements UserDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<User> query = session.createQuery(hql);
             query.setParameter("userAccountPara", userAccount);
@@ -107,7 +112,7 @@ public class UserDAOImpl implements UserDAO {
         Transaction transaction = null;
 
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             Query<User> query = session.createQuery(hql);
             query.setParameter("uid", id);
@@ -126,7 +131,7 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getUsers() {
 //        String hql = "FROM User";
         String hql = "FROM User as u left join fetch u.packages";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) { //openSession() in try block dont need to close, 
+        try (Session session = sessionFactory.openSession()) { //openSession() in try block dont need to close,
             Query<User> query = session.createQuery(hql);
             return query.list().stream().distinct().collect(Collectors.toList());
         }
@@ -137,7 +142,7 @@ public class UserDAOImpl implements UserDAO {
         //if(apartName.equals(null)) return null;
 //        String hql = "FROM User where account = :account";
         String hql = "FROM User as u left join fetch u.packages where u.account = :account";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<User> query = session.createQuery(hql);
             query.setParameter("account",userAccount);
             return query.uniqueResult();
@@ -147,7 +152,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserById(long id) {
         String hql = "FROM User as u left join fetch u.packages where u.id = :id";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<User> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();
@@ -157,7 +162,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserByCredential(String userAccount, String password) {
         String hql = "FROM User as u left join fetch u.packages where u.account = :account and u.password = :password";
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = sessionFactory.openSession()){
             Query<User> query = session.createQuery(hql);
             query.setParameter("account",userAccount);
             query.setParameter("password",password);
