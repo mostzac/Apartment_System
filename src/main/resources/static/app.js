@@ -1,4 +1,5 @@
 var stompClient = null;
+var token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNTczOTMzNTc3LCJpc3MiOiJpby5hc2NlbmRpbmciLCJleHAiOjE1NzQwMTk5NzcsImFsbG93ZWRSZWFkUmVzb3VyY2VzIjoiL2FwaS91c2Vycy91c2VyLC9hcGkvcGFja3MvcGFjayIsImFsbG93ZWRDcmVhdGVSZXNvdXJjZXMiOiIiLCJhbGxvd2VkVXBkYXRlUmVzb3VyY2VzIjoiIiwiYWxsb3dlZERlbGV0ZVJlc291cmNlcyI6IiJ9.GOI5mYBK32sfgCVPXC-_ftX8XGsEFLzNnQeVfllfieI';
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -13,12 +14,12 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('http://localhost:8080/myWebsocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('http://localhost:8080/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -33,7 +34,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/websocke", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("http://localhost:8080/app/sayHello", JSON.stringify({'name': $("#name").val()}));
 }
 
 function showGreeting(message) {
