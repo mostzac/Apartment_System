@@ -14,13 +14,16 @@ import java.io.IOException;
 public class SecurityFilter implements Filter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final String AUTH_URI = "/api/auth";
+    private final String SOCK_URL = "/myWebSocket";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         int statusCode = authorization((HttpServletRequest) servletRequest);
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(servletRequest, servletResponse);
-        else response.sendError(statusCode);
+        else {
+            response.sendError(statusCode);
+        }
 
     }
 
@@ -38,7 +41,10 @@ public class SecurityFilter implements Filter {
         int statusCode = HttpServletResponse.SC_UNAUTHORIZED;
         String uri = req.getRequestURI();
         String verb = req.getMethod();
-        if (uri.equalsIgnoreCase(AUTH_URI)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
+        String WebSocketToken = req.getParameter("token");
+
+//        if (uri.equalsIgnoreCase(AUTH_URI)||WebSocketToken.isEmpty()==false) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
+        if (uri.equalsIgnoreCase(AUTH_URI)||uri.startsWith(SOCK_URL)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
 
         try {
             String origin = req.getHeader("Authorization");

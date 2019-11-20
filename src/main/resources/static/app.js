@@ -34,7 +34,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("http://localhost:8080/app/sayHello", JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("http://localhost:8080/app/sayHello",{}, JSON.stringify({'name': $("#name").val()}));
 }
 
 function showGreeting(message) {
