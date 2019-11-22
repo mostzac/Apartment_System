@@ -1,6 +1,9 @@
 package io.ascending.training.init;
 
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +20,7 @@ public class ApplicationBoot {
     public static void main(String[] args){
         SpringApplication.run(ApplicationBoot.class, args);
     }
+
 
     @Bean
     public SessionFactory getFactory() throws Exception{

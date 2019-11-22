@@ -125,6 +125,12 @@
       <version>2.0.2</version>
     </dependency>
 
+    <!--AWS Java SDK-->
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk</artifactId>
+      <version>1.11.598</version>
+    </dependency>
 
   </dependencies>
 
