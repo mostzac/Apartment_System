@@ -24,5 +24,6 @@ public class FileService {
 
     public String getObjectURL(String key) {
         return s3Client.generatePresignedUrl(new GeneratePresignedUrlRequest(bucket,key)).toString();
+//        return s3Client.getUrl(bucket,key).toString();
     }
 }

@@ -41,7 +41,7 @@ public class SecurityFilter implements Filter {
         int statusCode = HttpServletResponse.SC_UNAUTHORIZED;
         String uri = req.getRequestURI();
         String verb = req.getMethod();
-        String WebSocketToken = req.getParameter("token");
+//        String WebSocketToken = req.getParameter("token");
 
 //        if (uri.equalsIgnoreCase(AUTH_URI)||WebSocketToken.isEmpty()==false) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
         if (uri.equalsIgnoreCase(AUTH_URI)||uri.startsWith(SOCK_URL)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter

@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Primary;
 import static org.mockito.Mockito.mock;
 
 @Configuration
-public class AWSConfiguration {
+public class AWSConfigMock {
     @Bean
-    @Primary
-    public AmazonS3 getAmazonS3(){
+    @Primary //test bean will scan both main and test
+    public AmazonS3 getAmazonS3Mock(){
         return mock(AmazonS3.class);
     }
 
