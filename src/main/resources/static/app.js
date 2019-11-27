@@ -14,12 +14,12 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('http://localhost:8080/myWebsocket');
+    var socket = new SockJS('http://localhost:8080/myWebsocket?token'+token);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('http://localhost:8080/topic/greetings', function (greeting) {
+        stompClient.subscribe('/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -34,7 +34,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("http://localhost:8080/app/sayHello",{}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/app/sayHello",{}, JSON.stringify({'name': $("#name").val()}));
 }
 
 function showGreeting(message) {
