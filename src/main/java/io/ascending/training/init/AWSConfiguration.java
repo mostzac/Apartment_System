@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AWSConfiguration {
-    @Bean
+    @Bean(name = "AmazonS3")
     public AmazonS3 getAmazonS3(){
         return AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
     }
