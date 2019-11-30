@@ -43,7 +43,7 @@ public class FileServiceTest {
         when(amazonS3.getUrl(anyString(),anyString())).thenReturn(url);
 //        when(amazonS3.getUrl(anyString(),anyString()).toString()).thenReturn(url.toString());   // nullPointerException
 
-        fileService.putObject(mf);
+        System.out.printf(fileService.putObject(mf).toString());
 
 
     }
