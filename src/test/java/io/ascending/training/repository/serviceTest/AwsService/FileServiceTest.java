@@ -1,4 +1,4 @@
-package io.ascending.training.repository.serviceTest;
+package io.ascending.training.repository.serviceTest.AwsService;
 
 import com.amazonaws.services.s3.AmazonS3;
 import io.ascending.training.init.ApplicationBoot;
