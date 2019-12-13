@@ -12,12 +12,15 @@
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
+    <packaging>war</packaging>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <flyway.version>6.0.3</flyway.version>
         <org.slf4j-version>1.7.25</org.slf4j-version>
+        <starter-class>io.ascending.training.init.ApplicationBoot</starter-class>
     </properties>
 
     <parent>
@@ -73,6 +76,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+            <!-- provided means only when running the tomcat is provided, when compile the war file it won't be added in-->
+        </dependency>
+
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -191,15 +201,26 @@
                     <artifactId>flyway-maven-plugin</artifactId>
                     <version>${flyway.version}</version>
                     <configuration>
-                        <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:5431/projectDB</url>
-                        <user>admin</user>
-                        <password>password</password>
+                        <driver>${database.driver}</driver>
+                        <url>${database.url}</url>
+                        <user>${database.user}</user>
+                        <password>${database.password}</password>
                         <schemas>
                             <schema>public</schema>
                         </schemas>
                     </configuration>
                 </plugin>
+                <!---Ddatabase.driver=org.postgresql.Driver
+                -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect
+                -Ddatabase.url=jdbc:postgresql://localhost:5431/projectDB
+                -Ddatabase.user=admin
+                -Ddatabase.password=password
+                -Daws.accessKeyId=AKIAZT4DLQNU2A3CJSQR
+                -Daws.secretKey=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
+                -Daws.region=us-east-1
+                -Daws.s3.bucket=ascending-apartment-system
+                -Daws.sqs.name=ascending-apartment-system-->
+
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
