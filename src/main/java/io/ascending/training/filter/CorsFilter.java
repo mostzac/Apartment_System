@@ -1,5 +1,8 @@
 package io.ascending.training.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +11,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "CorsFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class CorsFilter implements Filter {
-
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public CorsFilter(){
 
@@ -27,10 +30,13 @@ public class CorsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
+        logger.info("Accessing CORS Filter:"+request.getRequestURI());
+
+//        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
 
         //Authorize(allow) all domains to consume the content
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://62a0e6af.ngrok.io");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Credentials", "true");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
 
