@@ -36,7 +36,7 @@ public class CorsFilter implements Filter {
 
         //Authorize(allow) all domains to consume the content
 //        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://62a0e6af.ngrok.io");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Credentials", "true");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
 
