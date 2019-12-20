@@ -22,7 +22,7 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity authenticate(@RequestBody User user) {
         Map<String, String> result = new HashMap<>();
         String token = "";

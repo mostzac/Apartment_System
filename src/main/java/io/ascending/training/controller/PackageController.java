@@ -38,7 +38,7 @@ public class PackageController {
         return packageService.getPackageByShipNumber(shipNum);
     }
 
-    @RequestMapping(value = "/pack", method = RequestMethod.DELETE, params = "shipNum", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/pack", method = RequestMethod.DELETE, params = "shipNum", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Boolean deletePackageByShipNumber(@RequestParam(name = "shipNum") String shipNum) {
         return packageService.deletePackageByShipNumber(shipNum);
     }

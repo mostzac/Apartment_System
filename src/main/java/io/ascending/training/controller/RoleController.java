@@ -25,22 +25,22 @@ public class RoleController {
         return roleService.getRoleById(roleId);
     }
 
-    @RequestMapping(value = "/role", method = RequestMethod.DELETE, params = {"roleName"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/role", method = RequestMethod.DELETE, params = {"roleName"}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Boolean deleteRoleByName(@RequestParam(name = "roleName") String roleName) {
         return roleService.deleteRoleByName(roleName);
     }
 
-    @RequestMapping(value = "/role/{roleId}", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/role/{roleId}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Boolean deleteRoleById(@PathVariable(name = "roleId") long roleId) {
         return roleService.deleteRoleById(roleId);
     }
 
-    @RequestMapping(value = "/role", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/role", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Boolean createRole(@RequestBody Role role) {
         return roleService.save(role);
     }
 
-    @RequestMapping(value = "/role/{roleId}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/role/{roleId}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Boolean updateRole(@RequestBody Role role, @PathVariable(name = "roleId") long roleId) {
         role.setId(roleId);
         return roleService.update(role);
