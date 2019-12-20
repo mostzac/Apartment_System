@@ -32,13 +32,14 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         logger.info("Accessing CORS Filter:"+request.getRequestURI());
 
-//        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
+        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
 
         //Authorize(allow) all domains to consume the content
 //        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Credentials", "true");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers","Content-Type");// cors exception
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
