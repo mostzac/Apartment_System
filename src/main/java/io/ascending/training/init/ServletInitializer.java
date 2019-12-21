@@ -1,5 +1,6 @@
 package io.ascending.training.init;
 
+import com.amazonaws.services.amplify.model.App;
 import com.amazonaws.services.autoscaling.model.LoadBalancerTargetGroupState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         logger.info("SpringBootServletInitializer check point");
-        return builder.sources(ServletInitializer.class);
+        return builder.sources(ApplicationBoot.class);
     }
 }
