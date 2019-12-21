@@ -1,5 +1,5 @@
-#Apartment_System
-####Overview
+# Apartment_System
+#### Overview
 * Project Intention:
 
 People shop online and packages are delivered everyday. Apartment will get massive deliveries everyday and residences will have to pick them up in person at the front desk.   
@@ -27,15 +27,15 @@ This system is developed in Spring Framework by using Spring Boot, Hibernate, Sp
    1. Integrated with AWS S3 and SQS services and did unit tests using Mockito.
    1. Used Postman to test APIs.
    1. Build Docker images and deploy the project.
-####Postgres docker configuration
+#### Postgres docker configuration
 ```
 # Install postgres and start service with configuration
 docker pull postgres
 
 docker run --name ${PostgresContainerName} -e POSTGRES_USER=${username} -e POSTGRES_PASSWORD=${password} -e POSTGRES_DB=${databaseName} -p ${hostport}:${containerport} -d postgres
 ```
-####Project Deployment
-#####Environment Configuration
+#### Project Deployment
+##### Environment Configuration
 ```
 #For IntelliJ IDEA using the JVM Option
 
@@ -106,13 +106,13 @@ docker build -t {imageName}:{Tag} .
 
 docker run -p {localPort}:{containerPort} {imageName}:{Tag} -e DB_URL= -e DB_USER= -e DB_PASSWORD= -e AWS_ID= -e AWS_KEY -e AWS_REGION=
 ```
-####Flyway Migration
+#### Flyway Migration
 ```
 mvn compile flyway:migrate -P unit -Ddb_username=${username} -Ddb_url=localhost:${containerport}/${databasename} -Ddb_password=${password} 
 ```
-####Testing
-####Demo
-#####User sign up
+#### Testing
+#### Demo
+##### User sign up
 ```
 POST - http://localhost:8080/api/users/user?aptName={aptName}
 ```
@@ -126,8 +126,32 @@ Request Body
  }
 ```
 Postman snapshot:
-![](https://github.com/di1025/NationalResortBooking/blob/master/READMESnapshoot/sign%20up.png?raw=true)
-
+![](https://github.com/mostzac/Apartment_System/blob/master/READMESnapshot/addUser.png)
+##### Authentication
+```
+POST - http://localhost:8080/api/auth
+```
+Request Body
+```
+{
+	"account": "test",
+	"password": "0"
+}
+```
+Response Body
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxMyIsImlhdCI6MTU3Njk1OTIwOCwiaXNzIjoiaW8uYXNjZW5kaW5nIiwiZXhwIjoxNTc3MDQ1NjA4LCJhbGxvd2VkUmVhZFJlc291cmNlcyI6IiIsImFsbG93ZWRDcmVhdGVSZXNvdXJjZXMiOiIiLCJhbGxvd2VkVXBkYXRlUmVzb3VyY2VzIjoiIiwiYWxsb3dlZERlbGV0ZVJlc291cmNlcyI6IiJ9.rm3XN5JeRdqec7CbB5f2g41nAuppxr9VyqOu1SzSJA4"
+}
+```
+Postman snapshot:
+![](https://github.com/mostzac/Apartment_System/blob/master/READMESnapshot/auth.png)
+##### Get users
+```
+Get - http://localhost:8080/api/users/
+```
+Postman snapshot:
+![](https://github.com/mostzac/Apartment_System/blob/master/READMESnapshot/getUsers.png)
 
 
    
