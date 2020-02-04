@@ -1,6 +1,7 @@
 package io.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,27 +9,35 @@ import java.util.List;
 @Entity
 @Table(name = "roles")
 public class Role {
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column(name = "name")
     private String name;
 
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column(name = "allowed_resource")
     private String allowedResource;
 
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column(name = "allowed_read")
     private boolean allowedRead;
 
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column(name = "allowed_create")
     private boolean allowedCreate;
 
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column(name = "allowed_update")
     private boolean allowedUpdate;
 
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column(name = "allowed_delete")
     private boolean allowedDelete;
+
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")

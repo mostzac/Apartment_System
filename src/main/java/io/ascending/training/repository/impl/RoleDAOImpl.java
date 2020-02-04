@@ -130,7 +130,7 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public List<Role> getRoles() {
-//        String hql = "FROM User";
+//        String hql = "FROM Role";
         String hql = "FROM Role as r left join fetch r.users";
         try (Session session = sessionFactory.openSession()) { //openSession() in try block dont need to close,
             Query<Role> query = session.createQuery(hql);

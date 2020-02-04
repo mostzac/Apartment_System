@@ -1,25 +1,36 @@
 package io.ascending.training.repository.daoTest;
 
+import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.Apartment;
 import io.ascending.training.repository.impl.ApartmentDAOImpl;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ApplicationBoot.class)
 public class ApartmentDAOTest {
-    private static ApartmentDAO apartmentDAO;
+    @Autowired
+    private ApartmentDAO apartmentDAO;
     private static Apartment apartment;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private Logger logger;
+//    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @BeforeClass
-    public static void init() {
-        apartmentDAO = new ApartmentDAOImpl();
+    @Before
+    public void init() {
+//        apartmentDAO = new ApartmentDAOImpl();
         apartment = new Apartment("test","test");
     }
 

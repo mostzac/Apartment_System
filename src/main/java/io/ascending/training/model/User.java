@@ -1,6 +1,8 @@
 package io.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -15,13 +17,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
+    @JsonView(Apartment.ApartmentUsersView.class)
     private long id;
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String account;
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String password;
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String name;
+    @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String room;
 
@@ -30,17 +37,19 @@ public class User {
     @JoinColumn(name = "apartmentId")
     private Apartment apartment;
 
-//    @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    //    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Package> packages;
 
-//    @JsonIgnore
+    @JsonView(Apartment.ApartmentUsersView.class)
+    //    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 
 
-    public User(String account, String password,String name,String room) {
+    public User(String account, String password, String name, String room) {
         this.account = account;
         this.password = password;
         this.name = name;
@@ -103,9 +112,8 @@ public class User {
     public Set<Package> getPackages() {
         try {
             int size = packages.size();
-        }
-        catch (Exception e){
-            return  null;
+        } catch (Exception e) {
+            return null;
         }
         return packages;
     }
@@ -128,8 +136,7 @@ public class User {
         String str = null;
         try {
             str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
+        } catch (JsonProcessingException jpe) {
             jpe.printStackTrace();
         }
 

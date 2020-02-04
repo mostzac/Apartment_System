@@ -1,9 +1,11 @@
 package io.ascending.training.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,19 +13,30 @@ import java.util.Set;
 @Entity
 @Table(name = "apartments")
 public class Apartment {
+    public interface ApartmentView {
+    }
+
+    public interface ApartmentUsersView extends ApartmentView {
+    }
+
+    @JsonView(ApartmentView.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
+    @JsonView(ApartmentView.class)
     @Column(name = "name")
     private String name;
 
+    @JsonView(ApartmentView.class)
     @Column(name = "address")
     private String address;
 
-//    @JsonIgnore
-    @OneToMany(mappedBy = "apartment",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    //    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonView(ApartmentUsersView.class)
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<User> users;
 
 
@@ -66,21 +79,25 @@ public class Apartment {
         String str = null;
         try {
             str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
+        } catch (JsonProcessingException jpe) {
             jpe.printStackTrace();
         }
 
         return str;
     }
+//
+//    public Set<User> getUsers() {
+//        try {
+//            int size = users.size();//try catch the exception if the residents are not fetched
+//        }
+//        catch (Exception e){
+//            return null;
+//        }
+//        return users;
+//    }
+
 
     public Set<User> getUsers() {
-        try {
-            int size = users.size();//try catch the exception if the residents are not fetched
-        }
-        catch (Exception e){
-            return null;
-        }
         return users;
     }
 

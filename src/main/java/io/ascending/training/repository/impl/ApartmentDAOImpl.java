@@ -23,8 +23,10 @@ public class ApartmentDAOImpl implements ApartmentDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+//    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private Logger logger;
     @Override
     public boolean save(Apartment apartment) {
         Transaction transaction = null;
@@ -133,8 +135,8 @@ public class ApartmentDAOImpl implements ApartmentDAO {
 
     @Override
     public List<Apartment> getApartments() {
-//        String hql = "FROM Apartment";
-        String hql = "FROM Apartment as apt left join fetch apt.users";
+        String hql = "FROM Apartment";
+//        String hql = "FROM Apartment as apt left join fetch apt.users";
 
         try (Session session = sessionFactory.openSession()) {
             Query<Apartment> query = session.createQuery(hql);
@@ -165,4 +167,5 @@ public class ApartmentDAOImpl implements ApartmentDAO {
             return query.uniqueResult();
         }
     }
+
 }

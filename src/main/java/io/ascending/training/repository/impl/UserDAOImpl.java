@@ -129,8 +129,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getUsers() {
-//        String hql = "FROM User";
-        String hql = "FROM User as u left join fetch u.packages";
+        String hql = "FROM User";
+//        String hql = "FROM User as u left join fetch u.packages";
         try (Session session = sessionFactory.openSession()) { //openSession() in try block dont need to close,
             Query<User> query = session.createQuery(hql);
             return query.list().stream().distinct().collect(Collectors.toList());
