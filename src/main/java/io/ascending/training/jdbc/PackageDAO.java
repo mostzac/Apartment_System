@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 public class PackageDAO {
 
-    static final String DB_URL = "jdbc:postgresql://localhost:5431/projectDB";
-    static final String USER = "admin";
-    static final String PASS = "password";
+    static final String DB_URL = System.getProperty("database.url");
+    static final String USER = System.getProperty("database.user");
+    static final String PASS = System.getProperty("database.password");
     private final  Logger logger = LoggerFactory.getLogger(getClass());
 
 
