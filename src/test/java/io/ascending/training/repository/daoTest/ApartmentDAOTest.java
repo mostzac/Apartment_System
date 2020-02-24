@@ -4,10 +4,7 @@ import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.Apartment;
 import io.ascending.training.repository.impl.ApartmentDAOImpl;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,33 +29,17 @@ public class ApartmentDAOTest {
     public void init() {
 //        apartmentDAO = new ApartmentDAOImpl();
         apartment = new Apartment("test","test");
+        Assert.assertTrue(apartmentDAO.save(apartment));
     }
 
     @Test
     public void getApartments() {
         List<Apartment> apartments = apartmentDAO.getApartments();
-        int expectedNum = 2;
+        int expectedNum = 3;
         apartments.forEach(apt -> logger.info(apt.toString()));
         Assert.assertEquals(expectedNum, apartments.size());
     }
 
-    @Test
-    public void saveTest() {
-        Assert.assertTrue(apartmentDAO.save(apartment));
-
-    }
-
-    @Test
-    public void deleteTest() {
-        Assert.assertTrue(apartmentDAO.deleteApartmentById(apartment.getId()));
-    }
-
-    @Test
-    public void deleteApartmentByName(){
-        Apartment apt = new Apartment("testdelte","byname");
-        apartmentDAO.save(apt);
-        Assert.assertTrue(apartmentDAO.deleteApartmentByName(apt.getName()));
-    }
 
     @Test
     public void updateTest() {
@@ -73,6 +54,19 @@ public class ApartmentDAOTest {
         apartment.setAddress("test1");
         Assert.assertTrue(apartmentDAO.update(apartment));
     }
+
+    @After
+    public void teardown() {
+        Assert.assertTrue(apartmentDAO.deleteApartmentByName("test"));
+    }
+
+    @Test
+    public void deleteApartmentByName(){
+        Apartment apt = new Apartment("testdelte","byname");
+        apartmentDAO.save(apt);
+        Assert.assertTrue(apartmentDAO.deleteApartmentById(apt.getId()));
+    }
+
 
 
 }

@@ -128,17 +128,17 @@ public class Package {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String str = null;
-        try {
-            str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
-            jpe.printStackTrace();
-        }
-
-        return str;
-    }
+//    @Override
+//    public String toString() {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String str = null;
+//        try {
+//            str = objectMapper.writeValueAsString(this);
+//        }
+//        catch(JsonProcessingException jpe) {
+//            jpe.printStackTrace();
+//        }
+//
+//        return str;
+//    }
 }

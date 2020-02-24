@@ -1,16 +1,28 @@
 package io.ascending.training.jdbc;
 
+import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.Package;
+import io.ascending.training.model.User;
+import io.ascending.training.repository.impl.UserDAOImpl;
+import io.ascending.training.repository.interfaces.UserDAO;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ApplicationBoot.class)
 public class PackageDAOTest {
+    @Autowired
+    private UserDAO userDAO;
     private PackageDAO packageDAO;
     private Package packageTest;
 
@@ -20,7 +32,8 @@ public class PackageDAOTest {
         LocalDateTime deliveredTime = LocalDateTime.now();
         LocalDateTime arrangeTime = LocalDateTime.now();
         packageTest = new Package("111","shipTest",deliveredTime,"test",1,arrangeTime,"testNote");
-
+        User user = userDAO.getUserByAccount("DaveAccount");
+        packageTest.setUser(user);
         packageDAO.save(packageTest);
     }
 
@@ -32,7 +45,7 @@ public class PackageDAOTest {
     @Test
     public void getresidentsTest(){
         List<Package> aPackages = packageDAO.getPackage();
-        int expectetNum = 3;
+        int expectetNum = 5;
 
         Assert.assertEquals(expectetNum, aPackages.size());
     }

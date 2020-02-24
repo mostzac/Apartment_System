@@ -1,52 +1,58 @@
 package io.ascending.training.repository.daoTest;
 
+import com.amazonaws.services.amplify.model.App;
+import com.sun.xml.bind.v2.runtime.reflect.Lister;
+import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.Package;
 import io.ascending.training.repository.impl.PackageDAOImpl;
 import io.ascending.training.repository.impl.UserDAOImpl;
 import io.ascending.training.repository.interfaces.PackageDAO;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import io.ascending.training.repository.interfaces.UserDAO;
+import org.junit.*;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ApplicationBoot.class)
 public class PackageDAOTest {
-    private static PackageDAO packageDAO;
-    private static Package pack;
+    @Autowired
+    private PackageDAO packageDAO;
+    private Package pack;
+    @Autowired
+    private UserDAO userDAO;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @BeforeClass
-    public static void init() {
-        packageDAO = new PackageDAOImpl();
+    @Before
+    public void init() {
         LocalDateTime deliveredTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime arrangeTime = deliveredTime.plusMonths(1);
         pack = new Package("111","shipTest",deliveredTime,"test",1,arrangeTime,"testNote");
-        pack.setUser(new UserDAOImpl().getUserByAccount("DaveAccount"));
+        pack.setUser(userDAO.getUserByAccount("DaveAccount"));
+        Assert.assertTrue(packageDAO.save(pack));
     }
 
     @Test
     public void getPackages() {
         List<Package> packages = packageDAO.getPackages();
-        int expectedNum = 2;
+        int expectedNum = 5;
         packages.forEach(pack -> logger.info(pack.toString()));
         Assert.assertEquals(expectedNum, packages.size());
     }
 
-    @Test
-    public void saveTest() {
-        Assert.assertTrue(packageDAO.save(pack));
-
-    }
-
-    @Test
-    public void deleteTest() {
-        Assert.assertTrue(packageDAO.deletePackageByShipNumber(pack.getShipNumber()));
-    }
-
+//    @Test
+//    public void saveTest() {
+//        Assert.assertTrue(packageDAO.save(pack));
+//
+//    }
 
     @Test
     public void updateTest() {
@@ -62,5 +68,13 @@ public class PackageDAOTest {
         pack.setShipper("newTest");
         Assert.assertTrue(packageDAO.update(pack));
     }
+
+    @After
+    public void deleteTest() {
+        Assert.assertTrue(packageDAO.deletePackageByShipNumber(pack.getShipNumber()));
+    }
+
+
+
 
 }

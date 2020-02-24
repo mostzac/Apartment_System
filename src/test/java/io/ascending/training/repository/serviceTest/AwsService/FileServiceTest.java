@@ -27,15 +27,15 @@ public class FileServiceTest {
 //    @Qualifier("AmazonS3Test")
     private AmazonS3 amazonS3;
 
-    @Test
-    public void putObjectTest(){
-        File test = new File("xx.");
-        fileService.putObject(test);
-        verify(amazonS3,times(1)).putObject("ascending-apartment-system",test.getName(),test);
-    }
+//    @Test
+//    public void putObjectTest(){ //not using mock, test it with Qualifier() that autowired to the main bean AmazonS3.
+//        File test = new File("xx.");
+//        fileService.putObject(test);
+//        verify(amazonS3,times(1)).putObject("ascending-apartment-system",test.getName(),test);
+//    }
 
     @Test
-    public void putObjectTest1() throws MalformedURLException {
+    public void putObjectTest1() throws MalformedURLException { //mock test
         MultipartFile mf = mock(MultipartFile.class);
         when(mf.getOriginalFilename()).thenReturn("test.txt");
 //        when(fileService.putObject(null)).thenReturn()

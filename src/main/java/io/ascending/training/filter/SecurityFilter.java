@@ -3,6 +3,8 @@ import io.ascending.training.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,7 +14,10 @@ import java.io.IOException;
 
 @WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFilter implements Filter {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+//    private final Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private Logger logger;
+
     private final String AUTH_URI = "/api/auth";
     private final String SOCK_URL = "/myWebSocket";
 
@@ -20,6 +25,10 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         int statusCode = authorization((HttpServletRequest) servletRequest);
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if(logger==null){
+            SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,servletRequest.getServletContext());
+        }
+        logger.info("This is Security Filter");
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(servletRequest, servletResponse);
         else {
             response.sendError(statusCode);

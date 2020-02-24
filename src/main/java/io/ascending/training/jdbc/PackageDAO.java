@@ -72,7 +72,7 @@ public class PackageDAO {
             System.out.println("Creating statement");
             stmt = conn.createStatement();
             String sql = "insert into packages (shipNumber,shipper,deliveredDate,description,status,arrangeDate,notes,userId) values" +
-                    "('"+ aPackage.getShipNumber()+"','"+ aPackage.getShipper()+"','"+ aPackage.getDeliveredDate()+"','"+aPackage.getDescription()+"','"+aPackage.getStatus()+"','"+aPackage.getArrangeDate()+"','"+aPackage.getArrangeDate()+"','"+aPackage.getNotes()+"',1)";
+                    "('"+ aPackage.getShipNumber()+"','"+ aPackage.getShipper()+"','"+ aPackage.getDeliveredDate()+"','"+aPackage.getDescription()+"','"+aPackage.getStatus()+"','"+aPackage.getArrangeDate()+"','"+aPackage.getNotes()+"','"+aPackage.getUser().getId()+"')";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");

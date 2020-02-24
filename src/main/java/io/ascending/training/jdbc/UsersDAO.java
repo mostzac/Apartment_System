@@ -37,7 +37,7 @@ public class UsersDAO {
                 String password = rs.getString("password");
                 String name = rs.getString("name");
                 String room = rs.getString("room");
-                long apartmentId = rs.getLong("apartmentIdd");
+                long apartmentId = rs.getLong("apartmentId");
 
                 User user = new User();
                 user.setId(id);
@@ -65,7 +65,7 @@ public class UsersDAO {
             System.out.println("Creating statement");
             stmt = conn.createStatement();
             String sql = "insert into users (account, password, name,room,apartmentId) values" +
-                    "('"+user.getAccount()+"','"+user.getPassword()+"','"+user.getName()+"','"+user.getRoom()+"',1)";
+                    "('"+user.getAccount()+"','"+user.getPassword()+"','"+user.getName()+"','"+user.getRoom()+"','"+user.getApartment().getId()+"')";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");

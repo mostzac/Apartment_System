@@ -21,7 +21,7 @@ public class HibernateMappingTest {
     public void mappingTest() {
         String hqlApartment = "FROM Apartment"; //from class
         String hqlUser = "FROM User";
-        String hqlResident = "FROM Resident";
+        String hqlPackage = "FROM Package";
         List<Apartment> apartments = null;
         List<User> users = null;
         List<Package> aPackages = null;
@@ -31,17 +31,17 @@ public class HibernateMappingTest {
             Transaction transaction = session.beginTransaction();
             Query<Apartment> queryAp = session.createQuery(hqlApartment);
             Query<User> queryUser = session.createQuery(hqlUser);
-            Query<Package> queryRes = session.createQuery(hqlResident);
+            Query<Package> queryPac = session.createQuery(hqlPackage);
             apartments = queryAp.list();
             users = queryUser.list();
-            aPackages = queryRes.list();
+            aPackages = queryPac.list();
             transaction.commit();
 
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
         apartments.forEach(apt -> logger.info(apt.toString()));
-        aPackages.forEach(resident -> logger.info(resident.toString()));
+        aPackages.forEach(pack -> logger.info(pack.toString()));
         users.forEach(user -> logger.info(user.toString()));
 
         Assert.assertNotNull(apartments);

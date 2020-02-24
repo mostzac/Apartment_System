@@ -58,7 +58,7 @@ public class ApartmentDAO {
 
             System.out.println("Creating statement");
             stmt = conn.createStatement();
-            String sql = "insert into apartment (name,address) values" + "('"+apartment.getName()+"','"+apartment.getAddress()+"')";
+            String sql = "insert into apartments (name,address) values" + "('"+apartment.getName()+"','"+apartment.getAddress()+"')";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 System.out.println("creating a new record");
@@ -86,7 +86,7 @@ public class ApartmentDAO {
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "delete from apartment where name = " + "'"+apartmentname+"'";
+            String sql = "delete from apartments where name = " + "'"+apartmentname+"'";
             int i = stmt.executeUpdate(sql);
             if(i==1){
                 return true;

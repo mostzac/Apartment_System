@@ -6,11 +6,10 @@ import io.ascending.training.model.User;
 import io.ascending.training.repository.impl.ApartmentDAOImpl;
 import io.ascending.training.repository.impl.RoleDAOImpl;
 import io.ascending.training.repository.impl.UserDAOImpl;
+import io.ascending.training.repository.interfaces.ApartmentDAO;
 import io.ascending.training.repository.interfaces.RoleDAO;
 import io.ascending.training.repository.interfaces.UserDAO;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,30 +24,28 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
 public class UserDAOTest {
-    private static UserDAO userDAO;
-    private static User user;
+    @Autowired
+    private UserDAO userDAO;
+    private User user;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private RoleDAO roleDAO;
+    @Autowired
+    private ApartmentDAO apartmentDAO;
 
-    @BeforeClass
-    public static void init(){
-        userDAO = new UserDAOImpl();
+    @Before
+    public void init(){
         user = new User("accountTest","passworrTest","nameTest","777");
-        user.setApartment(new ApartmentDAOImpl().getApartmentByName("Buchanan"));
+        user.setApartment(apartmentDAO.getApartmentByName("Buchanan"));
+        Assert.assertTrue(userDAO.save(user));
     }
 
     @Test
     public void getUsersTest(){
         List<User> users = userDAO.getUsers();
-        int expectedNum = 2;
+        int expectedNum = 4;
         users.forEach(user -> logger.info(user.toString()));
         Assert.assertEquals(expectedNum, users.size());
-    }
-
-    @Test
-    public void saveUserTest(){
-        Assert.assertTrue(userDAO.save(user));
     }
 
     @Test
@@ -65,20 +62,23 @@ public class UserDAOTest {
         Assert.assertTrue(userDAO.update(user));
     }
 
-    @Test
-    public void deletTest(){
+    @After
+    public void tearDown(){
         Assert.assertTrue(userDAO.deleteUserByAccount(user.getAccount()));
     }
 
     @Test
     public void deleteByIdTest(){
-        Assert.assertTrue(userDAO.deleteUserById(userDAO.getUserByAccount("accountTest").getId()));
+        User user = new User("accountIdTest","passworrTest","nameTest","777");
+        user.setApartment(apartmentDAO.getApartmentByName("Buchanan"));
+        Assert.assertTrue(userDAO.save(user));
+        Assert.assertTrue(userDAO.deleteUserById(userDAO.getUserByAccount("accountIdTest").getId()));
     }
 
 
 
     @Test
-    public void delelteByNameTest(){
+    public void delelteByAccountTest(){
         User user = new User("deleteTest","passworrTest","nameTest","777");
         userDAO.save(user);
         Assert.assertTrue(userDAO.deleteUserByAccount(user.getAccount()));
@@ -96,7 +96,7 @@ public class UserDAOTest {
 //        Assert.assertEquals(user1.getRoles().size(),roles.size());
 //        userDAO.deleteUserById(user1.getId());
         Assert.assertEquals(user.getRoles().size(),roles.size());
-        userDAO.deleteUserById(user.getId());
+//        userDAO.deleteUserById(user.getId());
     }
 
     @Test
