@@ -70,7 +70,7 @@ public class UserDAOTest {
     @Test
     public void deleteByIdTest(){
         User user = new User("accountIdTest","passworrTest","nameTest","777");
-
+        user.setApartment(apartmentDAO.getApartmentByName("Buchanan"));
         Assert.assertTrue(userDAO.save(user));
         Assert.assertTrue(userDAO.deleteUserById(userDAO.getUserByAccount("accountIdTest").getId()));
     }
