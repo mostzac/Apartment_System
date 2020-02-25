@@ -104,13 +104,16 @@ export JAVA_OPTS="$JAVA_OPTS -Dlogging.level.org.springframework=INFO"
 -----
 docker build -t {imageName}:{Tag} .
 
-docker run -p {localPort}:{containerPort} {imageName}:{Tag} -e DB_URL= -e DB_USER= -e DB_PASSWORD= -e AWS_ID= -e AWS_KEY -e AWS_REGION=
+docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_USER=${} -e DB_PASSWORD=${} -e AWS_ID=${} -e AWS_KEY=${} -e AWS_REGION=${} {imageName}:{Tag}
 ```
 #### Flyway Migration
 ```
-mvn compile flyway:migrate -P unit -Ddb_username=${username} -Ddb_url=localhost:${containerport}/${databasename} -Ddb_password=${password} 
+mvn compile flyway:migrate -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.region=us-east-1 -Daws.s3.bucket=ascending-apartment-system -Daws.sqs.name=ascending-apartment-system
 ```
 #### Testing
+```
+mvn test -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.region=us-east-1 -Daws.s3.bucket=ascending-apartment-system -Daws.sqs.name=ascending-apartment-system
+```
 #### Demo
 ##### User sign up
 ```
