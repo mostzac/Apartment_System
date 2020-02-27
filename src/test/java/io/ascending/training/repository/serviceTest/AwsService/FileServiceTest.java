@@ -1,6 +1,7 @@
 package io.ascending.training.repository.serviceTest.AwsService;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.service.FileService;
 import org.junit.Test;
@@ -39,12 +40,17 @@ public class FileServiceTest {
         MultipartFile mf = mock(MultipartFile.class);
         when(mf.getOriginalFilename()).thenReturn("test.txt");
 //        when(fileService.putObject(null)).thenReturn()
-        URL url = new URL("http://testURL.com");
+        URL url = new URL("http://testS3URL.com");
         when(amazonS3.getUrl(anyString(),anyString())).thenReturn(url);
 //        when(amazonS3.getUrl(anyString(),anyString()).toString()).thenReturn(url.toString());   // nullPointerException
 
         System.out.printf(fileService.putObject(mf).toString());
+    }
 
-
+    @Test
+    public void getObjectURL() throws MalformedURLException {
+        URL result2 = new URL("http://testS3PresignedURL.com");
+        when(amazonS3.generatePresignedUrl(any(GeneratePresignedUrlRequest.class))).thenReturn(result2);
+        System.out.printf(fileService.getObjectURL("key"));
     }
 }

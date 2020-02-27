@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Service
 public class FileService {
-    private String bucket = "ascending-apartment-system";
+    private String bucket = System.getProperty("aws.s3.bucket");
     @Autowired
     private FileService fileService;
 
