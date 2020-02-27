@@ -108,11 +108,11 @@ docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_USER=${} -e DB_PAS
 ```
 #### Flyway Migration
 ```
-mvn compile flyway:migrate -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${}
+mvn compile flyway:migrate -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
 ```
 #### Testing
 ```
-mvn test -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${}
+mvn test -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
 ```
 #### Demo
 ##### User sign up

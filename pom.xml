@@ -210,17 +210,6 @@
                         </schemas>
                     </configuration>
                 </plugin>
-                <!---Ddatabase.driver=org.postgresql.Driver
-                -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect
-                -Ddatabase.url=jdbc:postgresql://localhost:5431/projectDB
-                -Ddatabase.user=admin
-                -Ddatabase.password=password
-                -Daws.accessKeyId=AKIAZT4DLQNU2A3CJSQR
-                -Daws.secretKey=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
-                -Daws.region=us-east-1
-                -Daws.s3.bucket=ascending-apartment-system
-                -Daws.sqs.name=ascending-apartment-system-->
-
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
