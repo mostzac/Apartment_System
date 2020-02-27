@@ -48,8 +48,8 @@ Template:
 -Daws.accessKeyId=${AWS_ID}
 -Daws.secretKey=${AWS_KEY}
 -Daws.region=${AWS_REGION}
--Daws.s3.bucket=ascending-apartment-system
--Daws.sqs.name=ascending-apartment-system
+-Daws.s3.bucket=${AWS_S3_NAME}
+-Daws.sqs.name=${AWS_SQS_NAME}
 -Dlogging.level.org.springframework=INFO"
 ```
 * Local Tomcat in Ubuntu:
@@ -68,8 +68,8 @@ export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.password=${DB_PASSWORD}"
 export CATALINA_OPTS="$CATALINA_OPTS -Daws.accessKeyId=${AWS_ID}"
 export CATALINA_OPTS="$CATALINA_OPTS -Daws.secretKey=${AWS_KEY}"
 export CATALINA_OPTS="$CATALINA_OPTS -Daws.region=${AWS_REGION}"
-export CATALINA_OPTS="$CATALINA_OPTS -Daws.s3.bucket=ascending-apartment-system"
-export CATALINA_OPTS="$CATALINA_OPTS -Daws.sqs.name=ascending-apartment-system"
+export CATALINA_OPTS="$CATALINA_OPTS -Daws.s3.bucket=${AWS_S3_NAME}"
+export CATALINA_OPTS="$CATALINA_OPTS -Daws.sqs.name=${AWS_SQS_NAME}"
 export CATALINA_OPTS="$CATALINA_OPTS -Dlogging.level.org.springframework=INFO"
 
 # 2. Generate .war file and deploy it onto the Tomcat(location: /var/lib/tomcat9/webapps)
@@ -96,23 +96,23 @@ export JAVA_OPTS="$JAVA_OPTS -Ddatabase.password=${DB_PASSWORD}"
 export JAVA_OPTS="$JAVA_OPTS -Daws.accessKeyId=${AWS_ID}"
 export JAVA_OPTS="$JAVA_OPTS -Daws.secretKey=${AWS_KEY}"
 export JAVA_OPTS="$JAVA_OPTS -Daws.region=${AWS_REGION}"
-export JAVA_OPTS="$JAVA_OPTS -Daws.s3.bucket=ascending-apartment-system"
-export JAVA_OPTS="$JAVA_OPTS -Daws.sqs.name=ascending-apartment-system"
+export JAVA_OPTS="$JAVA_OPTS -Daws.s3.bucket=${AWS_S3_NAME}"
+export JAVA_OPTS="$JAVA_OPTS -Daws.sqs.name=${AWS_SQS_NAME}"
 export JAVA_OPTS="$JAVA_OPTS -Dlogging.level.org.springframework=INFO"
 
 # 2. Build docker image and start the container
 -----
 docker build -t {imageName}:{Tag} .
 
-docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_USER=${} -e DB_PASSWORD=${} -e AWS_ID=${} -e AWS_KEY=${} -e AWS_REGION=${} {imageName}:{Tag}
+docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_USER=${} -e DB_PASSWORD=${} -e AWS_ID=${} -e AWS_KEY=${} {imageName}:{Tag}
 ```
 #### Flyway Migration
 ```
-mvn compile flyway:migrate -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.region=us-east-1 -Daws.s3.bucket=ascending-apartment-system -Daws.sqs.name=ascending-apartment-system
+mvn compile flyway:migrate -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${}
 ```
 #### Testing
 ```
-mvn test -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.region=us-east-1 -Daws.s3.bucket=ascending-apartment-system -Daws.sqs.name=ascending-apartment-system
+mvn test -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${}
 ```
 #### Demo
 ##### User sign up
