@@ -10,11 +10,15 @@ import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
     private static Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
+
 
     /* Define JVM options
     -Ddatabase.driver=org.postgresql.Driver

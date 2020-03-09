@@ -42,7 +42,7 @@ docker run --name ${PostgresContainerName} -e POSTGRES_USER=${username} -e POSTG
 Template:
 -Ddatabase.driver=org.postgresql.Driver
 -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect
--Ddatabase.url=jdbc:postgresql://${DB_URL}
+-Ddatabase.url=jdbc:postgresql://${DB_URL}:${port}/${DB_NAME}
 -Ddatabase.user=${DB_USER}
 -Ddatabase.password=${DB_PASSWORD}
 -Daws.accessKeyId=${AWS_ID}
@@ -62,7 +62,7 @@ Template:
 export CATALINA_OPTS="$CATALINA_OPTS -Dlogging.level.root=DEBUG"
 export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.driver=org.postgresql.Driver"
 export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect"
-export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.url=jdbc:postgresql://${DB_URL}"
+export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME}"
 export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.user=${DB_USER}"
 export CATALINA_OPTS="$CATALINA_OPTS -Ddatabase.password=${DB_PASSWORD}"
 export CATALINA_OPTS="$CATALINA_OPTS -Daws.accessKeyId=${AWS_ID}"
@@ -90,7 +90,7 @@ sudo service tomcat9 start
 export JAVA_OPTS="$JAVA_OPTS -Dlogging.level.root=DEBUG"
 export JAVA_OPTS="$JAVA_OPTS -Ddatabase.driver=org.postgresql.Driver"
 export JAVA_OPTS="$JAVA_OPTS -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect"
-export JAVA_OPTS="$JAVA_OPTS -Ddatabase.url=jdbc:postgresql://${DB_URL}"
+export JAVA_OPTS="$JAVA_OPTS -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME}"
 export JAVA_OPTS="$JAVA_OPTS -Ddatabase.user=${DB_USER}"
 export JAVA_OPTS="$JAVA_OPTS -Ddatabase.password=${DB_PASSWORD}"
 export JAVA_OPTS="$JAVA_OPTS -Daws.accessKeyId=${AWS_ID}"
@@ -104,15 +104,15 @@ export JAVA_OPTS="$JAVA_OPTS -Dlogging.level.org.springframework=INFO"
 -----
 docker build -t {imageName}:{Tag} .
 
-docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_USER=${} -e DB_PASSWORD=${} -e AWS_ID=${} -e AWS_KEY=${} {imageName}:{Tag}
+docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_NAME=${} -e DB_USER=${} -e DB_PASSWORD=${} -e AWS_ID=${} -e AWS_KEY=${} {imageName}:{Tag}
 ```
 #### Flyway Migration
 ```
-mvn compile flyway:migrate -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
+mvn compile flyway:migrate -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME} -Ddatabase.user=${DB_USER} -Ddatabase.password=${DB_PASSWORD} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
 ```
 #### Testing
 ```
-mvn test -Ddatabase.url=${} -Ddatabase.user=${} -Ddatabase.password=${} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
+mvn test -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME} -Ddatabase.user=${DB_USER} -Ddatabase.password=${DB_PASSWORD} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
 ```
 #### Demo
 ##### User sign up
