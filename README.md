@@ -108,11 +108,13 @@ docker run -p {localPort}:{containerPort} -e DB_URL=${} -e DB_NAME=${} -e DB_USE
 ```
 #### Flyway Migration
 ```
-mvn compile flyway:migrate -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME} -Ddatabase.user=${DB_USER} -Ddatabase.password=${DB_PASSWORD} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
+mvn compile flyway:migrate -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME} -Ddatabase.user=${DB_USER} -Ddatabase.password=${DB_PASSWORD}
 ```
 #### Testing
 ```
-mvn test -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME} -Ddatabase.user=${DB_USER} -Ddatabase.password=${DB_PASSWORD} -Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${}
+mvn test -Ddatabase.url=jdbc:postgresql://${DB_URL}:5432/${DB_NAME} -Ddatabase.user=${DB_USER} -Ddatabase.password=${DB_PASSWORD} 
+-Daws.s3.bucket=${} -Daws.sqs.name=${} -Daws.region=${} 
+-Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect -Ddatabase.driver=org.postgresql.Driver
 ```
 #### Demo
 ##### User sign up
