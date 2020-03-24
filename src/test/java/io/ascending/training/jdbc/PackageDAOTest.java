@@ -45,7 +45,7 @@ public class PackageDAOTest {
     @Test
     public void getresidentsTest(){
         List<Package> aPackages = packageDAO.getPackage();
-        int expectetNum = 5;
+        int expectetNum = 1;
 
         Assert.assertEquals(expectetNum, aPackages.size());
     }

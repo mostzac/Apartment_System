@@ -28,7 +28,7 @@ public class ApartmentDAOTest {
     @Test
     public void getapartmentsTest(){
         List<Apartment> apartments = apartmentDAO.gerApartment();
-        int expectetNum = 3;
+        int expectetNum = 1;
 
         Assert.assertEquals(expectetNum,apartments.size());
     }
