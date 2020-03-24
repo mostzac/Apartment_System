@@ -43,7 +43,7 @@ public class UserDAOTest {
     @Test
     public void getUsersTest(){
         List<User> users = userDAO.getUsers();
-        int expectedNum = 1;
+        int expectedNum = 4;
         users.forEach(user -> logger.info(user.toString()));
         Assert.assertEquals(expectedNum, users.size());
     }

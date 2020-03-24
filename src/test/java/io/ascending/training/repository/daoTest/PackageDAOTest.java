@@ -43,7 +43,7 @@ public class PackageDAOTest {
     @Test
     public void getPackages() {
         List<Package> packages = packageDAO.getPackages();
-        int expectedNum = 1;
+        int expectedNum = 3;
         packages.forEach(pack -> logger.info(pack.toString()));
         Assert.assertEquals(expectedNum, packages.size());
     }

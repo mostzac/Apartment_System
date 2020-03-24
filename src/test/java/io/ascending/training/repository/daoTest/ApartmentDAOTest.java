@@ -35,7 +35,7 @@ public class ApartmentDAOTest {
     @Test
     public void getApartments() {
         List<Apartment> apartments = apartmentDAO.getApartments();
-        int expectedNum = 1;
+        int expectedNum = 3;
         apartments.forEach(apt -> logger.info(apt.toString()));
         Assert.assertEquals(expectedNum, apartments.size());
     }

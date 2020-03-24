@@ -40,7 +40,7 @@ public class UserDAOTest {
     @Test
     public void getUsersTest(){
         List<User> users = userDAO.getUsers();
-        int expectetNum = 1;
+        int expectetNum = 4;
 
         Assert.assertEquals(expectetNum,users.size());
     }
