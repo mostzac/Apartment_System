@@ -1,6 +1,5 @@
 package io.ascending.training.init;
 
-
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -26,7 +25,6 @@ public class ApplicationBoot {
         SpringApplication.run(ApplicationBoot.class, args);
     }
 
-
     @Bean
     public SessionFactory getFactory() throws Exception{
         SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -38,5 +36,6 @@ public class ApplicationBoot {
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public Logger logger(InjectionPoint injectionPoint){
         return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
+
     }
 }
