@@ -23,6 +23,11 @@ public class TestController {
     @Autowired
     private PackageService packageService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String testDefault() {
+        return "You have connected to the server!";
+    }
+
     @RequestMapping(value = "/paths", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Map helloWorld() {
         Map<String,String> m = new HashMap();
