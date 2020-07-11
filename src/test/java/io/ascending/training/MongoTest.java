@@ -1,8 +1,12 @@
 package io.ascending.training;
 
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.internal.async.client.AsyncMongoClients;
 import io.ascending.training.init.ApplicationBoot;
+import io.ascending.training.model.MongoUser;
+import io.ascending.training.model.User;
+import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.UserService;
 import org.junit.After;
 import org.junit.Test;
@@ -14,7 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 
 @RunWith(SpringRunner.class)
@@ -24,6 +31,10 @@ public class MongoTest {
     UserService userService;
     @Autowired
     Logger logger;
+    @Autowired
+    MongoClient mongoClient;
+    @Autowired
+    ApartmentService apartmentService;
 
     @Test
     public void usertoString() {
@@ -32,7 +43,11 @@ public class MongoTest {
 
     @Test
     public void mongoOperation() {
-        MongoOperations mongoOperations = new MongoTemplate(MongoClients.create(), "database");
+        MongoOperations mongoOps = new MongoTemplate(mongoClient, "mongoTest");
+        mongoOps.insert(new MongoUser("Ryan",10));
+
+        logger.info(mongoOps.findOne(new Query(where("name").is("Ryan")),MongoUser.class).toString());
+        mongoOps.dropCollection("mongoUser");
     }
 
 }

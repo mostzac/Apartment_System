@@ -1,7 +1,10 @@
 package io.ascending.training.controller;
 
+import io.ascending.training.model.Apartment;
+import io.ascending.training.model.MongoUser;
 import io.ascending.training.model.Package;
 import io.ascending.training.model.User;
+import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.PackageService;
 import io.ascending.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = {"/test"})
 public class TestController {
+    @Autowired
+    private ApartmentService apartmentService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -60,7 +65,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/mongo", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public String usertoString() {
-        return userService.getUserById(1).toString();
+    public MongoUser usertoString() {
+        return new MongoUser("a",10);
     }
 }

@@ -3,6 +3,8 @@ package io.ascending.training.init;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -39,8 +41,16 @@ public class ApplicationBoot {
         return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
     }
 
+    //Configuration for the mongo client (mongodb server) to use you can specify database name
     @Bean
-    public MongoClientFactoryBean mongoClient() {
-
+    public MongoClient mongoClient() {
+        return MongoClients.create(System.getProperty("mongodb.url"));
     }
+    @Bean
+    public MongoClientFactoryBean mongo() {
+        MongoClientFactoryBean mongo = new MongoClientFactoryBean();
+        mongo.setHost("localhost");
+        return mongo;
+    }
+
 }
