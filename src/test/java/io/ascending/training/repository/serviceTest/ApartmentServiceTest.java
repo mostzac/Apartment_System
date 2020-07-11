@@ -1,7 +1,7 @@
 package io.ascending.training.repository.serviceTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.Apartment;
+import io.ascending.training.model.postgresModel.Apartment;
 import io.ascending.training.service.ApartmentService;
 import org.junit.Assert;
 import org.junit.Before;

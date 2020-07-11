@@ -1,21 +1,15 @@
 package io.ascending.training;
 
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.internal.async.client.AsyncMongoClients;
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.MongoUser;
-import io.ascending.training.model.User;
+import io.ascending.training.model.mongoModel.MongoUser;
 import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.UserService;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.MongoClientFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;

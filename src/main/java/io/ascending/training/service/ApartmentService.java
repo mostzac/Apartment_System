@@ -1,9 +1,8 @@
 package io.ascending.training.service;
 
-import io.ascending.training.model.Apartment;
+import io.ascending.training.model.postgresModel.Apartment;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

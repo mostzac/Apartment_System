@@ -1,14 +1,11 @@
 package io.ascending.training.repository.serviceTest;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.Apartment;
-import io.ascending.training.model.Role;
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.Role;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.RoleService;
 import io.ascending.training.service.UserService;
-import org.assertj.core.api.AbstractAtomicReferenceAssert;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package io.ascending.training.repository.interfaces;
 
-import io.ascending.training.model.Role;
+import io.ascending.training.model.postgresModel.Role;
 
 import java.util.List;
 

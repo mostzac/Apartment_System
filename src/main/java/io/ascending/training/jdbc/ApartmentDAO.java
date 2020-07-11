@@ -1,6 +1,6 @@
 package io.ascending.training.jdbc;
 
-import io.ascending.training.model.Apartment;
+import io.ascending.training.model.postgresModel.Apartment;
 
 import java.sql.*;
 import java.util.ArrayList;

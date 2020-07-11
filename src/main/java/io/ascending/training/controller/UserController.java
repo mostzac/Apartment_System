@@ -1,13 +1,11 @@
 package io.ascending.training.controller;
 
-import io.ascending.training.jdbc.UsersDAO;
-import io.ascending.training.model.Apartment;
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.Apartment;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

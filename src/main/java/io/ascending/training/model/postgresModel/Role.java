@@ -1,4 +1,4 @@
-package io.ascending.training.model;
+package io.ascending.training.model.postgresModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;

@@ -1,11 +1,7 @@
 package io.ascending.training.repository.daoTest;
 
-import com.amazonaws.services.amplify.model.App;
-import com.sun.xml.bind.v2.runtime.reflect.Lister;
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.Package;
-import io.ascending.training.repository.impl.PackageDAOImpl;
-import io.ascending.training.repository.impl.UserDAOImpl;
+import io.ascending.training.model.postgresModel.Package;
 import io.ascending.training.repository.interfaces.PackageDAO;
 import io.ascending.training.repository.interfaces.UserDAO;
 import org.junit.*;
@@ -13,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

@@ -1,12 +1,11 @@
 package io.ascending.training.util;
 
-import io.ascending.training.model.Role;
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.Role;
+import io.ascending.training.model.postgresModel.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.juli.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

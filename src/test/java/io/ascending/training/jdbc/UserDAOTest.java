@@ -1,9 +1,7 @@
 package io.ascending.training.jdbc;
 
-import com.amazonaws.services.amplify.model.App;
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.jdbc.UsersDAO;
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import org.junit.After;
 import org.junit.Assert;

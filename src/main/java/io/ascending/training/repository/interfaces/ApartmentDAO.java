@@ -1,11 +1,8 @@
 package io.ascending.training.repository.interfaces;
 
-import io.ascending.training.jdbc.UsersDAO;
-import io.ascending.training.model.Apartment;
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.Apartment;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ApartmentDAO {
     boolean save(Apartment apartment);

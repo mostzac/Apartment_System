@@ -1,10 +1,9 @@
 package io.ascending.training.jdbc;
 
-import io.ascending.training.model.Package;
+import io.ascending.training.model.postgresModel.Package;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

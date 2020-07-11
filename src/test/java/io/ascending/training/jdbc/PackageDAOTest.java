@@ -1,9 +1,8 @@
 package io.ascending.training.jdbc;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.Package;
-import io.ascending.training.model.User;
-import io.ascending.training.repository.impl.UserDAOImpl;
+import io.ascending.training.model.postgresModel.Package;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.repository.interfaces.UserDAO;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @RunWith(SpringRunner.class)

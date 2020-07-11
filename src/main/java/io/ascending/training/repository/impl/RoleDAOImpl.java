@@ -1,8 +1,7 @@
 package io.ascending.training.repository.impl;
 
-import io.ascending.training.model.Role;
+import io.ascending.training.model.postgresModel.Role;
 import io.ascending.training.repository.interfaces.RoleDAO;
-import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

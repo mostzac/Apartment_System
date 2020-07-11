@@ -1,9 +1,7 @@
 package io.ascending.training.repository.impl;
 
-import io.ascending.training.model.Apartment;
-import io.ascending.training.model.Package;
+import io.ascending.training.model.postgresModel.Package;
 import io.ascending.training.repository.interfaces.PackageDAO;
-import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

@@ -1,8 +1,7 @@
 package io.ascending.training.repository.serviceTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.Role;
-import io.ascending.training.repository.interfaces.RoleDAO;
+import io.ascending.training.model.postgresModel.Role;
 import io.ascending.training.service.RoleService;
 import org.junit.Before;
 import org.junit.Test;

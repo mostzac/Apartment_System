@@ -1,9 +1,8 @@
 package io.ascending.training.controller;
 
-import io.ascending.training.model.Apartment;
-import io.ascending.training.model.MongoUser;
-import io.ascending.training.model.Package;
-import io.ascending.training.model.User;
+import io.ascending.training.model.mongoModel.MongoUser;
+import io.ascending.training.model.postgresModel.Package;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.ApartmentService;
 import io.ascending.training.service.PackageService;
 import io.ascending.training.service.UserService;

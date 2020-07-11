@@ -1,6 +1,6 @@
 package io.ascending.training.repository.interfaces;
 
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.User;
 
 import java.util.List;
 

@@ -1,11 +1,8 @@
 package io.ascending.training.repository.daoTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.Role;
-import io.ascending.training.model.User;
-import io.ascending.training.repository.impl.ApartmentDAOImpl;
-import io.ascending.training.repository.impl.RoleDAOImpl;
-import io.ascending.training.repository.impl.UserDAOImpl;
+import io.ascending.training.model.postgresModel.Role;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
 import io.ascending.training.repository.interfaces.RoleDAO;
 import io.ascending.training.repository.interfaces.UserDAO;
@@ -17,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.TransactionScoped;
 import java.util.ArrayList;
 import java.util.List;
 

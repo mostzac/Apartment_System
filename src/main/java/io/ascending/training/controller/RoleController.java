@@ -1,6 +1,6 @@
 package io.ascending.training.controller;
 
-import io.ascending.training.model.Role;
+import io.ascending.training.model.postgresModel.Role;
 import io.ascending.training.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

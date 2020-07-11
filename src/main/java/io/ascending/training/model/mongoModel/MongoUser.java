@@ -1,4 +1,4 @@
-package io.ascending.training.model;
+package io.ascending.training.model.mongoModel;
 
 public class MongoUser {
     private String id;

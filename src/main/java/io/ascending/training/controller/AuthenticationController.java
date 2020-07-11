@@ -1,6 +1,6 @@
 package io.ascending.training.controller;
 
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.UserService;
 import io.ascending.training.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 

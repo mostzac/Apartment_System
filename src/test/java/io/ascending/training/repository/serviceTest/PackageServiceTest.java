@@ -1,14 +1,10 @@
 package io.ascending.training.repository.serviceTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.jdbc.UsersDAO;
-import io.ascending.training.model.Package;
-import io.ascending.training.model.User;
-import io.ascending.training.repository.interfaces.PackageDAO;
-import io.ascending.training.repository.interfaces.UserDAO;
+import io.ascending.training.model.postgresModel.Package;
+import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.PackageService;
 import io.ascending.training.service.UserService;
-import org.hibernate.loader.collection.PaddedBatchingCollectionInitializerBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

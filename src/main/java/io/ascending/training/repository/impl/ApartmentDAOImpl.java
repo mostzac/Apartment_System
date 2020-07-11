@@ -1,21 +1,16 @@
 package io.ascending.training.repository.impl;
 
-import io.ascending.training.model.Apartment;
-import io.ascending.training.model.User;
+import io.ascending.training.model.postgresModel.Apartment;
 import io.ascending.training.repository.interfaces.ApartmentDAO;
-import io.ascending.training.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
