@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
     <groupId>io.ascending.training</groupId>
     <artifactId>Apartment_System</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -11,6 +12,7 @@
     <name>Apartment_System</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+
 
     <packaging>war</packaging>
 
@@ -26,8 +28,9 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <version>2.3.1.RELEASE</version>
         <relativePath/>
+
     </parent>
 
     <dependencies>
@@ -82,6 +85,16 @@
             <scope>provided</scope>
             <!-- provided means only when running the tomcat is provided, when compile the war file it won't be added in-->
         </dependency>
+
+
+        <!-- spring data mongo-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <version>2.3.1.RELEASE</version>
+        </dependency>
+
 
 
         <dependency>
@@ -159,6 +172,15 @@
 
 
     </dependencies>
+
+    <!-- spring data mongo-->
+    <repositories>
+        <repository>
+            <id>spring-milestone</id>
+            <name>Spring Maven MILESTONE Repository</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+        </repository>
+    </repositories>
 
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
