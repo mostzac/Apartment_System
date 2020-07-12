@@ -41,17 +41,6 @@ public class ApplicationBoot {
         return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
     }
 
-    //Configuration for the mongo client (mongodb server) to use you can specify database name
-    @Bean
-    public MongoClient mongoClient() {
-        return MongoClients.create(System.getProperty("mongodb.url"));
-    }
-    @Bean
-    public MongoClientFactoryBean mongo() {
-        MongoClientFactoryBean mongo = new MongoClientFactoryBean();
-        mongo.setHost("localhost");
-        return mongo;
-    }
 
 
 
