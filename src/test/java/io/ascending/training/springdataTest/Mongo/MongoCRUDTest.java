@@ -1,23 +1,20 @@
 package io.ascending.training.springdataTest.Mongo;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.mongoModel.MongoMessge;
+import io.ascending.training.model.mongoModel.MongoMessage;
 import io.ascending.training.model.mongoModel.MongoUser;
-import org.checkerframework.checker.units.qual.A;
-import org.hibernate.engine.spi.ManagedEntity;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runner.Runner;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,12 +71,12 @@ public class MongoCRUDTest {
 
     @Test
     public void testWithMessage() {
-        MongoMessge message = new MongoMessge("hello from test");
+        MongoMessage message = new MongoMessage("hello from test");
         userTest.setMessage(message);
         ops.insert(userTest);
         MongoUser user = ops.findOne(query(where("name").is("UserTest")),MongoUser.class);
         logger.info("UserTest now has a message: "+user.getMessage().getContent());
-        MongoMessge retrieve = ops.findOne(query(where("name").is("UserTest")),MongoUser.class).getMessage();
+        MongoMessage retrieve = ops.findOne(query(where("name").is("UserTest")),MongoUser.class).getMessage();
         logger.info("Retrieving message: " + retrieve.getContent());
 
         //update message
@@ -100,10 +97,40 @@ public class MongoCRUDTest {
         logger.info("Save: "+ usersave);
     }
 
+    @Test
+    public void UpdateObjTest() {
+        MongoUser user = new MongoUser("Ryan",20);
+        MongoMessage message= new MongoMessage("original message");
+        user.setMessage(message);
+        ops.insert(user);
+        logger.info("Original Message: "+ user.getMessage().getContent());
+
+        ops.updateFirst(query(where("name").is("Ryan")), update("message.content","first update"), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("1. "+ user.getMessage().getContent());
+
+        // addToSet()
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().addToSet("message.tags").each("tag1", "tag2"), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("2. "+ user.getMessage().getContent());
+
+
+        ops.remove(user);
+
+
+    }
+
 
     @After
     public void tearDown() {
-        ops.remove(userTest);
+        try{
+            ops.remove(userTest);
+        }catch (Exception e){
+            logger.info("UserTest not inserted into database");
+        }
+
+
+
     }
 
 }

@@ -7,14 +7,14 @@ public class MongoUser {
     private String id;
     private String name;
     private int age;
-    private MongoMessge message;
+    private MongoMessage message;
 
 
-    public MongoMessge getMessage() {
+    public MongoMessage getMessage() {
         return message;
     }
 
-    public void setMessage(MongoMessge message) {
+    public void setMessage(MongoMessage message) {
         this.message = message;
     }
 
