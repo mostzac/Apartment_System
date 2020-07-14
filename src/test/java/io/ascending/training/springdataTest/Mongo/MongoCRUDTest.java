@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -110,9 +111,48 @@ public class MongoCRUDTest {
         logger.info("1. "+ user.getMessage().getContent());
 
         // addToSet()
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().addToSet("message.tags").each("tag1", "tag2"), MongoUser.class);
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().addToSet("message.tags").each("tag1", "tag2","tag3"), MongoUser.class);
         user = ops.findById(user.getId(), MongoUser.class);
-        logger.info("2. "+ user.getMessage().getContent());
+        logger.info("2. "+ Arrays.toString(user.getMessage().getTags()));
+
+        // inc()
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().inc("age", 5), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("3. "+ user);
+
+        // max()
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().max("age", 26), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("4. "+ user);
+
+        // min()
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().min("age", 20), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("5. "+ user);
+
+        // multiply()
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().multiply("age", 1.5), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("6. "+ user);
+
+        // The $pop operator removes the first or last element of an array. Pass $pop a value of -1 to remove the first element of an array and 1 to remove the last element in an array.
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().pop("message.tags", Update.Position.FIRST), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("7. " + Arrays.toString(user.getMessage().getTags()));
+
+        // The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
+        ops.updateFirst((query(where("name").is("Ryan"))), new Update().pullAll("message.tags", new String[]{"tag3", "tag2"}), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("8. " + Arrays.toString(user.getMessage().getTags()));
+
+        // The $push operator appends a specified value to an array.
+        ops.updateFirst((query(where("name").is("Ryan"))), new Update().push("message.tags").each("new tag1","new tag2"), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("9. " + Arrays.toString(user.getMessage().getTags()));
+
+        // rename() rename the field
+
+
 
 
         ops.remove(user);
