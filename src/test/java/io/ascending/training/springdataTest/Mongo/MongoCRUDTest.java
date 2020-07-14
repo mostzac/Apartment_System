@@ -1,5 +1,7 @@
 package io.ascending.training.springdataTest.Mongo;
 
+import com.amazonaws.services.autoscaling.model.EnabledMetric;
+import com.amazonaws.services.autoscaling.model.UpdateAutoScalingGroupRequest;
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.mongoModel.MongoMessage;
 import io.ascending.training.model.mongoModel.MongoUser;
@@ -15,6 +17,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -111,7 +114,7 @@ public class MongoCRUDTest {
         logger.info("1. "+ user.getMessage().getContent());
 
         // addToSet()
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().addToSet("message.tags").each("tag1", "tag2","tag3"), MongoUser.class);
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().addToSet("message.tags").each("tag1","tag1", "tag2","tag3"), MongoUser.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("2. "+ Arrays.toString(user.getMessage().getTags()));
 
@@ -147,10 +150,41 @@ public class MongoCRUDTest {
 
         // The $push operator appends a specified value to an array.
         ops.updateFirst((query(where("name").is("Ryan"))), new Update().push("message.tags").each("new tag1","new tag2"), MongoUser.class);
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().push("message.tags").atPosition(0).value("Push to the first"), MongoUser.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("9. " + Arrays.toString(user.getMessage().getTags()));
 
-        // rename() rename the field
+        // rename() rename the field,  in this test because changing the field the error occurs when doing the mapping.
+//        ops.updateFirst(query(where("name").is("Ryan")), new Update().rename("age", "current age"), MongoUser.class);
+//        user = ops.findById(user.getId(), MongoUser.class);
+//        logger.info("10. " + user);
+
+        // set()
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().set("message.content","new set()"), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("10. " + user.getMessage().getContent());
+
+        // setting a new field , but retrieving and mapping will not show
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().set("new field",22), MongoUser.class);
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("11. " + user);
+
+        // If an update operation with upsert: true results in an insert of a document, then $setOnInsert assigns the specified values to the fields in the document. If the update operation does not result in an insert, $setOnInsert does nothing.
+        // setOnInsert()  is a document is found will set, if not found, insert a new one
+//        ops.update(MongoUser.class).matching(query(where("name").is("new Ryan"))).apply(new Update().setOnInsert("new field 2",22)); // insert not work
+        ops.updateFirst(query(where("name").is("Ryan")), new Update().setOnInsert("new field 2",22), MongoUser.class); // will not setting a new field
+        ops.updateFirst(query(where("name").is("new Ryan")), new Update().setOnInsert("new field 2",22), MongoUser.class); // will not setting a new field
+        ops.updateFirst(query(where("name").is("new Ryan")), new Update().set("new field 2",22), MongoUser.class); // will not setting a new field
+        ops.update(MongoUser.class).matching(query(where("name").is("new Ryan"))).apply(new Update().setOnInsert("new field 2",33).setOnInsert("new field 3",35)).upsert();// insert work
+        // The $unset operator deletes a particular field. Consider the following syntax:
+        // unset()
+        ops.updateFirst(query(where("name").is("new Ryan")), new Update().unset("new field 2").unset("new field 3"), MongoUser.class); // will delete new Ryan fields
+        ops.remove(query(where("name").is("new Ryan")), "mongoUser");
+
+
+        user = ops.findById(user.getId(), MongoUser.class);
+        logger.info("12. " + user);
+
 
 
 
