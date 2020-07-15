@@ -2,8 +2,8 @@ package io.ascending.training.controller;
 
 import io.ascending.training.model.postgresModel.Package;
 import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.service.PackageService;
-import io.ascending.training.service.UserService;
+import io.ascending.training.service.postgres.PackageService;
+import io.ascending.training.service.postgres.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

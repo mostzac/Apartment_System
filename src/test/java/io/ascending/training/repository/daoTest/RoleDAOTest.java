@@ -2,7 +2,7 @@ package io.ascending.training.repository.daoTest;
 
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.postgresModel.Role;
-import io.ascending.training.repository.interfaces.RoleDAO;
+import io.ascending.training.repository.interfaces.postgres.RoleDAO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

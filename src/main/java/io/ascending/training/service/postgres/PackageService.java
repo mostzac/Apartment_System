@@ -1,7 +1,7 @@
-package io.ascending.training.service;
+package io.ascending.training.service.postgres;
 
 import io.ascending.training.model.postgresModel.Package;
-import io.ascending.training.repository.interfaces.PackageDAO;
+import io.ascending.training.repository.interfaces.postgres.PackageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package io.ascending.training.springdataTest.Mongo;
 
 import io.ascending.training.init.ApplicationBoot;
+import io.ascending.training.init.SpringDataConfig;
 import io.ascending.training.model.mongoModel.MongoMessage;
 import io.ascending.training.model.mongoModel.MongoUser;
 import org.junit.After;
@@ -11,10 +12,13 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.FindAndReplaceOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.AggregationUpdate;
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;

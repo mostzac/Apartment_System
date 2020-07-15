@@ -2,7 +2,7 @@ package io.ascending.training.jdbc;
 
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.repository.interfaces.ApartmentDAO;
+import io.ascending.training.repository.interfaces.postgres.ApartmentDAO;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

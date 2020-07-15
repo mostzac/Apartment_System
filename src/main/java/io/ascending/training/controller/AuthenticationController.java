@@ -1,7 +1,7 @@
 package io.ascending.training.controller;
 
 import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.service.UserService;
+import io.ascending.training.service.postgres.UserService;
 import io.ascending.training.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

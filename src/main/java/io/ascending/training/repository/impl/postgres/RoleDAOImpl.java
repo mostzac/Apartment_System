@@ -1,7 +1,7 @@
-package io.ascending.training.repository.impl;
+package io.ascending.training.repository.impl.postgres;
 
-import io.ascending.training.model.postgresModel.Package;
-import io.ascending.training.repository.interfaces.PackageDAO;
+import io.ascending.training.model.postgresModel.Role;
+import io.ascending.training.repository.interfaces.postgres.RoleDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,63 +12,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
-public class PackageDAOImpl implements PackageDAO {
+public class RoleDAOImpl implements RoleDAO {
     @Autowired
     private SessionFactory sessionFactory;
     
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public boolean save(Package pack) {
+    public boolean save(Role role) {
         Transaction transaction = null;
         boolean isSuccess = true;
 
-        try {
-            Session session = sessionFactory.getCurrentSession();
-            transaction = session.beginTransaction();
-            session.save(pack);
-            transaction.commit();
-        } catch (Exception e) {
-            isSuccess = false;
-            if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
-        }
-
-        if (isSuccess) logger.debug(String.format("The package %s is saved", pack.toString()));
-        return isSuccess;
-    }
-
-    @Override
-    public boolean update(Package pack) {
-        Transaction transaction = null;
-        boolean isSuccess =  true;
         try{
             Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
-            session.saveOrUpdate(pack);
+            session.save(role);
             transaction.commit();
         } catch (Exception e) {
             isSuccess = false;
             if (transaction != null) transaction.rollback();
             logger.error(e.getMessage());
         }
-        if (isSuccess) logger.debug(String.format("The package %s is updated", pack.toString()));
+
+        if (isSuccess) logger.debug(String.format("The role %s is saved", role.toString()));
         return isSuccess;
     }
 
     @Override
-    public boolean deletePackageByShipNumber(String shipNum) {
-        String hql = "DELETE Package where shipNumber = :shipNumPara";
+    public boolean update(Role role) {
+        Transaction transaction = null;
+        boolean isSuccess = true;
+
+        try{
+            Session session = sessionFactory.getCurrentSession();
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(role);
+            transaction.commit();
+        } catch (Exception e) {
+            isSuccess = false;
+            if (transaction != null) transaction.rollback();
+            logger.error(e.getMessage());
+        }
+
+        if (isSuccess) logger.debug(String.format("The role %s is updated", role.toString()));
+        return isSuccess;
+    }
+
+    @Override
+    public boolean deleteRoleByName(String roleName) {
+        String hql = "DELETE Role where name = :roleName";
         int delectedCount = 0;
         Transaction transaction = null;
 
         try {
             Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
-            Query<Package> query = session.createQuery(hql);
-            query.setParameter("shipNumPara", shipNum);
+            Query<Role> query = session.createQuery(hql);
+            query.setParameter("roleName", roleName);
             delectedCount = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
@@ -76,21 +79,21 @@ public class PackageDAOImpl implements PackageDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The package %s is deleted", shipNum));
+        logger.debug(String.format("The role %s is deleted", roleName));
         return delectedCount >= 1 ? true : false;
     }
 
     @Override
-    public boolean deletePackageById(long id) {
-        String hql = "DELETE Package where id = :idPara";
+    public boolean deleteRoleById(long id) {
+        String hql = "DELETE Role where id = :id";
         int delectedCount = 0;
         Transaction transaction = null;
 
         try {
             Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
-            Query<Package> query = session.createQuery(hql);
-            query.setParameter("idPara", id);
+            Query<Role> query = session.createQuery(hql);
+            query.setParameter("id", id);
             delectedCount = query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
@@ -98,39 +101,39 @@ public class PackageDAOImpl implements PackageDAO {
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The package %s is deleted", id));
+        logger.debug(String.format("The role %s is deleted", id));
         return delectedCount >= 1 ? true : false;
     }
 
     @Override
-    public List<Package> getPackages() {
-        String hql = "FROM Package p join fetch p.user";
-
-        try (Session session = sessionFactory.openSession()) {
-            Query<Package> query = session.createQuery(hql);
-            return query.list();
-        }
-    }
-
-    @Override
-    public Package getPackageByShipNumber(String packShipNum) {
-        //if(apartName.equals(null)) return null;
-        String hql = "FROM Package p join fetch p.user where p.shipNumber = :packShipNumPara";
+    public Role getRoleByName(String roleName) {
+        String hql = "FROM Role as r left join fetch r.users where r.name= :roleName";
+//        String hql = "FROM Role where name= :roleName";
         try (Session session = sessionFactory.openSession()){
-            Query<Package> query = session.createQuery(hql);
-            query.setParameter("packShipNumPara",packShipNum);
+            Query<Role> query = session.createQuery(hql);
+            query.setParameter("roleName",roleName);
             return query.uniqueResult();
         }
     }
 
     @Override
-    public Package getPackageById(long id) {
-        //if(apartName.equals(null)) return null;
-        String hql = "FROM Package p join fetch p.user where p.id = :id";
+    public Role getRoleById(long id) {
+        String hql = "FROM Role as r left join fetch r.users where r.id= :roleid";
+//        String hql = "FROM Role where name= :roleName";
         try (Session session = sessionFactory.openSession()){
-            Query<Package> query = session.createQuery(hql);
-            query.setParameter("id",id);
+            Query<Role> query = session.createQuery(hql);
+            query.setParameter("roleid",id);
             return query.uniqueResult();
+        }
+    }
+
+    @Override
+    public List<Role> getRoles() {
+//        String hql = "FROM Role";
+        String hql = "FROM Role as r left join fetch r.users";
+        try (Session session = sessionFactory.openSession()) { //openSession() in try block dont need to close,
+            Query<Role> query = session.createQuery(hql);
+            return query.list().stream().distinct().collect(Collectors.toList());
         }
     }
 }

@@ -2,7 +2,7 @@ package io.ascending.training.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.ascending.training.model.postgresModel.Apartment;
-import io.ascending.training.service.ApartmentService;
+import io.ascending.training.service.postgres.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
