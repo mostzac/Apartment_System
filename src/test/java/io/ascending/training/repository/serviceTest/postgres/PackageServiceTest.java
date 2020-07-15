@@ -1,4 +1,4 @@
-package io.ascending.training.repository.serviceTest;
+package io.ascending.training.repository.serviceTest.postgres;
 
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.postgresModel.Package;
