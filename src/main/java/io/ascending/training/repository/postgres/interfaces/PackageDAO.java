@@ -1,4 +1,4 @@
-package io.ascending.training.repository.interfaces.postgres;
+package io.ascending.training.repository.postgres.interfaces;
 
 import io.ascending.training.model.postgresModel.Package;
 

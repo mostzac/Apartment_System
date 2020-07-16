@@ -3,7 +3,7 @@ package io.ascending.training.jdbc;
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.postgresModel.Package;
 import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.repository.interfaces.postgres.UserDAO;
+import io.ascending.training.repository.postgres.interfaces.UserDAO;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

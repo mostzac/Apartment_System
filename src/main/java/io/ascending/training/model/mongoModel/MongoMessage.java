@@ -2,7 +2,9 @@ package io.ascending.training.model.mongoModel;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collation = "messages")
 public class MongoMessage {
     @Id
     private String id;

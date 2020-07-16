@@ -4,6 +4,7 @@ import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.postgres.UserService;
 import io.ascending.training.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import java.util.Map;
 @RequestMapping(value = {"/api/auth"})
 public class AuthenticationController {
     @Autowired
+    @Qualifier("postgresService")
     UserService userService;
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -5,6 +5,7 @@ import io.ascending.training.model.postgresModel.User;
 import io.ascending.training.service.postgres.PackageService;
 import io.ascending.training.service.postgres.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ public class PackageController {
     @Autowired
     private PackageService packageService;
     @Autowired
+    @Qualifier("postgresService")
     private UserService userService;
 
     @RequestMapping(value = "", method = RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE})

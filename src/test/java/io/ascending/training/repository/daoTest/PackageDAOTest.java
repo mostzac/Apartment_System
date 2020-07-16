@@ -2,8 +2,8 @@ package io.ascending.training.repository.daoTest;
 
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.model.postgresModel.Package;
-import io.ascending.training.repository.interfaces.postgres.PackageDAO;
-import io.ascending.training.repository.interfaces.postgres.UserDAO;
+import io.ascending.training.repository.postgres.interfaces.PackageDAO;
+import io.ascending.training.repository.postgres.interfaces.UserDAO;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

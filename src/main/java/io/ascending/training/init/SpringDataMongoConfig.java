@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+import java.util.Collection;
 
 @Configuration
-public class SpringDataConfig {
+@EnableMongoRepositories(basePackages = {"io.ascending.training.repository.mongo"})
+class SpringDataMongoConfig{
     //Configuration for the mongo client (mongodb server) to use you can specify database name
     @Bean
     public MongoClient mongoClient() {
@@ -45,7 +50,5 @@ public class SpringDataConfig {
     public MongoOperations mongoOperations() {
         return mongoTemplate();
     }
-
-
 
 }

@@ -1,7 +1,7 @@
 package io.ascending.training.service.postgres;
 
 import io.ascending.training.model.postgresModel.Role;
-import io.ascending.training.repository.interfaces.postgres.RoleDAO;
+import io.ascending.training.repository.postgres.interfaces.RoleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

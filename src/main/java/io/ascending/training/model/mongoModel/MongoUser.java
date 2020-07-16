@@ -1,7 +1,11 @@
 package io.ascending.training.model.mongoModel;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
+
+@Document(collection = "users")
 public class MongoUser {
     @Id
     private String id;

@@ -1,13 +1,13 @@
 package io.ascending.training.service.postgres;
 
 import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.repository.interfaces.postgres.UserDAO;
+import io.ascending.training.repository.postgres.interfaces.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("postgresService")
 public class UserService {
     @Autowired
     private UserDAO userDAO;

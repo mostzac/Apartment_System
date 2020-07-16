@@ -1,11 +1,8 @@
 package io.ascending.training.springdataTest.Mongo;
 
-import com.mongodb.client.MongoCollection;
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.init.SpringDataConfig;
 import io.ascending.training.model.mongoModel.MongoMessage;
 import io.ascending.training.model.mongoModel.MongoUser;
-import org.bson.Document;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,14 +11,10 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.FindAndReplaceOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.AggregationUpdate;
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
@@ -42,9 +35,10 @@ public class MongoCRUDTest {
     @Autowired
     private MongoOperations ops;
     @Autowired
-    Logger logger;
+    private Logger logger;
 
     private MongoUser userTest;
+
 
 
     @Before
@@ -76,7 +70,7 @@ public class MongoCRUDTest {
         MongoUser remove = ops.findOne((query(where("name").is("Test 2"))), MongoUser.class);
         logger.info(String.format("Deleting Test 2: %d record is deleted", ops.remove(remove).getDeletedCount()));
         //Size after deleting
-        lists = ops.findAll(MongoUser.class, "mongoUser"); //second para is the collection name
+        lists = ops.findAll(MongoUser.class); //second para is the collection name
         Assert.assertEquals(2, lists.size());
         logger.info("Records after deleting: " + lists);
         lists = ops.findAllAndRemove(query(where("_class").is(MongoUser.class.getName())), MongoUser.class);
@@ -170,8 +164,8 @@ public class MongoCRUDTest {
 
 
         // rename() rename the field,  in this test because changing the field the error occurs when doing the mapping.
-//        ops.updateFirst(query(where("name").is("Ryan")), new Update().rename("age", "current age"), MongoUser.class);
-//        user = ops.findById(user.getId(), MongoUser.class);
+//        ops.updateFirst(query(where("name").is("Ryan")), new Update().rename("age", "current age"), MongoUser.class,collection);
+//        user = ops.findById(user.getId(), MongoUser.class,collection);
 //        logger.info("10. " + user);
 
         // set()
@@ -277,17 +271,17 @@ public class MongoCRUDTest {
                 .withOptions(FindAndReplaceOptions.options().upsert().returnNew())
                 .as(MongoUser.class)
                 .findAndReplace();
-        logger.info("Replace: "+result.get());
+        logger.info("Replace: " + result.get());
 
         //querying documents:
         //using plain JSON string
         BasicQuery query = new BasicQuery("{age:{$lte:25}}");
-        List<MongoUser> lists = ops.find(query,MongoUser.class);
+        List<MongoUser> lists = ops.find(query, MongoUser.class);
         lists.sort(Comparator.comparingInt(MongoUser::getAge).reversed());
-        logger.info("JSON query Lists: "+ new ArrayList<>(lists));
+        logger.info("JSON query Lists: " + new ArrayList<>(lists));
 
         //using Mongotemplate
-        Query query1 = new Query(where("age").lte(25)).skip(0).with(Sort.by(Sort.Direction.DESC,"age"));
+        Query query1 = new Query(where("age").lte(25)).skip(0).with(Sort.by(Sort.Direction.DESC, "age"));
         query1.fields().exclude("_id");
         lists = ops.query(MongoUser.class).matching(query1).all();
         logger.info("MongoTemplate query Lists: " + lists);
@@ -295,7 +289,7 @@ public class MongoCRUDTest {
         //distinct
 //        List<Object> list = ops.query(MongoUser.class).distinct("age").all();
         List<Integer> list = ops.query(MongoUser.class).distinct("age").as(Integer.class).all();//Retrieving strongly typed distinct values
-        logger.info("Distinct: "+list);
+        logger.info("Distinct: " + list);
 
     }
 
