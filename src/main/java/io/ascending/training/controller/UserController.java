@@ -1,9 +1,9 @@
 package io.ascending.training.controller;
 
-import io.ascending.training.model.postgresModel.Apartment;
-import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.service.postgres.ApartmentService;
-import io.ascending.training.service.postgres.UserService;
+import io.ascending.training.postgres.model.Apartment;
+import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.service.ApartmentService;
+import io.ascending.training.postgres.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;

@@ -2,9 +2,9 @@ package io.ascending.training.springdataTest.Mongo;
 
 import com.mongodb.client.MongoClient;
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.mongoModel.MongoUser;
-import io.ascending.training.service.postgres.ApartmentService;
-import io.ascending.training.service.postgres.UserService;
+import io.ascending.training.mongo.model.MongoUser;
+import io.ascending.training.postgres.service.ApartmentService;
+import io.ascending.training.postgres.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

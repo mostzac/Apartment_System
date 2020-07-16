@@ -1,7 +1,7 @@
 package io.ascending.training.util;
 
-import io.ascending.training.model.postgresModel.Role;
-import io.ascending.training.model.postgresModel.User;
+import io.ascending.training.postgres.model.Role;
+import io.ascending.training.postgres.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

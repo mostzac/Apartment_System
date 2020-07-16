@@ -1,11 +1,11 @@
 package io.ascending.training.controller;
 
-import io.ascending.training.model.mongoModel.MongoUser;
-import io.ascending.training.model.postgresModel.Package;
-import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.service.postgres.ApartmentService;
-import io.ascending.training.service.postgres.PackageService;
-import io.ascending.training.service.postgres.UserService;
+import io.ascending.training.mongo.model.MongoUser;
+import io.ascending.training.postgres.model.Package;
+import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.service.ApartmentService;
+import io.ascending.training.postgres.service.PackageService;
+import io.ascending.training.postgres.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;

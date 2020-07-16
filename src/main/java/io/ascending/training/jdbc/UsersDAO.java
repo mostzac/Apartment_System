@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.ascending.training.model.postgresModel.User;
+import io.ascending.training.postgres.model.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

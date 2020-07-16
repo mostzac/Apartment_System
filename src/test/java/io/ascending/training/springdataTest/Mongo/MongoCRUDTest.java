@@ -1,8 +1,8 @@
 package io.ascending.training.springdataTest.Mongo;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.mongoModel.MongoMessage;
-import io.ascending.training.model.mongoModel.MongoUser;
+import io.ascending.training.mongo.model.MongoMessage;
+import io.ascending.training.mongo.model.MongoUser;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,6 +38,7 @@ public class MongoCRUDTest {
     private Logger logger;
 
     private MongoUser userTest;
+
 
 
 

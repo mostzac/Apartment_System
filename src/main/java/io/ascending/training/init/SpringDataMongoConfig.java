@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.Collection;
 
 @Configuration
-@EnableMongoRepositories(basePackages = {"io.ascending.training.repository.mongo"})
+@EnableMongoRepositories(basePackages = {"io.ascending.training.mongo.repository"})
 class SpringDataMongoConfig{
     //Configuration for the mongo client (mongodb server) to use you can specify database name
     @Bean

@@ -1,9 +1,9 @@
 package io.ascending.training.UtilTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.postgresModel.Role;
-import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.service.postgres.UserService;
+import io.ascending.training.postgres.model.Role;
+import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.service.UserService;
 import io.ascending.training.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.junit.Assert;

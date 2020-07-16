@@ -30,7 +30,7 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {//factory design pattern
         if (sessionFactory == null) {// singleton design pattern
             try {
-                String[] modelPackages = {"io.ascending.training.model"};
+                String[] modelPackages = {"io.ascending.training.postgres.model"};
                 String dbDriver = System.getProperty("database.driver");
                 String dbDialect = System.getProperty("database.dialect");
                 String dbUrl = System.getProperty("database.url");

@@ -1,8 +1,8 @@
 package io.ascending.training.UtilTest;
 
-import io.ascending.training.model.postgresModel.Apartment;
-import io.ascending.training.model.postgresModel.Package;
-import io.ascending.training.model.postgresModel.User;
+import io.ascending.training.postgres.model.Apartment;
+import io.ascending.training.postgres.model.Package;
+import io.ascending.training.postgres.model.User;
 import io.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

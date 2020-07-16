@@ -1,6 +1,6 @@
 package io.ascending.training.jdbc;
 
-import io.ascending.training.model.postgresModel.Apartment;
+import io.ascending.training.postgres.model.Apartment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

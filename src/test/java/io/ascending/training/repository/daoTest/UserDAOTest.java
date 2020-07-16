@@ -1,11 +1,11 @@
 package io.ascending.training.repository.daoTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.postgresModel.Role;
-import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.repository.postgres.interfaces.ApartmentDAO;
-import io.ascending.training.repository.postgres.interfaces.RoleDAO;
-import io.ascending.training.repository.postgres.interfaces.UserDAO;
+import io.ascending.training.postgres.model.Role;
+import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.repository.interfaces.ApartmentDAO;
+import io.ascending.training.postgres.repository.interfaces.RoleDAO;
+import io.ascending.training.postgres.repository.interfaces.UserDAO;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

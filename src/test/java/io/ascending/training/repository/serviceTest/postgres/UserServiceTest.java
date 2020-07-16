@@ -1,11 +1,11 @@
 package io.ascending.training.repository.serviceTest.postgres;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.postgresModel.Role;
-import io.ascending.training.model.postgresModel.User;
-import io.ascending.training.service.postgres.ApartmentService;
-import io.ascending.training.service.postgres.RoleService;
-import io.ascending.training.service.postgres.UserService;
+import io.ascending.training.postgres.model.Role;
+import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.service.ApartmentService;
+import io.ascending.training.postgres.service.RoleService;
+import io.ascending.training.postgres.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

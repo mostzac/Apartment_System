@@ -1,10 +1,10 @@
 package io.ascending.training.repository.serviceTest.mongo;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.mongoModel.MongoMessage;
-import io.ascending.training.model.mongoModel.MongoUser;
-import io.ascending.training.repository.mongo.UserRepository;
-import io.ascending.training.service.mongo.UserService;
+import io.ascending.training.mongo.model.MongoMessage;
+import io.ascending.training.mongo.model.MongoUser;
+import io.ascending.training.mongo.repository.UserRepository;
+import io.ascending.training.mongo.service.UserService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,8 +1,8 @@
 package io.ascending.training.repository.daoTest;
 
 import io.ascending.training.init.ApplicationBoot;
-import io.ascending.training.model.postgresModel.Apartment;
-import io.ascending.training.repository.postgres.interfaces.ApartmentDAO;
+import io.ascending.training.postgres.model.Apartment;
+import io.ascending.training.postgres.repository.interfaces.ApartmentDAO;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package io.ascending.training.jdbc;
 
-import io.ascending.training.model.postgresModel.Package;
+import io.ascending.training.postgres.model.Package;
 
 import java.sql.*;
 import java.time.LocalDateTime;
