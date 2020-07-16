@@ -2,6 +2,7 @@ package io.ascending.training.init;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import io.ascending.training.mongo.eventListener.UserCascadeSaveMongoEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +17,14 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.Collection;
 
 @Configuration
-@EnableMongoRepositories(basePackages = {"io.ascending.training.mongo.repository"})
-class SpringDataMongoConfig{
+@EnableMongoRepositories(basePackages = {"io.ascending.training.mongo"})
+class SpringDataMongoConfig {
     //Configuration for the mongo client (mongodb server) to use you can specify database name
     @Bean
     public MongoClient mongoClient() {
         return MongoClients.create(System.getProperty("mongodb.url"));
     }
+
     @Bean
     public MongoClientFactoryBean mongo() {
         MongoClientFactoryBean mongo = new MongoClientFactoryBean();
@@ -45,10 +47,16 @@ class SpringDataMongoConfig{
         return new MongoTemplate(mongoDatabaseFactory());
     }
 
-    //Register MongoOperation
+    //Register MongoOperation  why autowired, MongoTemple is an implementation of MongoOperations
     @Autowired
     public MongoOperations mongoOperations() {
         return mongoTemplate();
+    }
+
+    //Register UserCascadeSaveMongoEventListener
+    @Bean
+    public UserCascadeSaveMongoEventListener userCascadeSaveMongoEventListener() {
+        return new UserCascadeSaveMongoEventListener();
     }
 
 }

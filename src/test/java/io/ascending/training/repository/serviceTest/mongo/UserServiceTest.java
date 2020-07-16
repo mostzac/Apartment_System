@@ -3,6 +3,7 @@ package io.ascending.training.repository.serviceTest.mongo;
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.mongo.model.MongoMessage;
 import io.ascending.training.mongo.model.MongoUser;
+import io.ascending.training.mongo.repository.MessageRepository;
 import io.ascending.training.mongo.repository.UserRepository;
 import io.ascending.training.mongo.service.UserService;
 import org.junit.After;
@@ -29,6 +30,8 @@ public class UserServiceTest {
     private MongoUser user;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    MessageRepository messageRepository;
 
     @Before
     public void init() {
@@ -55,6 +58,7 @@ public class UserServiceTest {
     @After
     public void tearDown() {
         userRepository.deleteAll();
+        messageRepository.deleteAll();
     }
 
 

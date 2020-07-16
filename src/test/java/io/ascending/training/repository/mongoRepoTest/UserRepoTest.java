@@ -44,7 +44,7 @@ public class UserRepoTest {
         userRepository.insert(user);
         logger.info("Insert: " + user);
         user.setAge(22);
-        user.setMessage(messageRepository.insert(new MongoMessage("hello")));
+        user.setMessage(new MongoMessage("hello"));
         userRepository.save(user); //update
         logger.info("Update: " + user);
         userRepository.save(new MongoUser("userNew", 25));
@@ -69,13 +69,13 @@ public class UserRepoTest {
         list.add(new MongoUser("C", 20));
         list.add(new MongoUser("D", 20));
         MongoUser a = new MongoUser("AAA", 10);
-        a.setMessage(messageRepository.insert(new MongoMessage("i have message")));
+        a.setMessage(new MongoMessage("i have message"));
         userRepository.insert(a);
         MongoUser a1 = new MongoUser("AAA", 15);
         a1.setMessage(messageRepository.findByContent("i have message").get());
         userRepository.insert(a1);
         MongoUser b = new MongoUser("BBB", 20);
-        b.setMessage(messageRepository.insert(new MongoMessage("message 2")));
+        b.setMessage(new MongoMessage("message 2"));
         userRepository.insert(b);
         logger.info("Unsorted record: " + userRepository.insert(list));
         logger.info("Sorted :" + userRepository.findAll(sort));
@@ -96,7 +96,7 @@ public class UserRepoTest {
         userRepository.insert(user);
         logger.info("Insert: " + user);
         user.setAge(22);
-        user.setMessage(messageRepository.insert(new MongoMessage("hello")));
+        user.setMessage(new MongoMessage("hello"));
         userRepository.save(user); //update
         logger.info("Save: " + user);
         MongoMessage msg= messageRepository.findByContent("hello").get();
