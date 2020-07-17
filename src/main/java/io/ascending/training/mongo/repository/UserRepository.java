@@ -12,8 +12,8 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<MongoUser, String> {
     Optional<MongoUser> findByName(String name);
 
-    @Query(value="{'message':{'$ref':'messages','$id':?0}}",fields="{'_id':0}",sort="{'age':-1}")
-    Streamable<MongoUser> findAllByMessageContainsContent(String id);
+    @Query(value="{'message.content':?0}",fields="{'_id':0}",sort="{'age':-1}")
+    Streamable<MongoUser> findAllByMessageContainsContent(String content);
 
 
     //Containing on Collection

@@ -1,16 +1,21 @@
 package io.ascending.training.mongo.model;
 
+import io.ascending.training.mongo.config.annotaion.CascadeSave;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
+
 @Document(collection = "users")
-public class MongoUser {
+public class MongoUser implements Serializable {
     @Id
     private String id;
     private String name;
     private int age;
     @DBRef
+    @CascadeSave
     private MongoMessage message;
 
 

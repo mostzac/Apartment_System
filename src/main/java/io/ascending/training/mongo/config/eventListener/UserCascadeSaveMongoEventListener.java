@@ -1,4 +1,4 @@
-package io.ascending.training.mongo.eventListener;
+package io.ascending.training.mongo.config.eventListener;
 
 import io.ascending.training.mongo.model.MongoMessage;
 import io.ascending.training.mongo.model.MongoUser;
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 
 
-// saving the user and message in the meantime, but in user document message field remains DBref
+// saving the user and message in the meantime, but in user document message field remains DBRef
 public class UserCascadeSaveMongoEventListener extends AbstractMongoEventListener<Object> {
     @Autowired
     MessageRepository messageRepository;
