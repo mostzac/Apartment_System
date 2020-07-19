@@ -2,6 +2,7 @@ package io.ascending.training.mongo.config;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import io.ascending.training.mongo.config.converter.UserReadConverter;
 import io.ascending.training.mongo.config.converter.UserWriteConverter;
 import io.ascending.training.mongo.config.eventListener.CascadeSaveMongoEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,7 @@ class SpringDataMongoConfig extends AbstractMongoClientConfiguration {
     public MongoCustomConversions customConversions() {
         final List<Converter<?, ?>> converterList = new ArrayList<>();
         converterList.add(new UserWriteConverter());
+//        converterList.add(new UserReadConverter());
         return new MongoCustomConversions(converterList);
     }
 

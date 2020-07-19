@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
@@ -54,6 +55,14 @@ public class MongoCascadeConverterTest {
         ops.insert(user);
         MongoUser newUser = new MongoUser("new User", 25);
         ops.insert(newUser);
+        MongoUser newUser1 = new MongoUser("newUser2", 26);
+        newUser1.setMessage(messageRepository.findByContent("new Message").get());
+        ops.insert(newUser1);
+        List<MongoUser> list = userRepository.findAll();
+        newUser = userRepository.findByName("userTest").get();
+        logger.info("Read: "+newUser);
+        logger.info("Find: "+list);
+        logger.info("Find message:"+userRepository.findAllByMessageContainsContent("new Message"));
     }
 
 
@@ -61,7 +70,7 @@ public class MongoCascadeConverterTest {
 
     @After
     public void tearDown() {
-//        userRepository.deleteAll();
-//        messageRepository.deleteAll();
+        userRepository.deleteAll();
+        messageRepository.deleteAll();
     }
 }

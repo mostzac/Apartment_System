@@ -81,10 +81,10 @@ public class UserRepoTest {
         logger.info("Sorted :" + userRepository.findAll(sort));
         logger.info("Example query: " + userRepository.findAll(userExample));
         logger.info("FindByMessageContainsContent: " + userRepository.findAllByMessageContainsContent("i have message").stream().collect(Collectors.toList()));
-        logger.info("Streamable user: " + userRepository.findAllByMessageContainsContent("i have message")
-                .and(userRepository.findAllByMessageContainsContent("message 2")).stream().collect(Collectors.toList()));
-        logger.info("Streamable map to content: " + userRepository.findAllByMessageContainsContent("i have message")
-                .and(userRepository.findAllByMessageContainsContent("message 2")).stream().map(MongoUser::getMessage).map(MongoMessage::getContent).collect(Collectors.joining(", ")));
+//        logger.info("Streamable user: " + userRepository.findAllByMessageContainsContent("i have message")
+//                .and(userRepository.findAllByMessageContainsContent("message 2")).stream().collect(Collectors.toList()));
+//        logger.info("Streamable map to content: " + userRepository.findAllByMessageContainsContent("i have message")
+//                .and(userRepository.findAllByMessageContainsContent("message 2")).stream().map(MongoUser::getMessage).map(MongoMessage::getContent).collect(Collectors.joining(", ")));
         logger.info("Page: " + userRepository.findAll(PageRequest.of(0, 3, Sort.by("age").ascending())).getContent());
         logger.info("Contains: " + userRepository.findByMessageContains(messageRepository.findByContent("i have message").get()));
         logger.info("Containing: " + userRepository.findByMessageContaining(messageRepository.findByContent("i have message").get()));

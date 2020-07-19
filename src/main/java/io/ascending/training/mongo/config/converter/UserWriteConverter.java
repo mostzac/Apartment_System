@@ -10,7 +10,7 @@ import org.springframework.data.convert.WritingConverter;
 import org.springframework.stereotype.Component;
 
 
-@Component
+//@Component
 @WritingConverter
 public class UserWriteConverter implements Converter<MongoUser, Document> {
     @Override
@@ -20,9 +20,9 @@ public class UserWriteConverter implements Converter<MongoUser, Document> {
         document.put("age",mongoUser.getAge());
         if (mongoUser.getMessage() != null) {
             final Document messageDocument = new Document();
+            messageDocument.put("_id",  mongoUser.getMessage().getId());
             messageDocument.put("content",mongoUser.getMessage().getContent());
             messageDocument.put("tags", mongoUser.getMessage().getTags());
-            messageDocument.put("_id",  mongoUser.getMessage().getId());
             document.put("message", messageDocument);
         }
 //        dbObject.removeField("_class");
