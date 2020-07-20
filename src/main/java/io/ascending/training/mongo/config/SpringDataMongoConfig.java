@@ -101,4 +101,9 @@ class SpringDataMongoConfig extends AbstractMongoClientConfiguration {
         return new MongoCustomConversions(converterList);
     }
 
+    //enable auto indexing
+    @Override
+    protected boolean autoIndexCreation() {
+        return true;
+    }
 }
