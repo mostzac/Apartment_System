@@ -114,12 +114,13 @@ public class MongoCRUDTest {
         ops.insert(user);
         logger.info("Original Message: " + user.getMessage().getContent());
 
-        ops.updateFirst(query(where("name").is("Ryan")), update("message.content", "first update"), MongoUser.class);
+//        ops.updateFirst(query(where("name").is("Ryan")), update("message.content", "first update"), MongoUser.class);
         user = ops.findById(user.getId(), MongoUser.class);
-        logger.info("1. " + user.getMessage().getContent());
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), update("content", "first update"), MongoMessage.class);
+        logger.info("1. " + ops.findById(user.getId(), MongoUser.class).getMessage().getContent());
 
         // addToSet()
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().addToSet("message.tags").each("tag1", "tag1", "tag2", "tag3"), MongoUser.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().addToSet("tags").each("tag1", "tag1", "tag2", "tag3"), MongoMessage.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("2. " + Arrays.toString(user.getMessage().getTags()));
 
@@ -144,22 +145,22 @@ public class MongoCRUDTest {
         logger.info("6. " + user);
 
         // The $pop operator removes the first or last element of an array. Pass $pop a value of -1 to remove the first element of an array and 1 to remove the last element in an array.
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().pop("message.tags", Update.Position.FIRST), MongoUser.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().pop("tags", Update.Position.FIRST), MongoMessage.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("7. " + Arrays.toString(user.getMessage().getTags()));
 
         // The $pull operator removes from an existing array all instances of a value or values that match a specified condition.
-        ops.updateFirst((query(where("name").is("Ryan"))), new Update().pullAll("message.tags", new String[]{"tag3", "tag2"}), MongoUser.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().pullAll("tags", new String[]{"tag3", "tag2"}), MongoMessage.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("8. " + Arrays.toString(user.getMessage().getTags()));
 
         // The $push operator appends a specified value to an array.
-        ops.updateFirst((query(where("name").is("Ryan"))), new Update().push("message.tags").each("new tag1", "new tag2"), MongoUser.class);
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().push("message.tags").atPosition(0).value("Push to the first"), MongoUser.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().push("tags").each("new tag1", "new tag2"), MongoMessage.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().push("tags").atPosition(0).value("Push to the first"), MongoMessage.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("9. " + Arrays.toString(user.getMessage().getTags()));
         //The $slice modifier limits the number of array elements during a $push operation.
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().push("message.tags").slice(-3).each("slice 0", "slice 1"), MongoUser.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().push("tags").slice(-3).each("slice 0", "slice 1"), MongoMessage.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("9.1.slice: " + Arrays.toString(user.getMessage().getTags()));
 
@@ -170,7 +171,7 @@ public class MongoCRUDTest {
 //        logger.info("10. " + user);
 
         // set()
-        ops.updateFirst(query(where("name").is("Ryan")), new Update().set("message.content", "new set()"), MongoUser.class);
+        ops.updateFirst(query(where("_id").is(user.getMessage().getId())), new Update().set("content", "new set()"), MongoMessage.class);
         user = ops.findById(user.getId(), MongoUser.class);
         logger.info("10. " + user.getMessage().getContent());
 
@@ -298,6 +299,7 @@ public class MongoCRUDTest {
     @After
     public void tearDown() {
         ops.remove(new Query(), MongoUser.class);
+        ops.remove(new Query(), MongoMessage.class);
     }
 
 }
