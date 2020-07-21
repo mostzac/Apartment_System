@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <flyway.version>6.0.3</flyway.version>
+        <flyway.version>6.5.1</flyway.version>
         <org.slf4j-version>1.7.25</org.slf4j-version>
         <starter-class>io.ascending.training.init.ApplicationBoot</starter-class>
     </properties>
@@ -241,10 +241,10 @@
                     <artifactId>flyway-maven-plugin</artifactId>
                     <version>${flyway.version}</version>
                     <configuration>
-                        <driver>${database.driver}</driver>
                         <url>${database.url}</url>
                         <user>${database.user}</user>
                         <password>${database.password}</password>
+                        <driver>${database.driver}</driver>
                         <schemas>
                             <schema>public</schema>
                         </schemas>

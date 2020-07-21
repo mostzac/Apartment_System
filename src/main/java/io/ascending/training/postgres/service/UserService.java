@@ -1,18 +1,27 @@
 package io.ascending.training.postgres.service;
 
+import io.ascending.training.postgres.model.Role;
 import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.repository.interfaces.RoleDAO;
 import io.ascending.training.postgres.repository.interfaces.UserDAO;
+import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("postgresService")
 public class UserService {
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private RoleDAO roleDAO;
 
     public boolean save(User u){
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleDAO.getRoleByName("MongoUser"));
+        u.setRoles(roles);
         return (userDAO.save(u));
     }
 

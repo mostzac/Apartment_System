@@ -72,6 +72,26 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    public void cascadeDeleteTest() {
+        MongoUser user = new MongoUser("userTest", 20);
+        user.setMessage(new MongoMessage("original"));
+        userService.insert(user);
+        logger.info("Insert: " + user);
+        user.setAge(22);
+        user.setMessage(new MongoMessage("hello"));
+        userService.save(user); //update
+        logger.info("Save: " + user);
+        MongoUser user1 = new MongoUser("userNew", 20);
+        user1.setMessage(new MongoMessage("hello"));
+        userService.insert(user1);
+        logger.info("");
+        messageRepository.delete(user1.getMessage());
+        logger.info("");
+        Assert.assertNull(userService.findByName("userNew").getMessage());
+
+    }
+
     @After
     public void tearDown() {
         userRepository.deleteAll();

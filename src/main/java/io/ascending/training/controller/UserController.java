@@ -1,14 +1,17 @@
 package io.ascending.training.controller;
 
 import io.ascending.training.postgres.model.Apartment;
+import io.ascending.training.postgres.model.Role;
 import io.ascending.training.postgres.model.User;
 import io.ascending.training.postgres.service.ApartmentService;
+import io.ascending.training.postgres.service.RoleService;
 import io.ascending.training.postgres.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
