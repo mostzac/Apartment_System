@@ -42,7 +42,7 @@ public class MongoCascadeConverterTest {
         user.setMessage(new MongoMessage("new Message"));
         userRepository.insert(user);
         MongoUser newUser = new MongoUser("new User", 25);
-        newUser.setMessage(new MongoMessage("new Message"));
+        newUser.setMessage(messageRepository.findByContent("new Message").get());
         userRepository.insert(newUser);
         logger.info("User: "+userRepository.findAllByMessageContainsContent("new Message").stream().collect(Collectors.toList()));
         logger.info("Message: "+messageRepository.findByContent("new Message").get().getContent());

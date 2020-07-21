@@ -71,7 +71,7 @@ public class MongoBeanTest {
         MongoOperations ops = new MongoTemplate(mongoDatabaseFactory);
         ops.insert(new MongoUser("mongoDatabaseFactoryTest", 10));
         logger.info(ops.findOne(new Query(where("name").is("mongoDatabaseFactoryTest")), MongoUser.class).toString());
-        ops.dropCollection("mongoUser");
+        ops.remove(new Query(), MongoUser.class);
     }
 
     @Test

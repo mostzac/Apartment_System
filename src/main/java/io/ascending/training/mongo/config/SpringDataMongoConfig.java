@@ -83,23 +83,17 @@ class SpringDataMongoConfig extends AbstractMongoClientConfiguration {
         return new CascadeSaveMongoEventListener();
     }
 
-//    @Override
-//    protected void configureConverters(MongoCustomConversions.MongoConverterConfigurationAdapter adapter) {
+    @Override
+    protected void configureConverters(MongoCustomConversions.MongoConverterConfigurationAdapter adapter) {
 //        adapter.registerConverter(new UserWriteConverter());
-//    }
-//    @Bean
+    }
+//    @Override
 //    public MongoCustomConversions customConversions() {
 //        final List<Converter<?, ?>> converterList = new ArrayList<>();
 //        converterList.add(new UserWriteConverter());
+////        converterList.add(new UserReadConverter());
 //        return new MongoCustomConversions(converterList);
 //    }
-    @Override
-    public MongoCustomConversions customConversions() {
-        final List<Converter<?, ?>> converterList = new ArrayList<>();
-        converterList.add(new UserWriteConverter());
-//        converterList.add(new UserReadConverter());
-        return new MongoCustomConversions(converterList);
-    }
 
     //enable auto indexing
     @Override

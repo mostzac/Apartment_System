@@ -80,14 +80,18 @@ public class UserRepoTest {
         logger.info("Unsorted record: " + userRepository.insert(list));
         logger.info("Sorted :" + userRepository.findAll(sort));
         logger.info("Example query: " + userRepository.findAll(userExample));
-        logger.info("FindByMessageContainsContent: " + userRepository.findAllByMessageContainsContent("i have message").stream().collect(Collectors.toList()));
+//        logger.info("FindByMessageContainsContent: " + userRepository.findAllByMessageContainsContent("i have message").stream().collect(Collectors.toList()));
+        logger.info("FindByMessageContainsContent: " + userRepository.findAllByMessageContainsContent("i have message"));
+
 //        logger.info("Streamable user: " + userRepository.findAllByMessageContainsContent("i have message")
 //                .and(userRepository.findAllByMessageContainsContent("message 2")).stream().collect(Collectors.toList()));
 //        logger.info("Streamable map to content: " + userRepository.findAllByMessageContainsContent("i have message")
 //                .and(userRepository.findAllByMessageContainsContent("message 2")).stream().map(MongoUser::getMessage).map(MongoMessage::getContent).collect(Collectors.joining(", ")));
         logger.info("Page: " + userRepository.findAll(PageRequest.of(0, 3, Sort.by("age").ascending())).getContent());
-        logger.info("Contains: " + userRepository.findByMessageContains(messageRepository.findByContent("i have message").get()));
-        logger.info("Containing: " + userRepository.findByMessageContaining(messageRepository.findByContent("i have message").get()));
+        MongoMessage contain = messageRepository.findByContent("i have message").get();
+//        user = userRepository.findByMessageContains(contain);
+//        logger.info("Contains: " + userRepository.findByMessageContains(contain));
+        logger.info("Containing: " + userRepository.findAllByMessageContainingByMessageContaining(contain));
 
     }
 
@@ -100,9 +104,9 @@ public class UserRepoTest {
         userRepository.save(user); //update
         logger.info("Save: " + user);
         MongoMessage msg= messageRepository.findByContent("hello").get();
-        logger.info("findByMessageContains: " + userRepository.findByMessageContains(msg));
-        logger.info("findByMessageContaining: " + userRepository.findByMessageContaining(msg));
-        logger.info("findAllByMessageContainsContent" + userRepository.findAllByMessageContainsContent(msg.getId()));
+//        logger.info("findByMessageContains: " + userRepository.findByMessageContains(msg));
+        logger.info("findByMessageContaining: " + userRepository.findAllByMessageContainingByMessageContaining(msg));
+        logger.info("findAllByMessageContainsContent" + userRepository.findAllByMessageContainsContent(msg.getContent()));
     }
 
 

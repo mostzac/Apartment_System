@@ -2,6 +2,9 @@ package io.ascending.training.mongo.model;
 
 import io.ascending.training.mongo.config.annotaion.CascadeSave;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,9 +12,13 @@ import java.io.Serializable;
 
 
 @Document(collection = "users")
+@CompoundIndexes({
+        @CompoundIndex(name = "name_age", def = "{'name' : 1, 'age': 1}")
+})
 public class MongoUser implements Serializable {
     @Id
     private String id;
+//    @Indexed(unique = true)
     private String name;
     private int age;
     @DBRef

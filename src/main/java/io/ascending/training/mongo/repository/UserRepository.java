@@ -5,6 +5,7 @@ import io.ascending.training.mongo.model.MongoMessage;
 import io.ascending.training.mongo.model.MongoUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.repository.DeleteQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -32,9 +33,11 @@ public interface UserRepository extends MongoRepository<MongoUser, String> {
 
 
     //Containing on Collection
-    MongoUser findByMessageContaining(MongoMessage message);
+    default List<MongoUser> findAllByMessageContainingByMessageContaining(MongoMessage message) {
+        return findAll().stream().filter(user -> user.getMessage() != null && user.getMessage().getId().equals(message.getId())).collect(Collectors.toList());
+    }
 
-    MongoUser findByMessageContains(MongoMessage message);
+//    MongoUser findAllByMessageContainsByMessageContains(MongoMessage message);
 
     //    MongoUser findById(String id);
 //    List<MongoUser> getUsers();

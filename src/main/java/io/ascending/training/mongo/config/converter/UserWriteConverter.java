@@ -5,17 +5,25 @@ import com.mongodb.DBObject;
 import io.ascending.training.mongo.model.MongoUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
+
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 
 //@Component
+// using like this save() method will not update the original document
 @WritingConverter
 public class UserWriteConverter implements Converter<MongoUser, Document> {
+
     @Override
     public Document convert(final MongoUser mongoUser) {
         final Document document = new Document();
+//        document.put("_id", mongoUser.getId());
         document.put("name", mongoUser.getName());
         document.put("age",mongoUser.getAge());
         if (mongoUser.getMessage() != null) {

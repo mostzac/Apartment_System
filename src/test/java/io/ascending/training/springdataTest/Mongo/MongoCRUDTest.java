@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationUpdate;
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
 import org.springframework.data.mongodb.core.query.*;
+import org.springframework.messaging.Message;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
@@ -38,8 +39,6 @@ public class MongoCRUDTest {
     private Logger logger;
 
     private MongoUser userTest;
-
-
 
 
     @Before
@@ -91,8 +90,14 @@ public class MongoCRUDTest {
         //update message
         //upsert() If document is matched, update it, else create a new document by combining the query and update object, it’s works like findAndModifyElseCreate() 🙂
 //        ops.update(MongoUser.class).inCollection("mongoUser").matching(query(where("name").is("UserTest"))).apply(update("message","updated message")).upsert();
-        ops.update(MongoUser.class).inCollection("mongoUser").matching(query(where("name").is("UserTest"))).apply(update("message", "updated message")).first();
+//        ops.update(MongoUser.class).inCollection("users").matching(query(where("name").is("UserTest"))).apply(update("message", "updated message")).first();
+        // update message:
+        MongoUser updateUser = ops.findOne(query(where("name").is("UserTest")), MongoUser.class);
+        updateUser.setMessage(new MongoMessage("updated messages"));
+// ops.update(MongoMessage.class).inCollection("messages").matching(query(where("_id").is(updateUser.getMessage().getId()))).apply(update("content","updated messages")).upsert();
+        ops.save(updateUser);
         logger.info("Updating message: " + ops.findOne(query(where("name").is("UserTest")), MongoUser.class).getMessage().getContent());
+
     }
 
     @Test

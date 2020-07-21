@@ -55,6 +55,23 @@ public class UserServiceTest {
         logger.info("After deleting userTest: " + userService.findAll());
     }
 
+    @Test
+    public void insertSaveWithMessage() {
+        userService.insert(user);
+        user.setMessage(new MongoMessage("hello"));
+        Assert.assertEquals(user.getMessage().getContent(),userService.save(user).getMessage().getContent());
+        MongoUser newUser = new MongoUser("newUser", 10);
+        newUser.setMessage(new MongoMessage("hello"));
+        Assert.assertTrue(user.getMessage().getId().equals(userService.insert(newUser).getMessage().getId()));
+        newUser.setMessage(new MongoMessage("new Message"));
+        userService.save(newUser);
+        Assert.assertFalse(user.getMessage().getId().equals(newUser.getMessage().getId()));
+        newUser.setAge(25);
+        logger.info("updated: "+userService.update(newUser));
+        Assert.assertTrue(newUser.getMessage().getId().equals(userService.update(newUser).getMessage().getId()));
+
+    }
+
     @After
     public void tearDown() {
         userRepository.deleteAll();
