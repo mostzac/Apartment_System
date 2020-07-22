@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class MongoUser implements Serializable {
     @Id
     private String id;
-//    @Indexed(unique = true)
+    //    @Indexed(unique = true)
     private String name;
     private int age;
     @DBRef
@@ -45,6 +45,10 @@ public class MongoUser implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setAge(int age) {

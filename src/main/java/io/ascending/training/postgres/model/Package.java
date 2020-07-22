@@ -34,7 +34,7 @@ public class Package {
     @Column
     private String notes;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

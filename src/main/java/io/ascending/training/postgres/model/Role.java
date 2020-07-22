@@ -39,8 +39,8 @@ public class Role {
     private boolean allowedDelete;
 
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnore
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private List<User> users;
 
     public Role(String name, String allowedResource, boolean allowedRead, boolean allowedCreate, boolean allowedUpdate, boolean allowedDelete) {

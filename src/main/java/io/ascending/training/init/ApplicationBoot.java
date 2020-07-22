@@ -3,6 +3,7 @@ package io.ascending.training.init;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import io.ascending.training.util.HibernateUtil;
@@ -41,7 +42,10 @@ public class ApplicationBoot {
         return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
     }
 
-
+    @Bean
+    public Hibernate5Module hibernate5Module() {
+        return new Hibernate5Module();
+    }
 
 
 }

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserController {
     @Autowired
-    @Qualifier("postgresService")
     private UserService userService;
     @Autowired
     private ApartmentService apartmentService;
@@ -58,8 +58,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{uid}",method = RequestMethod.PUT,consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean updateUser(@RequestBody User user,@PathVariable(name = "uid")long id){
+    public Boolean updateUser(@RequestBody User user,@PathVariable(name = "uid")long id,@RequestParam Optional<String> aptName){
         user.setId(id);
+        if (aptName.isPresent()) {
+            user.setApartment(apartmentService.getApartmentByName(aptName.get()));
+        } else {
+            user.setApartment(userService.getUserById(id).getApartment());
+        }
+
         return userService.update(user);
     }
 

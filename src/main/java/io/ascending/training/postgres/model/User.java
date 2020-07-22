@@ -31,8 +31,9 @@ public class User {
     @Column
     private String room;
 
-    @JsonIgnore
-    @ManyToOne
+//    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apartmentId")
     private Apartment apartment;
 
