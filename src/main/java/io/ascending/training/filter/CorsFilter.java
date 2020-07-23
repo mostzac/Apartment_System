@@ -36,7 +36,6 @@ public class CorsFilter implements Filter {
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST, PATCH");
         // config for swagger ui
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers", "Content-Type, api_key, Authorization");
-
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         //For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake

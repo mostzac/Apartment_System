@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 
 @SpringBootApplication(scanBasePackages = {"io.ascending.training"})
 @ServletComponentScan(basePackages = {"io.ascending.training.filter"})
+//@EnableSwagger2
 public class ApplicationBoot {
     public static void main(String[] args){
         SpringApplication.run(ApplicationBoot.class, args);
