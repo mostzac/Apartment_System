@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = {"/files"})
+@RequestMapping(value = {"/api/files"})
 public class FileController {
     @Autowired
     private FileService fileService;

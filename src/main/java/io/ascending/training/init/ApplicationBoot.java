@@ -18,6 +18,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,8 +1,6 @@
 package io.ascending.training.postgres.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,7 +19,7 @@ public class User {
     @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String account;
-    @JsonView(Apartment.ApartmentUsersView.class)
+//    @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String password;
     @JsonView(Apartment.ApartmentUsersView.class)
@@ -32,17 +30,20 @@ public class User {
     private String room;
 
 //    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonBackReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apartmentId")
     private Apartment apartment;
 
     //    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Package> packages;
 
     @JsonView(Apartment.ApartmentUsersView.class)
+    @JsonBackReference
     //    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
@@ -110,11 +111,11 @@ public class User {
     }
 
     public Set<Package> getPackages() {
-        try {
-            int size = packages.size();
-        } catch (Exception e) {
-            return null;
-        }
+//        try {
+//            int size = packages.size();
+//        } catch (Exception e) {
+//            return null;
+//        }
         return packages;
     }
 

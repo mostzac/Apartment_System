@@ -1,5 +1,6 @@
 package io.ascending.training.postgres.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -34,7 +35,8 @@ public class Package {
     @Column
     private String notes;
 
-//    @JsonIgnore
+    @JsonIgnore
+//    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

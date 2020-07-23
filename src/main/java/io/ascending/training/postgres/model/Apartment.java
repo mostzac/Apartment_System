@@ -2,6 +2,7 @@ package io.ascending.training.postgres.model;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -32,7 +33,8 @@ public class Apartment {
     private String address;
 
     //    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonView(ApartmentUsersView.class)
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<User> users;

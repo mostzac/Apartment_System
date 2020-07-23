@@ -19,8 +19,9 @@ public class SecurityFilter implements Filter {
     private Logger logger;
 
     private final String AUTH_URI = "/api/auth";
-    private final String SOCK_URL = "/myWebSocket";
-    private final String TEST_URL = "/test";
+    private final String SOCK_URL = "/api/myWebSocket";
+    private final String TEST_URL = "/api/test";
+    private final String API_ENTRY_URL = "/api";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -54,7 +55,7 @@ public class SecurityFilter implements Filter {
 //        String WebSocketToken = req.getParameter("token");
 
 //        if (uri.equalsIgnoreCase(AUTH_URI)||WebSocketToken.isEmpty()==false) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
-        if (uri.startsWith(TEST_URL)||uri.equalsIgnoreCase(AUTH_URI)||uri.startsWith(SOCK_URL)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
+        if (!uri.startsWith(API_ENTRY_URL)||uri.startsWith(TEST_URL)||uri.startsWith(SOCK_URL)||uri.equalsIgnoreCase(AUTH_URI)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
 
         try {
             String origin = req.getHeader("Authorization");

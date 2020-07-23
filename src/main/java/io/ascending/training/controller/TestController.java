@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = {"/test"})
+@RequestMapping(value = {"/api/test"})
 public class TestController {
     @Autowired
     private ApartmentService apartmentService;

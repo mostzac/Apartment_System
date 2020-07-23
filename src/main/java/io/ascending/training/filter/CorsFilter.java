@@ -10,7 +10,7 @@ import java.io.IOException;
 public class CorsFilter implements Filter {
 
 
-    public CorsFilter(){
+    public CorsFilter() {
 
     }
 
@@ -30,20 +30,23 @@ public class CorsFilter implements Filter {
         System.out.println("CORSFilter HTTP Request: " + request.getMethod());
 
         //Authorize(allow) all domains to consume the content
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Credentials", "true");
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST, PATCH");
+        // config for swagger ui
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers", "Content-Type, api_key, Authorization");
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         //For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
-        if(request.getMethod().equals("OPTIONS")){
+        if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
             return;
         }
 
         //pass the request along hte filter chain
-        filterChain.doFilter(request,servletResponse);
+        filterChain.doFilter(request, servletResponse);
     }
 }
 

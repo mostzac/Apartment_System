@@ -1,7 +1,6 @@
 package io.ascending.training.postgres.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 public class Role {
     @JsonView(Apartment.ApartmentUsersView.class)
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @JsonView(Apartment.ApartmentUsersView.class)
@@ -39,8 +38,10 @@ public class Role {
     private boolean allowedDelete;
 
 
-//    @JsonIgnore
-    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    //    @JsonIgnore
+    @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 
     public Role(String name, String allowedResource, boolean allowedRead, boolean allowedCreate, boolean allowedUpdate, boolean allowedDelete) {
@@ -52,7 +53,8 @@ public class Role {
         this.allowedDelete = allowedDelete;
     }
 
-    public Role(){}
+    public Role() {
+    }
 
     public long getId() {
         return id;

@@ -167,8 +167,18 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5 -->
         <dependency>
@@ -176,6 +186,8 @@
             <artifactId>jackson-datatype-hibernate5</artifactId>
             <version>2.11.1</version>
         </dependency>
+
+
 
 
     </dependencies>
