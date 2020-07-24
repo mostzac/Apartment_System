@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/packs")
@@ -30,19 +31,9 @@ public class PackageController {
         return packageService.getPackageById(id);
     }
 
-    @RequestMapping(value = "/pack/{packId}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean deletePackageById(@PathVariable(name = "packId") long id) {
-        return packageService.deletePackageById(id);
-    }
-
     @RequestMapping(value = "/pack", method = RequestMethod.GET, params = "shipNum", produces = MediaType.APPLICATION_JSON_VALUE)
     public Package getPackageByShipNumber(@RequestParam(name = "shipNum") String shipNum) {
         return packageService.getPackageByShipNumber(shipNum);
-    }
-
-    @RequestMapping(value = "/pack", method = RequestMethod.DELETE, params = "shipNum", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Boolean deletePackageByShipNumber(@RequestParam(name = "shipNum") String shipNum) {
-        return packageService.deletePackageByShipNumber(shipNum);
     }
 
     @RequestMapping(value = "/pack", method = RequestMethod.POST,params = "userAccount",consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -53,8 +44,28 @@ public class PackageController {
     }
 
     @RequestMapping(value = "/pack/{packId}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean updatePackage(@RequestBody Package pack, @PathVariable(name = "packId") long id) {
-        pack.setId(id);
-        return packageService.update(pack);
+    public Boolean updatePackage(@RequestBody Package pack, @PathVariable(name = "packId") long id, @RequestParam Optional<String> userAccount) {
+        try {
+            pack.setId(id);
+            if (userAccount.isPresent()) {
+                pack.setUser(userService.getUserByAccount(userAccount.get()));
+            } else {
+                pack.setUser(packageService.getPackageById(id).getUser());
+            }
+            return packageService.update(pack);
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+
+    @RequestMapping(value = "/pack/{packId}", method = RequestMethod.DELETE)
+    public Boolean deletePackageById(@PathVariable(name = "packId") long id) {
+        return packageService.deletePackageById(id);
+    }
+
+    @RequestMapping(value = "/pack", method = RequestMethod.DELETE, params = "shipNum")
+    public Boolean deletePackageByShipNumber(@RequestParam(name = "shipNum") String shipNum) {
+        return packageService.deletePackageByShipNumber(shipNum);
     }
 }

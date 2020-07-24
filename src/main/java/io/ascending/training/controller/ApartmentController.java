@@ -29,11 +29,6 @@ public class ApartmentController {
         return apartmentService.getApartmentById(id);
     }
 
-//    @JsonView(Apartment.ApartmentUsersView.class)
-    @RequestMapping(value = "/apt/{aptId}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean deleteApartmentById(@PathVariable(name = "aptId") long id) {
-        return apartmentService.deleteApartmentById(id);
-    }
 
     @JsonView(Apartment.ApartmentUsersView.class)
     @RequestMapping(value = "/apt", method = RequestMethod.GET, params = "aptName", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,11 +36,6 @@ public class ApartmentController {
         return apartmentService.getApartmentByName(aptName);
     }
 
-//    @JsonView(Apartment.ApartmentUsersView.class)
-    @RequestMapping(value = "/apt", method = RequestMethod.DELETE, params = "aptName", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean deleteApartmentByName(@RequestParam(name = "aptName") String aptName) {
-        return apartmentService.deleteApartmentByName(aptName);
-    }
 
 //    @JsonView(Apartment.ApartmentUsersView.class)
     @RequestMapping(value = "/apt", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -58,6 +48,18 @@ public class ApartmentController {
     public Boolean updateApartment(@RequestBody Apartment apt, @PathVariable(name = "aptId") long id) {
         apt.setId(id);
         return apartmentService.update(apt);
+    }
+
+    //    @JsonView(Apartment.ApartmentUsersView.class)
+    @RequestMapping(value = "/apt/{aptId}", method = RequestMethod.DELETE)
+    public Boolean deleteApartmentById(@PathVariable(name = "aptId") long id) {
+        return apartmentService.deleteApartmentById(id);
+    }
+
+    //    @JsonView(Apartment.ApartmentUsersView.class)
+    @RequestMapping(value = "/apt", method = RequestMethod.DELETE, params = "aptName")
+    public boolean deleteApartmentByName(@RequestParam(name = "aptName") String aptName) {
+        return apartmentService.deleteApartmentByName(aptName);
     }
 
 

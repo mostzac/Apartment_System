@@ -39,17 +39,6 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/user", method = RequestMethod.DELETE, params = {"Account"}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean deleteUserByAccount(@RequestParam(name = "Account") String p1) {
-        return userService.deleteUserByAccount(p1);
-    }
-
-    @RequestMapping(value = "/user/{uid}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public Boolean deleteUserById(@PathVariable(name = "uid") long id) {
-        return userService.deleteUserById(id);
-    }
-
-
     @RequestMapping(value = "/user", method = RequestMethod.POST, params = {"aptName"}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Boolean createUser(@RequestBody User user, @RequestParam(name = "aptName") String aptName) {
         Apartment apartment = apartmentService.getApartmentByName(aptName);
@@ -59,14 +48,42 @@ public class UserController {
 
     @RequestMapping(value = "/user/{uid}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public Boolean updateUser(@RequestBody User user, @PathVariable(name = "uid") long id, @RequestParam Optional<String> aptName) {
-        user.setId(id);
-        if (aptName.isPresent()) {
-            user.setApartment(apartmentService.getApartmentByName(aptName.get()));
-        } else {
-            user.setApartment(userService.getUserById(id).getApartment());
+        try {
+            user.setId(id);
+            if (aptName.isPresent()) {
+                user.setApartment(apartmentService.getApartmentByName(aptName.get()));
+            } else {
+                user.setApartment(userService.getUserById(id).getApartment());
+            }
+            return userService.updateUserOptionalApartment(user);
+        } catch (NullPointerException e) {
+            return false;
         }
+    }
 
-        return userService.update(user);
+    @RequestMapping(value = "/user/{uid}/roles", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public Boolean updateUserRoles(@RequestBody User user, @PathVariable(name = "uid") long id) {
+        try {
+            user.setId(id);
+            user.setApartment(userService.getUserById(id).getApartment());
+//            List<Role> roles = new ArrayList<>();
+//            user.getRoles().get(0).getId();
+            return userService.updateUserRoles(user);
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    //    @RequestMapping(value = "/user", method = RequestMethod.DELETE, params = {"Account"}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/user", method = RequestMethod.DELETE, params = {"Account"})
+    public Boolean deleteUserByAccount(@RequestParam(name = "Account") String p1) {
+        return userService.deleteUserByAccount(p1);
+    }
+
+    //    @RequestMapping(value = "/user/{uid}", method = RequestMethod.DELETE, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/user/{uid}", method = RequestMethod.DELETE)
+    public Boolean deleteUserById(@PathVariable(name = "uid") long id) {
+        return userService.deleteUserById(id);
     }
 
 }

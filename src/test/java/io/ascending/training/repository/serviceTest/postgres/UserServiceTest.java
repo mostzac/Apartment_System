@@ -52,7 +52,7 @@ public class UserServiceTest {
     public void Test(){
         logger.info(user.getApartment().toString());
         user.setApartment(apartmentService.getApartmentByName("Crystal Plaza"));
-        userService.update(user);
+        userService.updateUserOptionalApartment(user);
         user = userService.getUserByAccount(user.getAccount());
         logger.info(user.getName());
     }
@@ -70,7 +70,7 @@ public class UserServiceTest {
         roles = user1.getRoles();
         roles.add(roleService.getRoleByName("testRole"));
         user1.setRoles(roles);
-        userService.update(user1);
+        userService.updateUserRoles(user1);
         roleService.deleteRoleById(roleService.getRoleByName(role.getName()).getId());
     }
 

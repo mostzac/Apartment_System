@@ -3,6 +3,7 @@ package io.ascending.training;
 import io.ascending.training.init.ApplicationBoot;
 import io.ascending.training.postgres.model.Role;
 import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.repository.interfaces.UserDAO;
 import io.ascending.training.postgres.service.RoleService;
 import io.ascending.training.postgres.service.UserService;
 import org.junit.Test;
@@ -21,6 +22,8 @@ public class SetAllUsersWithMongoUserRoleTest {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserDAO userDAO;
 
     @Test
     public void initializeUserRoles() {
@@ -33,14 +36,15 @@ public class SetAllUsersWithMongoUserRoleTest {
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.getRoleByName("Manager"));
         roles.add(roleService.getRoleByName("User"));
+        roles.add(roleService.getRoleByName("MongoUser"));
         user.setRoles(roles);
-        userService.update(user);
+        userService.updateUserRoles(user);
 
     }
 
     @Test
     public void updateTest() {
-        List<User> users = userService.getUsers();
+        List<User> users = userDAO.getUsers();
         for (User i : users) {
             List<Role> roles;
             if (i.getRoles() != null) {
@@ -51,7 +55,7 @@ public class SetAllUsersWithMongoUserRoleTest {
 
             roles.add(roleService.getRoleByName("MongoUser"));
             i.setRoles(roles);
-            userService.update(i);
+            userDAO.update(i);
         }
     }
 }

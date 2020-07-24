@@ -1,5 +1,6 @@
 package io.ascending.training.postgres.service;
 
+import com.mongodb.MongoWriteException;
 import io.ascending.training.mongo.model.MongoUser;
 import io.ascending.training.mongo.repository.UserRepository;
 import io.ascending.training.postgres.model.Role;
@@ -9,6 +10,7 @@ import io.ascending.training.postgres.repository.interfaces.UserDAO;
 import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,37 +28,69 @@ public class UserService {
     private io.ascending.training.mongo.service.UserService userService;
 
 
-    public boolean save(User u){
+    public boolean save(User u) {
         List<Role> roles = new ArrayList<>();
         roles.add(roleDAO.getRoleByName("MongoUser"));
         u.setRoles(roles);
 
-        MongoUser user = userRepository.findByName(u.getAccount()).orElse(new MongoUser(u.getAccount(),0));
+        MongoUser user = userRepository.findByName(u.getAccount()).orElse(new MongoUser(u.getAccount(), 0));
         userRepository.save(user);
 
         return (userDAO.save(u));
     }
 
-    public boolean update(User u){
+    public boolean updateUserOptionalApartment(User u) {
         String originalAccount = userDAO.getUserById(u.getId()).getAccount();
 
-        MongoUser user = userRepository.findByName(originalAccount).orElse(new MongoUser(u.getAccount(),0));
-        user.setName(u.getAccount());
-        userRepository.save(user);
+        try {
+            MongoUser user = userRepository.findByName(originalAccount).orElse(new MongoUser(u.getAccount(), 0));
+            user.setName(u.getAccount());
+            userRepository.save(user);
+        } catch (DuplicateKeyException e) {
+            return false;
+        }
+        u.setRoles(userDAO.getUserById(u.getId()).getRoles());
+        return (userDAO.update(u));
+    }
 
-        return (userDAO.update(u));}
+    public boolean updateUserRoles(User u) {
+        String originalAccount = userDAO.getUserById(u.getId()).getAccount();
+
+        try {
+            MongoUser user = userRepository.findByName(originalAccount).orElse(new MongoUser(u.getAccount(), 0));
+            user.setName(u.getAccount());
+            userRepository.save(user);
+        } catch (DuplicateKeyException e) {
+            return false;
+        }
+        return (userDAO.update(u));
+    }
 
 //    public boolean delete(User u){ return (userDAO.delete(u));}
 
-    public boolean deleteUserByAccount(String userAccount){ return (userDAO.deleteUserByAccount(userAccount));}
+    public boolean deleteUserByAccount(String userAccount) {
+        userRepository.deleteByName(userAccount);
+        return (userDAO.deleteUserByAccount(userAccount));
+    }
 
-    public boolean deleteUserById(long id){return userDAO.deleteUserById(id);}
+    public boolean deleteUserById(long id) {
+        userRepository.deleteByName(userDAO.getUserById(id).getAccount());
+        return userDAO.deleteUserById(id);
+    }
 
-    public List<User> getUsers(){return userDAO.getUsers();}
+    public List<User> getUsers() {
+        return userDAO.getUsers();
+    }
 
-    public User getUserByAccount(String userAccount){return userDAO.getUserByAccount(userAccount);}
+    public User getUserByAccount(String userAccount) {
+        return userDAO.getUserByAccount(userAccount);
+    }
 
-    public User getUserById(long uid){return userDAO.getUserById(uid);}
+    public User getUserById(long uid) {
+        return userDAO.getUserById(uid);
+    }
 
-    public User getUserByCredential(String userAccount,String password){ return userDAO.getUserByCredential(userAccount,password);}
+    public User getUserByCredential(String userAccount, String password) {
+        return userDAO.getUserByCredential(userAccount, password);
+    }
 }

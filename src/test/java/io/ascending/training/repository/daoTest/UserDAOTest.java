@@ -96,25 +96,6 @@ public class UserDAOTest {
 //        userDAO.deleteUserById(user.getId());
     }
 
-    @Test
-    public void setUserWithRole() {
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleDAO.getRoleByName("User"));
-        User user = userDAO.getUserById(1);
-        user.setRoles(roles);
-        userDAO.update(user);
-    }
-    @Test
-    public void setAdmin(){
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleDAO.getRoleByName("Admin"));
-        User user = userDAO.getUserByAccount("Admin");
-        user.setRoles(roles);
-        userDAO.update(user);
-    }
-
-
-
 }
 
 

@@ -42,11 +42,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Package> packages;
 
-    @JsonIgnore
+//    @JsonIgnore
 //    @JsonView(Apartment.ApartmentUsersView.class)
 //    @JsonBackReference
 //    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+//    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 
