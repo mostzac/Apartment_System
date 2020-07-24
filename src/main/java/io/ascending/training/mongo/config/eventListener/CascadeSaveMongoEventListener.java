@@ -41,15 +41,14 @@ public class CascadeSaveMongoEventListener extends AbstractMongoEventListener<Ob
                         if (!callback.isIdFound()) {
                             throw new MappingException("Cannot perform cascade save on child object without id set");
                         }
-//                        try {
+                        try {
                             mongoOperations.save(fieldValue);
-//                        } catch (DuplicateKeyException e) {
-//                            if (fieldValue instanceof MongoMessage) {
-//                                if (!mongoOperations.exists(Query.query(where("content").is(((MongoMessage) fieldValue).getContent())), MongoMessage.class)) {
-//                                    mongoOperations.save(fieldValue);
-//                                }
-//                            }
-//                        }
+                        } catch (DuplicateKeyException e) {
+                            if (fieldValue instanceof MongoMessage) {
+                                fieldValue = mongoOperations.findOne(Query.query(where("content").is(((MongoMessage) fieldValue).getContent())), MongoMessage.class);
+                                field.set(source,fieldValue);
+                            }
+                        }
                     }
 
                 }

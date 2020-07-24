@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mapping.MappingException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -62,7 +63,9 @@ public class UserServiceTest {
         Assert.assertEquals(user.getMessage().getContent(),userService.save(user).getMessage().getContent());
         MongoUser newUser = new MongoUser("newUser", 10);
         newUser.setMessage(new MongoMessage("hello"));
-        Assert.assertTrue(user.getMessage().getId().equals(userService.insert(newUser).getMessage().getId()));
+        newUser = userService.insert(newUser);
+
+        Assert.assertTrue(user.getMessage().getId().equals(newUser.getMessage().getId()));
         newUser.setMessage(new MongoMessage("new Message"));
         userService.save(newUser);
         Assert.assertFalse(user.getMessage().getId().equals(newUser.getMessage().getId()));
@@ -70,6 +73,29 @@ public class UserServiceTest {
         logger.info("updated: "+userService.update(newUser));
         Assert.assertTrue(newUser.getMessage().getId().equals(userService.update(newUser).getMessage().getId()));
 
+    }
+
+    @Test
+    public void insertUseWithExistingMessage() {
+        MongoMessage message = new MongoMessage("hello");
+        messageRepository.insert(message);
+        try {
+            user.setMessage(new MongoMessage("hello"));
+            userService.insert(user);
+        } catch (MappingException e) {
+            user.setMessage(null);
+            user = userService.insert(user);
+            user.setMessage(new MongoMessage("hello"));
+            userService.save(user);
+
+        }
+    }
+
+    @Test
+    public void normalInsert() {
+//        user = userService.insert(user);
+        user.setMessage(new MongoMessage("hello"));
+        logger.info("User: "+userService.save(user).getMessage().getContent());
     }
 
     @Test
@@ -90,6 +116,14 @@ public class UserServiceTest {
         logger.info("");
         Assert.assertNull(userService.findByName("userNew").getMessage());
 
+    }
+
+    @Test
+    public void duplicateTest() {
+        MongoUser user = new MongoUser("aa", 0);
+        MongoUser user1 = new MongoUser("aa", 0);
+        user1 = userService.insert(user);
+        userService.save(user1);
     }
 
 

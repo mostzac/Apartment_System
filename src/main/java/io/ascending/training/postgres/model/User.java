@@ -19,7 +19,7 @@ public class User {
     @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String account;
-//    @JsonView(Apartment.ApartmentUsersView.class)
+    //    @JsonView(Apartment.ApartmentUsersView.class)
     @Column
     private String password;
     @JsonView(Apartment.ApartmentUsersView.class)
@@ -29,8 +29,8 @@ public class User {
     @Column
     private String room;
 
-//    @JsonIgnore
-//    @JsonBackReference
+    //    @JsonIgnore
+    @JsonBackReference
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apartmentId")
@@ -42,10 +42,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Package> packages;
 
-    @JsonView(Apartment.ApartmentUsersView.class)
-    @JsonBackReference
-    //    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JsonIgnore
+//    @JsonView(Apartment.ApartmentUsersView.class)
+//    @JsonBackReference
+//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 

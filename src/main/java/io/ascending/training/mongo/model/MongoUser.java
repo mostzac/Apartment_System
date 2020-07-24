@@ -1,7 +1,10 @@
 package io.ascending.training.mongo.model;
 
 import io.ascending.training.mongo.config.annotaion.CascadeSave;
+import io.ascending.training.mongo.repository.MessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,7 +16,7 @@ import java.io.Serializable;
 
 @Document(collection = "users")
 @CompoundIndexes({
-        @CompoundIndex(name = "name_age", def = "{'name' : 1, 'age': 1}")
+        @CompoundIndex(name = "name_age", def = "{'name' : 1, 'age': 1}", unique = true)
 })
 public class MongoUser implements Serializable {
     @Id
@@ -24,7 +27,6 @@ public class MongoUser implements Serializable {
     @DBRef
     @CascadeSave
     private MongoMessage message;
-
 
     public MongoMessage getMessage() {
         return message;

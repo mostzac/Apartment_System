@@ -27,21 +27,21 @@ public class UserService {
     }
 
     public MongoUser save(MongoUser user) {
-        try {
+//        try {
             return userRepository.save(user);
-        } catch (DuplicateKeyException e) {
-            user.setMessage(messageRepository.findByContent(user.getMessage().getContent()).get());
-            return userRepository.save(user);
-        }
+//        } catch (DuplicateKeyException e) {
+//            user.setMessage(messageRepository.findByContent(user.getMessage().getContent()).get());
+//            return userRepository.save(user);
+//        }
     }
 
     public MongoUser insert(MongoUser user) {
-        try {
+//        try {
             return userRepository.insert(user);
-        } catch (DuplicateKeyException e) {
-            user.setMessage(messageRepository.findByContent(user.getMessage().getContent()).get());
-            return userRepository.insert(user);
-        }
+//        } catch (DuplicateKeyException e) {
+//            user.setMessage(messageRepository.findByContent(user.getMessage().getContent()).get());
+//            return userRepository.insert(user);
+//        }
     }
 
     public boolean deleteByName(String name) {
@@ -49,12 +49,12 @@ public class UserService {
     }
 
     public MongoUser update(MongoUser user) {
-        try {
+//        try {
             return userRepository.save(user);
-        } catch (DuplicateKeyException e) {
-            user.setMessage(messageRepository.findByContent(user.getMessage().getContent()).get());
-            return userRepository.save(user);
-        }
+//        } catch (DuplicateKeyException e) {
+//            user.setMessage(messageRepository.findByContent(user.getMessage().getContent()).get());
+//            return userRepository.save(user);
+//        }
     }
 
     public MongoUser findById(String id) {

@@ -23,6 +23,22 @@ public class SetAllUsersWithMongoUserRoleTest {
     private RoleService roleService;
 
     @Test
+    public void initializeUserRoles() {
+        userService.getUserByAccount("Admin");
+    }
+
+    @Test
+    public void addTest(){
+        User user =  userService.getUserById(1);
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.getRoleByName("Manager"));
+        roles.add(roleService.getRoleByName("User"));
+        user.setRoles(roles);
+        userService.update(user);
+
+    }
+
+    @Test
     public void updateTest() {
         List<User> users = userService.getUsers();
         for (User i : users) {

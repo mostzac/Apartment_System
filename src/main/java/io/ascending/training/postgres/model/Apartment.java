@@ -4,6 +4,8 @@ package io.ascending.training.postgres.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -33,7 +35,7 @@ public class Apartment {
     private String address;
 
     //    @JsonIgnore
-//    @JsonManagedReference
+    @JsonManagedReference
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonView(ApartmentUsersView.class)
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
@@ -73,18 +75,18 @@ public class Apartment {
         this.address = address;
     }
 
-//    @Override
-//    public String toString() {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String str = null;
-//        try {
-//            str = objectMapper.writeValueAsString(this);
-//        } catch (JsonProcessingException jpe) {
-//            jpe.printStackTrace();
-//        }
-//
-//        return str;
-//    }
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String str = null;
+        try {
+            str = objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException jpe) {
+            jpe.printStackTrace();
+        }
+
+        return str;
+    }
 //
 //    public Set<User> getUsers() {
 //        try {

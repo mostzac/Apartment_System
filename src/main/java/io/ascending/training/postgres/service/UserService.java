@@ -22,6 +22,8 @@ public class UserService {
     private RoleDAO roleDAO;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private io.ascending.training.mongo.service.UserService userService;
 
 
     public boolean save(User u){
@@ -29,7 +31,8 @@ public class UserService {
         roles.add(roleDAO.getRoleByName("MongoUser"));
         u.setRoles(roles);
 
-        userRepository.save(new MongoUser(u.getAccount(),0));
+        MongoUser user = userRepository.findByName(u.getAccount()).orElse(new MongoUser(u.getAccount(),0));
+        userRepository.save(user);
 
         return (userDAO.save(u));
     }

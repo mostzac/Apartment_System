@@ -39,9 +39,9 @@ public class Role {
 
 
     //    @JsonIgnore
-    @JsonManagedReference
+//    @JsonManagedReference
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles",cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<User> users;
 
     public Role(String name, String allowedResource, boolean allowedRead, boolean allowedCreate, boolean allowedUpdate, boolean allowedDelete) {

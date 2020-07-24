@@ -6,6 +6,7 @@ import io.ascending.training.postgres.model.User;
 import io.ascending.training.postgres.service.ApartmentService;
 import io.ascending.training.postgres.service.RoleService;
 import io.ascending.training.postgres.service.UserService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,31 +37,24 @@ public class UserServiceTest {
 
         user = new User("accountTest","passworrTest","nameTest","777");
         user.setApartment(apartmentService.getApartmentByName("Buchanan"));
-    }
-
-    @Test
-    public void saveAndDeleteTest(){
-        Assert.assertTrue(userService.save(user));
-        Assert.assertTrue(userService.deleteUserById(user.getId()));
+        userService.save(user);
     }
 
 
     @Test
     public void getUsersTest(){
         List<User> users = userService.getUsers();
-        int expectedNum = 3;
+        int expectedNum = 4;
         Assert.assertEquals(expectedNum,users.size());
     }
 
     @Test
     public void Test(){
-        userService.save(user);
         logger.info(user.getApartment().toString());
         user.setApartment(apartmentService.getApartmentByName("Crystal Plaza"));
         userService.update(user);
         user = userService.getUserByAccount(user.getAccount());
-        logger.info(user.getApartment().toString());
-        Assert.assertTrue(userService.deleteUserByAccount(user.getAccount()));
+        logger.info(user.getName());
     }
 
     @Test
@@ -77,25 +71,18 @@ public class UserServiceTest {
         roles.add(roleService.getRoleByName("testRole"));
         user1.setRoles(roles);
         userService.update(user1);
-        userService.deleteUserById(user1.getId());
         roleService.deleteRoleById(roleService.getRoleByName(role.getName()).getId());
-    }
-
-    @Test
-    public void addTest(){
-        User user =  userService.getUserById(1);
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleService.getRoleByName("Manager"));
-        roles.add(roleService.getRoleByName("User"));
-        user.setRoles(roles);
-        userService.update(user);
-
     }
 
     @Test
     public void getUserCredentialTest(){
         User user = userService.getUserByCredential("DaveAccount","1234");
         Assert.assertNotNull(user);
+    }
+
+    @After
+    public void tearDown() {
+        Assert.assertTrue(userService.deleteUserByAccount(user.getAccount()));
     }
 
 

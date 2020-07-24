@@ -23,7 +23,7 @@ public class JwtUtilTest {
     String token;
     @Test
     public void generateTokenTest(){
-        User user = userService.getUserById(1);
+        User user = userService.getUserByCredential("Admin","123");
         Role role = new Role("testRole", "/roles", true, true, false, true);
         List<Role> roles = user.getRoles();
         roles.add(role);
