@@ -1,4 +1,5 @@
 package io.ascending.training.filter;
+
 import io.ascending.training.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFilter implements Filter {
-//    private final Logger logger = LoggerFactory.getLogger(getClass());
+    //    private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private Logger logger;
 
@@ -27,8 +28,8 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         int statusCode = authorization((HttpServletRequest) servletRequest);
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(logger==null){
-            SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,servletRequest.getServletContext());
+        if (logger == null) {
+            SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, servletRequest.getServletContext());
         }
         logger.info("This is Security Filter");
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(servletRequest, servletResponse);
@@ -55,7 +56,8 @@ public class SecurityFilter implements Filter {
 //        String WebSocketToken = req.getParameter("token");
 
 //        if (uri.equalsIgnoreCase(AUTH_URI)||WebSocketToken.isEmpty()==false) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
-        if (!uri.startsWith(API_ENTRY_URL)||uri.startsWith(TEST_URL)||uri.startsWith(SOCK_URL)||uri.equalsIgnoreCase(AUTH_URI)) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
+        if (!uri.startsWith(API_ENTRY_URL) || uri.startsWith(TEST_URL) || uri.startsWith(SOCK_URL) || uri.equalsIgnoreCase(AUTH_URI))
+            return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
 
         try {
             String origin = req.getHeader("Authorization");
@@ -81,7 +83,7 @@ public class SecurityFilter implements Filter {
             }
 
             for (String s : allowedResources.split(",")) {
-                if(allowedResources=="") break;
+                if (allowedResources == "") break;
                 if (uri.trim().toLowerCase().startsWith(s.trim().toLowerCase())) {
                     statusCode = HttpServletResponse.SC_ACCEPTED;
                     break;

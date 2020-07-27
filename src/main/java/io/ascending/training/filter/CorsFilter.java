@@ -44,7 +44,7 @@ public class CorsFilter implements Filter {
             return;
         }
 
-        //pass the request along hte filter chain
+        //pass the request along the filter chain
         filterChain.doFilter(request, servletResponse);
     }
 }
