@@ -30,7 +30,6 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.1.RELEASE</version>
         <relativePath/>
-
     </parent>
 
     <dependencies>
@@ -85,6 +84,11 @@
             <scope>provided</scope>
             <!-- provided means only when running the tomcat is provided, when compile the war file it won't be added in-->
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
 
 
         <!-- spring data mongo-->
@@ -141,12 +145,6 @@
         </dependency>
         <!--><-->
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>[4.1.1,)</version>
-        </dependency>
 
         <!--AWS Java SDK-->
         <dependency>
