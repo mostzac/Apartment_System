@@ -15,7 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
@@ -83,7 +85,7 @@ public class UserDAOTest {
 
     @Test
     public void saveUserWithRoleTest(){
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(roleDAO.getRoleByName("Manager"));
         roles.add(roleDAO.getRoleByName("User"));
 //        user = userDAO.getUserByAccount("accountTest");

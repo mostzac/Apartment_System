@@ -14,6 +14,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class JwtUtil {
     private static Logger logger = LoggerFactory.getLogger(JwtUtil.class); //static
@@ -34,7 +35,7 @@ public class JwtUtil {
         claims.setIssuer(ISSUER);
         claims.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME));
 
-        List<Role> roles = user.getRoles();
+        Set<Role> roles = user.getRoles();
         String allowedReadResources = "";
         String allowedCreateResources = "";
         String allowedUpdateResources = "";

@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
@@ -33,7 +35,7 @@ public class SetAllUsersWithMongoUserRoleTest {
     @Test
     public void addTest(){
         User user =  userService.getUserById(1);
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(roleService.getRoleByName("Manager"));
         roles.add(roleService.getRoleByName("User"));
         roles.add(roleService.getRoleByName("MongoUser"));
@@ -46,11 +48,11 @@ public class SetAllUsersWithMongoUserRoleTest {
     public void updateTest() {
         List<User> users = userDAO.getUsers();
         for (User i : users) {
-            List<Role> roles;
+            Set<Role> roles;
             if (i.getRoles() != null) {
                 roles = i.getRoles();
             } else {
-                roles = new ArrayList<>();
+                roles = new HashSet<>();
             }
 
             roles.add(roleService.getRoleByName("MongoUser"));

@@ -14,12 +14,17 @@ import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.sql.DataSource;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,20 +32,20 @@ import java.util.regex.Pattern;
 @ServletComponentScan(basePackages = {"io.ascending.training.filter"})
 //@EnableSwagger2
 public class ApplicationBoot {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         SpringApplication.run(ApplicationBoot.class, args);
     }
 
     @Bean
-    public SessionFactory getFactory() throws Exception{
+    public SessionFactory getFactory() throws Exception {
         SessionFactory sf = HibernateUtil.getSessionFactory();
-        if(sf==null) throw new Exception("building session factory exception");
+        if (sf == null) throw new Exception("building session factory exception");
         return sf;
     }
 
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public Logger logger(InjectionPoint injectionPoint){
+    public Logger logger(InjectionPoint injectionPoint) {
         return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
     }
 
@@ -49,5 +54,10 @@ public class ApplicationBoot {
         return new Hibernate5Module();
     }
 
-
+//    @Bean(name = "postgresDatasource")
+//    @ConfigurationProperties("postgres.datasource")
+//    @Primary
+//    public DataSource dataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
 }

@@ -56,7 +56,7 @@ public class SecurityFilter implements Filter {
 //        String WebSocketToken = req.getParameter("token");
 
 //        if (uri.equalsIgnoreCase(AUTH_URI)||WebSocketToken.isEmpty()==false) return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
-        if (!uri.startsWith(API_ENTRY_URL) || uri.startsWith(TEST_URL) || uri.startsWith(SOCK_URL) || uri.equalsIgnoreCase(AUTH_URI))
+        if (!uri.startsWith(API_ENTRY_URL) || uri.startsWith(TEST_URL) || uri.startsWith(SOCK_URL) || uri.startsWith(AUTH_URI))
             return HttpServletResponse.SC_ACCEPTED;//login doesnt go to this filter
 
         try {

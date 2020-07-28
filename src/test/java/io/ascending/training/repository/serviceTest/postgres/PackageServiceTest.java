@@ -60,7 +60,7 @@ public class PackageServiceTest {
     @Test
     public void TestId(){
         packageService.save(pack);
-        pack = packageService.getPackageById(1);
+        pack = packageService.getPackageById(2);
         pack.toString();
         pack = packageService.getPackageByShipNumber("test111");
         Package apt = packageService.getPackageById(pack.getId());

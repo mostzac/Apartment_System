@@ -14,7 +14,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("postgresService")
 public class UserService {
@@ -29,7 +31,7 @@ public class UserService {
 
 
     public boolean save(User u) {
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(roleDAO.getRoleByName("MongoUser"));
         u.setRoles(roles);
 

@@ -18,7 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationBoot.class)
@@ -61,7 +63,7 @@ public class UserServiceTest {
     public void saveUserWithRoles(){
         Role role = new Role("testRole", "/test", true, true, true, true);
         roleService.save(role);
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(roleService.getRoleByName("Manager"));
         roles.add(roleService.getRoleByName("User"));
         user.setRoles(roles);
