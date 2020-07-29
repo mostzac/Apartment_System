@@ -11,23 +11,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserPrinciple implements UserDetails {
+public class UserPrincipal implements UserDetails {
     private Long id;
     private String account;
     //@JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrinciple(Long id, String account, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String account, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.account = account;
         this.password = password;
         this.authorities = authorities;
     }
 
-    public static UserPrinciple build(User user) {
+    public static UserPrincipal build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-        return new UserPrinciple(user.getId(), user.getAccount(), user.getPassword(), authorities);
+        return new UserPrincipal(user.getId(), user.getAccount(), user.getPassword(), authorities);
     }
 
     public Long getId() {

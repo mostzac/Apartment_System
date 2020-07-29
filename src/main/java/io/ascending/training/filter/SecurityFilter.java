@@ -1,3 +1,4 @@
+/*
 package io.ascending.training.filter;
 
 import io.ascending.training.util.JwtUtil;
@@ -50,7 +51,7 @@ public class SecurityFilter implements Filter {
     }
 
     private int authorization(HttpServletRequest req) {
-        int statusCode = HttpServletResponse.SC_UNAUTHORIZED;
+        int statusCode = HttpServletResponse.SC_FORBIDDEN;
         String uri = req.getRequestURI();
         String verb = req.getMethod();
 //        String WebSocketToken = req.getParameter("token");
@@ -97,3 +98,4 @@ public class SecurityFilter implements Filter {
         return statusCode;
     }
 }
+*/

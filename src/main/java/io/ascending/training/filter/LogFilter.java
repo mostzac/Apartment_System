@@ -1,3 +1,4 @@
+/*
 package io.ascending.training.filter;
 
 import org.apache.juli.logging.Log;
@@ -35,3 +36,4 @@ public class LogFilter implements Filter {
 
     }
 }
+*/

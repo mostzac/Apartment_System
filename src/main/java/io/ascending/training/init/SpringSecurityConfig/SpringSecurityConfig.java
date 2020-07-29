@@ -1,6 +1,5 @@
 package io.ascending.training.init.SpringSecurityConfig;
 
-import io.ascending.training.filter.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
-import javax.sql.DataSource;
-
-//@Configuration
+@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,12 +27,28 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Qualifier("myUserDetailsService")
     @Autowired
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
 
     @Autowired
-    private JwtAuthenticationTokenFilter authenticationTokenFilter() {
+    private JwtAuthEntryPoint unauthorizedHandler;
+
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
     }
+
+    @Bean
+    public PasswordEncoder getPasswordEncode() {
+        // config no encode to password, raw string password
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
 
     // configure authentication
     @Override
@@ -48,29 +62,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .password("0")
 //                .roles("MongoUser");
     }
-
     // configure authorization
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .authorizeRequests()
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    }
-
-    @Bean
-    public PasswordEncoder getPasswordEncode() {
-        // config no encode to password, raw string password
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManagerBean();
     }
 
 }

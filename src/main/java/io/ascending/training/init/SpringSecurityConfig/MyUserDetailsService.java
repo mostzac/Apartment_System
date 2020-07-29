@@ -24,7 +24,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         try {
             User user = userDAO.getUserByAccount(s);
-            return UserPrinciple.build(user);
+            return UserPrincipal.build(user);
         } catch (NullPointerException e) {
             throw new UsernameNotFoundException("User Not Found with -> account : " + s);
         }

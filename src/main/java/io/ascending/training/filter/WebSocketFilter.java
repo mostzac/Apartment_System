@@ -1,3 +1,4 @@
+/*
 package io.ascending.training.filter;
 
 import io.ascending.training.util.JwtUtil;
@@ -51,3 +52,4 @@ public class WebSocketFilter implements Filter {
 
     }
 }
+*/

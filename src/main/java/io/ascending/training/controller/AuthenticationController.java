@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,25 +46,15 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity authenticate(@RequestBody User user) throws Exception {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getAccount(), user.getPassword())
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         Map<String, String> result = new HashMap<>();
-        String token = "";
-        try {
-            User u = userService.getUserByCredential(user.getAccount(), user.getPassword());
-            if (u == null) {
-                result.put("error", "User Not Found");
-                return ResponseEntity.status(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION).body(result);
-            }
-            token = JwtUtil.generateToken(u);
-        } catch (Exception e) {
-            String msg = e.getMessage();
-            if (msg == null) msg = "BAD REQUEST!";
-            result.put("error", msg);
-            return ResponseEntity.status(HttpServletResponse.SC_BAD_REQUEST).body(result);
-
-        }
-
+        String token = JwtUtil.generateToken(user);
         result.put("token", token);
-        return ResponseEntity.status(HttpServletResponse.SC_OK).body(result);
+        return ResponseEntity.ok(result);
 /*
         Map<String, String> result = new HashMap<>();
         String token = "";

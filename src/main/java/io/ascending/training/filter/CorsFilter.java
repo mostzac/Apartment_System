@@ -1,3 +1,4 @@
+/*
 package io.ascending.training.filter;
 
 import javax.servlet.*;
@@ -49,3 +50,4 @@ public class CorsFilter implements Filter {
     }
 }
 
+*/
