@@ -59,9 +59,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
             String token = req.getHeader("Authorization").replaceAll("^(.*?) ", "");
             if (token != null || !token.isEmpty()) {
                 Claims claims = JwtUtil.decodeJwtToken(token);
+                String uid = (String) claims.get("mstz");
 
-                String username = userDAO.getUserById(Long.getLong(claims.getId())).getName();
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                String userAccount = userDAO.getUserById(Long.parseLong(uid)).getAccount();
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userAccount);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 SecurityContextHolder.getContext().setAuthentication(authentication);

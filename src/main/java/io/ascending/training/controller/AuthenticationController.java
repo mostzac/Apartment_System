@@ -1,8 +1,11 @@
 package io.ascending.training.controller;
 
+import io.ascending.training.postgres.model.Apartment;
 import io.ascending.training.postgres.model.User;
+import io.ascending.training.postgres.service.ApartmentService;
 import io.ascending.training.postgres.service.UserService;
 import io.ascending.training.util.JwtUtil;
+import jdk.jfr.Unsigned;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,10 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -29,7 +29,10 @@ import java.util.Map;
 public class AuthenticationController {
     @Autowired
     @Qualifier("postgresService")
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private ApartmentService apartmentService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -39,19 +42,21 @@ public class AuthenticationController {
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity signingup(@RequestBody User user) {
+    public ResponseEntity singup(@RequestBody User user, @RequestParam(name = "aptName") String aptName) {
+        Apartment apartment = apartmentService.getApartmentByName(aptName);
+        user.setApartment(apartment);
         userService.save(user);
-        return ResponseEntity.status(HttpServletResponse.SC_CREATED).body("Sign Up Successful");
+        return ResponseEntity.ok().body("User registered successfully!");
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity authenticate(@RequestBody User user) throws Exception {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getAccount(), user.getPassword())
-        );
+        Authentication request = new UsernamePasswordAuthenticationToken(user.getAccount(), user.getPassword());
+        Authentication principal = authenticationManager.authenticate(request);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextHolder.getContext().setAuthentication(principal);
         Map<String, String> result = new HashMap<>();
+        user = userService.getUserByAccount(user.getAccount());
         String token = JwtUtil.generateToken(user);
         result.put("token", token);
         return ResponseEntity.ok(result);

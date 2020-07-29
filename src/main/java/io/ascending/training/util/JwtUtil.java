@@ -34,6 +34,7 @@ public class JwtUtil {
         claims.setIssuedAt(new Date(System.currentTimeMillis()));
         claims.setIssuer(ISSUER);
         claims.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME));
+        claims.put("mstz", String.valueOf(user.getId()));
 
         Set<Role> roles = user.getRoles();
         String allowedReadResources = "";
