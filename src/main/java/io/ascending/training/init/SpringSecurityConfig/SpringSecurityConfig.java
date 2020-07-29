@@ -50,7 +50,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     // configure authentication
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

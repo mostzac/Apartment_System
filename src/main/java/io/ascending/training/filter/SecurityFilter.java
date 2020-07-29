@@ -1,4 +1,3 @@
-/*
 package io.ascending.training.filter;
 
 import io.ascending.training.util.JwtUtil;
@@ -98,4 +97,3 @@ public class SecurityFilter implements Filter {
         return statusCode;
     }
 }
-*/
